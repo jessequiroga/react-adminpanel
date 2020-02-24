@@ -7,15 +7,15 @@ import {
   InfoWindow
 } from "react-google-maps";
 import * as parkData from "./data/skateboard-parks.json";
-import mapStyles from "./mapStyles";
+import myStyle from "./style";
 
 function Map() {
-  const [selectedPark, setSelectedPark] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   useEffect(() => {
     const listener = e => {
       if (e.key === "Escape") {
-        setSelectedPark(null);
+        setSelectedMarker(null);
       }
     };
     window.addEventListener("keydown", listener);
@@ -27,9 +27,18 @@ function Map() {
 
   return (
     <GoogleMap
-      defaultZoom={10}
-      defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-      defaultOptions={{ styles: mapStyles }}
+      defaultZoom={17}
+      defaultCenter={{ lat: 48.529377, lng: 7.73689 }} // Iut pos
+      options=
+      {{
+        disableDefaultUI: true, // disable default map UI
+        draggable: true, // make map draggable
+        keyboardShortcuts: false, // disable keyboard shortcuts
+        scaleControl: true, // allow scale controle
+        scrollwheel: true, // allow scroll wheel
+        streetViewControl: false, // Enlève la possibilité d'utilisé la fonction streetview
+        styles: myStyle // change default map styles
+      }}
     >
       {parkData.features.map(park => (
         <Marker
@@ -39,28 +48,28 @@ function Map() {
             lng: park.geometry.coordinates[0]
           }}
           onClick={() => {
-            setSelectedPark(park);
+            setSelectedMarker(park);
           }}
           icon={{
-            url: `/skateboarding.svg`,
+            url: `/mapMarker.png`,
             scaledSize: new window.google.maps.Size(25, 25)
           }}
         />
       ))}
 
-      {selectedPark && (
+      {selectedMarker && (
         <InfoWindow
           onCloseClick={() => {
-            setSelectedPark(null);
+            setSelectedMarker(null);
           }}
           position={{
-            lat: selectedPark.geometry.coordinates[1],
-            lng: selectedPark.geometry.coordinates[0]
+            lat: selectedMarker.geometry.coordinates[1],
+            lng: selectedMarker.geometry.coordinates[0]
           }}
         >
           <div>
-            <h2>{selectedPark.properties.NAME}</h2>
-            <p>{selectedPark.properties.DESCRIPTIO}</p>
+            <h2>{selectedMarker.properties.NAME}</h2>
+            <p>{selectedMarker.properties.DESCRIPTIO}</p>
           </div>
         </InfoWindow>
       )}
@@ -74,9 +83,8 @@ export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${
-          process.env.REACT_APP_GOOGLE_KEY
-        }`}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDWq5pZcRKig9OuOck6qsEEfAE-Um9n1hE
+        `}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
