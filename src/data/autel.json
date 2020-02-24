@@ -1,0 +1,51 @@
+{
+    "type": "FeatureCollection",
+    "crs": {
+      "type": "name",
+      "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+    },
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "AUTEL_ID": 1,
+          "NAME": "Autel du cul",
+          "NAME_FR": "Bordel",
+          "ADDRESS": "756 ruelle rouge",
+          "ADDRESS_FR": "69, chemin du cul"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [48.527377, 7.73589]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "AUTEL_ID": 2,
+          "NAME": "Autel jakie",
+          "NAME_FR": "keke",
+          "ADDRESS": "666 ruelle de la flame",
+          "ADDRESS_FR": "66, avenue où ca va vite"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [48.529377, 7.72689]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "AUTEL_ID": 3,
+          "NAME": "Autel du dieu perdu",
+          "NAME_FR": "Athé",
+          "ADDRESS": "999, rue du néant",
+          "ADDRESS_FR": "athé pas la"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [48.529377, 7.73689]
+        }
+      }
+    ]
+  }
