@@ -13,7 +13,10 @@ import * as parkData from "./data/autel.json";
 import myStyle from "./style";
 
 function Map() {
-  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [selectedAutel, setSelectedAutel] = useState(null);
+  const [selectedDrawing, setSelectedDrawing] = useState(null);
+  const [selectedEdition, setSelectedEdition] = useState(null);
+
 
   const google = window.google;
 
@@ -21,7 +24,7 @@ function Map() {
   useEffect(() => {
     const listener = e => {
       if (e.key === "Escape") {
-        setSelectedMarker(null);
+        setSelectedAutel(null);
       }
     };
     window.addEventListener("keydown", listener);
@@ -31,15 +34,57 @@ function Map() {
     };
   }, []);
 
+  const suppressionComponent = (component) => {
+    component.setMap(null);
+  }
+
+  const beginEdition = (component) => {
+    component.setEditable?component.setEditable(true):component.setDraggable(true);
+    google.maps.event.clearListeners(component, 'click');
+    google.maps.event.addListener(component, 'click', function (event) {
+      setSelectedEdition(component);
+    });
+  }
+
+  const confirmeEdition = (component) => {
+    component.setEditable?component.setEditable(false):component.setDraggable(false);
+    google.maps.event.clearListeners(component, 'click');
+    google.maps.event.addListener(component, 'click', function (event) {
+      setSelectedDrawing(component);
+    });
+  }
+
+  const onNewAutel = (autel) => {
+    google.maps.event.addListener(autel, 'click', function (event) {
+      setSelectedDrawing(autel);
+    });
+  }
+
+  const onNewItem = (item) => {
+    google.maps.event.addListener(item, 'click', function (event) {
+      setSelectedDrawing(item);
+    });
+  }
+
   const onPolygonComplete = React.useCallback(function onPolygonComplete(poly) {
     const polyArray = poly.getPath().getArray();
-    let paths = [];
-    polyArray.forEach(function (path) {
-      paths.push({ latitude: path.lat(), longitude: path.lng() });
-    });
-    console.log("onPolygonComplete", paths);
-  }, []);
+    if(polyArray.length >= 3 )
+    {
+      let paths = [];
+      polyArray.forEach(function (path) {
+        paths.push({ latitude: path.lat(), longitude: path.lng() });
+      });
 
+      google.maps.event.addListener(poly, 'click', function (event) {
+        setSelectedDrawing(poly);
+      });
+    }
+    else
+    {
+      poly.setMap(null);
+    }
+  }, []);
+  
   return (
     <GoogleMap
       defaultZoom={17}
@@ -64,7 +109,7 @@ function Map() {
             lng: autel.geometry.coordinates[1]
           }}
           onClick={() => {
-            setSelectedMarker(autel);
+            setSelectedAutel(autel);
           }}
           icon={{
             url: `/mapMarker.png`,
@@ -73,36 +118,121 @@ function Map() {
         />
       ))}
 
-      {selectedMarker && (
+      {selectedAutel && (
         <InfoWindow
           onCloseClick={() => {
-            setSelectedMarker(null);
+            setSelectedAutel(null);
           }}
           position={{
-            lat: selectedMarker.geometry.coordinates[0],
-            lng: selectedMarker.geometry.coordinates[1]
+            lat: selectedAutel.geometry.coordinates[0],
+            lng: selectedAutel.geometry.coordinates[1]
           }}
         >
           <div>
-            <h2>{selectedMarker.properties.NAME}</h2>
-            <p>{selectedMarker.properties.DESCRIPTIO}</p>
+            <h2>{selectedAutel.properties.NAME}</h2>
+            <p>{selectedAutel.properties.DESCRIPTIO}</p>
           </div>
         </InfoWindow>
       )}
-      <DrawingManager
-        defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON}
-        onPolygonComplete={onPolygonComplete}
-        defaultOptions={{
-          drawingControl: true,
-          drawingControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: [
-              google.maps.drawing.OverlayType.POLYGON,
-              google.maps.drawing.OverlayType.RECTANGLE,
-            ],
-          },
-        }}
-      />
+      <div id="DrawingManager_zone">
+        <DrawingManager
+          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON}
+          onPolygonComplete={onPolygonComplete}
+          defaultOptions={{
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+                google.maps.drawing.OverlayType.POLYGON,
+                google.maps.drawing.OverlayType.RECTANGLE,
+              ],
+            },
+          }}     
+        />
+      </div>
+      <div id="DrawingManager_autel">
+        <DrawingManager
+          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON}
+          onMarkerComplete={onNewAutel}
+          defaultOptions={{
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+                google.maps.drawing.OverlayType.MARKER
+              ],
+            },
+            markerOptions:{
+              icon:{
+                url: `/mapMarker.png`,
+                scaledSize: new window.google.maps.Size(100, 100)
+              }
+            }  
+          }}
+             
+        />
+      </div>
+
+      <div id="DrawingManager_item">
+        <DrawingManager
+          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON}
+          onMarkerComplete={onNewItem}
+          defaultOptions={{
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+                google.maps.drawing.OverlayType.MARKER,
+              ],
+            },
+            markerOptions:{
+              icon:{
+                url: `/skateboarding.svg`,
+                scaledSize: new window.google.maps.Size(50, 50)
+              }
+            }
+          }}     
+        />
+      </div>
+      
+      {selectedDrawing && (
+          <InfoWindow
+            onCloseClick={() => {
+              setSelectedDrawing(null);
+            }}
+            position={{
+              lat: selectedDrawing.getPath?selectedDrawing.getPath().getArray()[0].lat():selectedDrawing.position.lat(),
+              lng: selectedDrawing.getPath?selectedDrawing.getPath().getArray()[0].lng():selectedDrawing.position.lng()
+            }}
+          >
+            
+            <div>
+              <div>
+                <button onClick={()=>{suppressionComponent(selectedDrawing); setSelectedDrawing(null);}}>Supprimer</button>
+                <button onClick={()=>{beginEdition(selectedDrawing); setSelectedDrawing(null);}}>Edition</button>
+              </div>
+            </div>
+          </InfoWindow>
+        )}
+
+      {selectedEdition && (
+          <InfoWindow
+            onCloseClick={() => {
+              setSelectedEdition(null);
+            }}
+            position={{
+              lat: selectedEdition.getPath?selectedEdition.getPath().getArray()[0].lat():selectedEdition.position.lat(),
+              lng: selectedEdition.getPath?selectedEdition.getPath().getArray()[0].lng():selectedEdition.position.lng()
+            }}
+          >
+            
+            <div>
+              <div>
+                <button onClick={()=>{confirmeEdition(selectedEdition); setSelectedEdition(null);}}>Valider</button>
+              </div>
+            </div>
+          </InfoWindow>
+        )}
     </GoogleMap>
   );
 }
