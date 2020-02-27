@@ -1,19 +1,14 @@
-import React, { useState} from "react";
+import React from "react";
 import {
   withGoogleMap,
   withScriptjs
 } from "react-google-maps";
 import "./app.css";
 import Map from "./Map.js";
-import Header from "./Header.js";
+import Header from "./components/Header.js";
 
 function App() {
 
-  const [isOpen, changeIsOpen] = useState(true); // Trigger toogle menu
-
-  const toggle = () => { // Open/Close the menu
-     changeIsOpen(!isOpen); // set true/false isOpen
-  }
   const MapWrapped = withScriptjs(withGoogleMap(Map)); // Build the map with the google map api
 
   return (
