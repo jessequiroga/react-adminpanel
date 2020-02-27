@@ -1,0 +1,67 @@
+.divButton {
+    direction: ltr;
+    overflow: hidden;
+    text-align: left;
+    position: relative;
+    color: rgb(0, 0, 0);
+    font-family: Roboto, Arial, sans-serif;
+    user-select: none;
+    font-size: 11px;
+    background-color: rgb(255, 255, 255);
+    padding: 4px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    font-weight: 500;
+    cursor : pointer;
+}
+
+.divBar { 
+    float: left;
+    line-height: 0;
+}
+
+.spanBar {
+    display: inline-block;
+}
+
+.divImg {
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    position: relative;
+}
+.imgDraw {
+    position: absolute;
+    left: 0px;
+    top: -80px;
+    user-select: none;
+    border: 0px none;
+    padding: 0px;
+    margin: 0px;
+    max-width: none;
+    width: 16px;
+    height: 192px;
+}
+
+.button2
+{ 
+    background-Color : #fff;
+    border : 2px solid #fff;
+    border-Radius : 3px;
+    box-Shadow : 0 2px 6px rgba(0,0,0,.3);
+    cursor : pointer;
+    margin-Bottom : 22px;
+    text-Align : center;
+}
+
+.textButton
+{  
+    color : rgb(25,25,25);
+    font-Family : Roboto,Arial,sans-serif;
+    font-Size : 16px;
+    line-Height : 38px;
+    padding-Left : 5px;
+    padding-Right : 5px;
+}

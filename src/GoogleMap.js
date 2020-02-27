@@ -3,7 +3,6 @@ import {
   withGoogleMap,
   withScriptjs
 } from "react-google-maps";
-import "./app.css";
 import Map from "./Map.js";
 
 class GoogleMap extends Component {

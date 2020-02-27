@@ -1,7 +1,7 @@
 import React, { useState} from "react";
-import {Card,Navbar,NavbarToggler,Button,Nav,Collapse,NavItem} from 'reactstrap';
+import {Card,Navbar,NavbarToggler,Nav,Collapse,NavItem} from 'reactstrap';
 
-function Header({changeCanDrawMapZone,changeCanDrawAltar,changeCanDrawItem}) {
+function Header() {
 
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
 
@@ -18,13 +18,13 @@ function Header({changeCanDrawMapZone,changeCanDrawAltar,changeCanDrawItem}) {
           <Nav navbar>
             <Nav className="justify-content-center">
               <NavItem className="mr-4">
-                <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>
+                
               </NavItem>
               <NavItem className="mr-4">
-                <Button onClick={changeCanDrawAltar}>Put Altar</Button>
+
               </NavItem>
               <NavItem className="mr-4">
-                <Button onClick={changeCanDrawItem}>Put Item</Button>
+
               </NavItem>
             </Nav>
           </Nav>

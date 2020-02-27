@@ -4,17 +4,47 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+import {Card,Navbar,NavbarToggler,Button,Nav,Collapse,NavItem} from 'reactstrap';
 import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
 import * as altarData from "./data/altar.json";
 import myStyle from "./style";
-import "./app.css";
+import "./Map.css";
+
+import MapControl from "./MapControl.js"
 
 function Map() {
   const [selectedAltar, setSelectedAltar] = useState(null); // Triger if an Altar is selected
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
   const [selectedEdited, setSelectedEdited] = useState(null); // Triger if an Altar is selected
+  const [canDrawMapZone, setCanDrawMapZone] = useState(false); // Triger if the DrawingManger Map Zone is active
+  const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
+  const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
+  const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
+
+  const toggle = () => { // Open/Close the menu
+     changeIsOpen(!isOpen); // set true/false isOpen
+  }
+
+
+  const changeCanDrawItem = () => { // Show the DrawingManager item and hidde the other DrawingManager
+    setCanDrawItem(true); // Show the DrawingManager item
+    setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
+    setCanDrawAltar(false); // Hidde the DrawingManager Altar 
+  }
+
+  const changeCanDrawAltar = () => { // Show the DrawingManager item and hidde the other DrawingManager
+    setCanDrawAltar(true); // Show the DrawingManager Altar
+    setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
+    setCanDrawItem(false); // Hidde the DrawingManager Item
+  }
+
+  const changeCanDrawMapZone = () => { // Show the DrawingManager item and hidde the other DrawingManager
+    setCanDrawMapZone(true); // Show the DrawingManager Map Zone
+    setCanDrawAltar(false); // Hidde the DrawingManager Altar
+    setCanDrawItem(false); // Hidde the DrawingManager Item
+  }
 
   const google = window.google; // The constructor of the lib googgle map
 
@@ -92,6 +122,8 @@ function Map() {
       poly.setMap(null); // The polygone is remove
     }
   }, []);
+
+ 
   
   return (
     <GoogleMap
@@ -146,9 +178,8 @@ function Map() {
        * Create an Drawing Manager for the game zone
        * Can draw an polygon or an rectangle
        */}
-      <div id="DrawingManager_zone">
+      {canDrawMapZone && (
         <DrawingManager // Create a new Drawing Manager
-          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON} // Set the defalt Drawing mode to polygon
           onPolygonComplete={onPolygonComplete} // Set the new Event onPolygonComplete with our custom onPolygonComplete
           defaultOptions={{ // Initiate the Drawing Manager options
             drawingControl: true, // Show the Drawing Manager
@@ -156,17 +187,16 @@ function Map() {
               position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
               drawingModes: [ // Set the drawing options
                 google.maps.drawing.OverlayType.POLYGON, // We can draw polygons
-                google.maps.drawing.OverlayType.RECTANGLE, // We can draw rectangles
               ],
             },
           }}     
         />
-      </div>
+      )}
       {/**
        * Create an Drawing Manager for the marker altar
        * Can draw marker only
        */}
-      <div id="DrawingManager_altar">
+      {canDrawAltar && (
         <DrawingManager // Create a new Drawing Manager
           onMarkerComplete={onNewAltar} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewAltar
           defaultOptions={{ // Initiate the Drawing Manager options
@@ -186,12 +216,12 @@ function Map() {
           }}
              
         />
-      </div>
+      )}
       {/**
        * Create an Drawing Manager for the marker item
        * Can draw marker only
        */}
-      <div id="DrawingManager_item">
+      {canDrawItem && (
         <DrawingManager // Create a new Drawing Manager
           onMarkerComplete={onNewItem} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewItem
           defaultOptions={{ // Initiate the Drawing Manager options
@@ -210,7 +240,41 @@ function Map() {
             }
           }}     
         />
-      </div>
+        )}
+      
+      <MapControl position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
+        <Card className="border-1">
+        <Navbar color="faded" className="border-1" light>
+            <NavbarToggler className="mb-2" onClick={toggle}/>
+            <Collapse isOpen={isOpen} navbar>
+                <Nav  navbar>
+                    <NavItem className="mb-2">
+                        <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>
+                    </NavItem>
+                    <NavItem className="mb-2">
+                        <Button onClick={changeCanDrawAltar}>Put Altar</Button>
+                    </NavItem>
+                    <NavItem className="mb-2">
+                        <Button onClick={changeCanDrawItem}>Put Item</Button>
+                        <Collapse className="mt-2" isOpen={canDrawItem} navbar>
+                            <Nav  navbar>
+                                <NavItem className="mb-2">
+                                    <Button onClick={() => console.log("Item 1")}>Item 1</Button>
+                                </NavItem>
+                                <NavItem className="mb-2">
+                                    <Button onClick={() => console.log("Item 2")}>Item 2</Button>
+                                </NavItem>
+                                <NavItem className="mb-2">
+                                    <Button onClick={() => console.log("Item 3")}>Item 3</Button>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
+                    </NavItem>
+                </Nav>
+            </Collapse>
+        </Navbar>
+        </Card>
+      </MapControl>
       
       {selectedDrawed && ( // If an drawed component was select
           <InfoWindow // Show a new Info Window
