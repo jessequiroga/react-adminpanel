@@ -5,9 +5,9 @@
   "dependencies": {
     "@react-google-maps/api": "^1.8.3",
     "bootstrap": "^4.4.1",
-    "react": "^16.8.6",
+    "react": "^16.13.0",
     "react-bootstrap-typeahead": "^4.0.0-rc.1",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.13.0",
     "react-google-maps": "^9.4.5",
     "react-scripts": "2.1.8",
     "reactstrap": "^8.4.1"

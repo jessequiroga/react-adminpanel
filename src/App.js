@@ -1,27 +1,33 @@
-import React from "react";
-import {
-  withGoogleMap,
-  withScriptjs
-} from "react-google-maps";
-import "./app.css";
-import Map from "./Map.js";
+import React, { useState } from "react";
 import Header from "./components/Header.js";
+import GoogleMap from "./GoogleMap.js";
 
 function App() {
+  const [canDrawMapZone, setCanDrawMapZone] = useState(false);
+  const [canDrawAltar, setCanDrawAltar] = useState(false);
+  const [canDrawItem, setCanDrawItem] = useState(false);
 
-  const MapWrapped = withScriptjs(withGoogleMap(Map)); // Build the map with the google map api
+  const changeCanDrawItem = () => {
+    setCanDrawItem(!canDrawItem);
+    console.log(canDrawItem);
+  }
+
+  const changeCanDrawAltar = () => {
+    setCanDrawAltar(!canDrawAltar);
+    console.log(canDrawAltar);
+  }
+
+  const changeCanDrawMapZone = () => {
+    setCanDrawMapZone(!canDrawMapZone);
+    console.log(canDrawMapZone);
+  }
 
   return (
-        <div id="map" style={{ width: "100vw", height: "100vh" }}>
-          <Header/>
-          <MapWrapped
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDWq5pZcRKig9OuOck6qsEEfAE-Um9n1hE`}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `100%` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-          />
-        </div>
-      );
+    <>
+      <Header changeCanDrawAltar={changeCanDrawAltar} changeCanDrawMapZone={changeCanDrawMapZone} changeCanDrawItem={changeCanDrawItem} />
+      <GoogleMap  />
+    </>
+  );
 
 }
 export default App;
