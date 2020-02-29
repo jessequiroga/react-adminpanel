@@ -109,6 +109,7 @@ function Map() {
     {
       poly.setMap(null); // The polygone is remove
     }
+    setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
   }, []);
  
   
