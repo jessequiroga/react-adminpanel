@@ -36,7 +36,7 @@ export default class MapControl extends Component {
     this.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
   }
 
-  addPolygone = (event) =>
+  /*addPolygone = (event) =>
   {
     let poly = new this.google.maps.Polygon({
         strokeColor: '#000000',
@@ -65,7 +65,7 @@ export default class MapControl extends Component {
       title: '#' + path.getLength(),
       map: this.map
     });
-  }
+  }*/
 
   componentWillMount() {
     this.map = this.context[MAP];
@@ -86,10 +86,10 @@ export default class MapControl extends Component {
     {
         this.map.addListener('click',this.addAltar);
     }
-    else if(this.props.canDrawMapZone)
+    /*else if(this.props.canDrawMapZone)
     {
         this.map.addListener('click',this.addPolygone);
-    }
+    }*/
         
   }
 

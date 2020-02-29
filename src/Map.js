@@ -180,9 +180,10 @@ function Map() {
        */}
       {canDrawMapZone && (
         <DrawingManager // Create a new Drawing Manager
+          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON} // Set the defalt Drawing mode to polygon
           onPolygonComplete={onPolygonComplete} // Set the new Event onPolygonComplete with our custom onPolygonComplete
           defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
+            drawingControl: false, // Show the Drawing Manager
             drawingControlOptions: { // Initiate the button and drawing options
               position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
               drawingModes: [ // Set the drawing options
@@ -192,55 +193,6 @@ function Map() {
           }}     
         />
       )}
-      {/**
-       * Create an Drawing Manager for the marker altar
-       * Can draw marker only
-       */}
-      {canDrawAltar && (
-        <DrawingManager // Create a new Drawing Manager
-          onMarkerComplete={onNewAltar} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewAltar
-          defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
-            drawingControlOptions: { // Initiate the button and drawing options
-              position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
-              drawingModes: [ // Set the drawing options
-                google.maps.drawing.OverlayType.MARKER // We can draw markers
-              ],
-            },
-            markerOptions:{ // Initiate the option of drawed markers
-              icon:{ // Initaite the icon of the markers
-                url: `/mapMarker.png`, // take the icon on /public
-                scaledSize: new window.google.maps.Size(100, 100) // resize the icon
-              }
-            }  
-          }}
-             
-        />
-      )}
-      {/**
-       * Create an Drawing Manager for the marker item
-       * Can draw marker only
-       */}
-      {canDrawItem && (
-        <DrawingManager // Create a new Drawing Manager
-          onMarkerComplete={onNewItem} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewItem
-          defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
-            drawingControlOptions: { // Initiate the button and drawing options
-              position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
-              drawingModes: [ // Set the drawing options
-                google.maps.drawing.OverlayType.MARKER, // We can draw markers
-              ],
-            },
-            markerOptions:{ // Initiate the option of drawed markers
-              icon:{ // Initaite the icon of the markers
-                url: `/skateboarding.svg`, // take the icon on /public
-                scaledSize: new window.google.maps.Size(50, 50) // resize the icon
-              }
-            }
-          }}     
-        />
-        )}
       
       <MapControl setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
       position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
