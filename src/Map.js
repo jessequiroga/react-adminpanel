@@ -23,7 +23,6 @@ function Map() {
   const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
-  const [map, setMap] = useState(null); // Trigger the map
 
   const toggle = () => { // Open/Close the menu
      changeIsOpen(!isOpen); // set true/false isOpen
@@ -93,18 +92,6 @@ function Map() {
     });
   }
 
-  const onNewAltar = (altar) => { // Event when an altar is created
-    google.maps.event.addListener(altar, 'click', function (event) { // Add Event onClick to the altar selectedDrawed: the new altar can be selected
-      setSelectedDrawed(altar); // Select the drawed componenet: altar
-    });
-  }
-
-  const onNewItem = (item) => { // Event when a item is created
-    google.maps.event.addListener(item, 'click', function (event) { // Add Event onClick to the item selectedDrawed: the new item can be selected
-      setSelectedDrawed(item); // Select the drawed componenet: item
-    });
-  }
-
   const onPolygonComplete = React.useCallback(function onPolygonComplete(poly) { // Event when a polygon is created
     const polyArray = poly.getPath().getArray(); // Get all the coordinates of the polygone
     if(polyArray.length >= 3 ) // If the polygone have more/or 3 coordinates it's a polygone
@@ -126,7 +113,7 @@ function Map() {
  
   
   return (
-    <GoogleMap ref={(map) => setMap(map)}
+    <GoogleMap
       defaultZoom={17} // Initiate the defalt zoom view on the map
       defaultCenter={{ lat: 48.529377, lng: 7.73689 }} // Initiate the begin coordonate on the Iut pos
       //defaultCenter={{ lat: 45.421532, lng: -75.967189 }} //Ottawa
@@ -193,7 +180,7 @@ function Map() {
           }}     
         />
       )}
-      
+
       <MapControl setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
       position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
         <Card className="border-1">
