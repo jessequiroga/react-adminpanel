@@ -12,7 +12,7 @@ import * as altarData from "./data/altar.json";
 import fs from "fs";
 import myStyle from "./style";
 import "./Map.css";
-import Game from "./model/Map.js";
+import Game from "./model/Game.js";
 import Zone from "./model/Zone.js";
 
 import MapControl from "./DrawManager.js"

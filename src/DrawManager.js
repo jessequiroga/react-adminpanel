@@ -4,7 +4,7 @@ import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import Altar from './model/elements/Altar.js';
 import Item from './model/elements/Item.js';
-import Game from './model/Map.js';
+import Game from './model/Game.js';
 
 export default class MapControl extends Component {
 

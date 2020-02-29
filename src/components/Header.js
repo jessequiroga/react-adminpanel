@@ -1,12 +1,11 @@
 import React, { useState} from "react";
 import {Button, Nav, NavItem} from 'reactstrap';
-import Game from '../model/Map.js';
+import Game from '../model/Game.js';
 function Header() {
 
-  const saveMap = () => {
-    var map = Game.getInstance();
-    console.log(map);
-    var mapJsonised = JSON.stringify(map)
+  const saveMap = () => { // save the Map
+    var map = Game.getInstance(); // get the current map
+    var mapJsonised = JSON.stringify(map) // Jsonised the map
     console.log(mapJsonised);
   }
 

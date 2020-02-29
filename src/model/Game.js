@@ -1,4 +1,4 @@
- class Map
+ class Game
 {
     Name;
     Duration;
@@ -44,11 +44,11 @@
         this.Altars.push(altar);
     }
 }
-class Game {
+class SigletonGame { // Object Game to sigleton
         static instance;
      
         static createInstance() {
-            var object = new Map("hug","60sec","aujourd'hui","3","127.0.0.1");
+            var object = new Game("hug","60sec","aujourd'hui","3","127.0.0.1");
             return object;
         }
      
@@ -61,4 +61,4 @@ class Game {
         }
 }
 
-export default Game;
+export default SigletonGame;
