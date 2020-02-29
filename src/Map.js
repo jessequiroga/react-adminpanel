@@ -12,6 +12,8 @@ import * as altarData from "./data/altar.json";
 import fs from "fs";
 import myStyle from "./style";
 import "./Map.css";
+import Game from "./model/Map.js";
+import Zone from "./model/Zone.js";
 
 import MapControl from "./DrawManager.js"
 
@@ -104,6 +106,8 @@ function Map() {
       google.maps.event.addListener(poly, 'click', function (event) { // Add Event onClick to the polygon selectedDrawed: the new polygon can be selected
         setSelectedDrawed(poly); // Select the drawed componenet: polygon
       });
+
+      Game.getInstance().addZone(new Zone(paths));
     }
     else // If the polygone have less of 3 coordinates it's not a polygone
     {

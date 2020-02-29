@@ -1,36 +1,24 @@
 import React, { useState} from "react";
-import {Card,Navbar,NavbarToggler,Nav,Collapse,NavItem} from 'reactstrap';
-
+import {Button, Nav, NavItem} from 'reactstrap';
+import Game from '../model/Map.js';
 function Header() {
 
-  const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
-
-  const toggle = () => { // Open/Close the menu
-     changeIsOpen(!isOpen); // set true/false isOpen
+  const saveMap = () => {
+    var map = Game.getInstance();
+    console.log(map);
+    var mapJsonised = JSON.stringify(map)
+    console.log(mapJsonised);
   }
 
   return (
     <div>
-    <Card className="border-1">
-      <Navbar color="faded" className="border-1" light>
-        <NavbarToggler onClick={toggle}/>
-        <Collapse isOpen={isOpen} navbar>
-          <Nav navbar>
-            <Nav className="justify-content-center">
-              <NavItem className="mr-4">
-                
-              </NavItem>
-              <NavItem className="mr-4">
-
-              </NavItem>
-              <NavItem className="mr-4">
-
-              </NavItem>
-            </Nav>
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </Card>
+      <Nav navbar>
+        <Nav className="justify-content-center">
+          <NavItem className="mr-4">
+            <Button onClick={saveMap}>Save Map</Button>
+          </NavItem>
+        </Nav>
+      </Nav>
     </div>
       );
 
