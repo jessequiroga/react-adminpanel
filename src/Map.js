@@ -9,10 +9,11 @@ import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
 import * as altarData from "./data/altar.json";
+import fs from "fs";
 import myStyle from "./style";
 import "./Map.css";
 
-import MapControl from "./MapControl.js"
+import MapControl from "./DrawManager.js"
 
 function Map() {
   const [selectedAltar, setSelectedAltar] = useState(null); // Triger if an Altar is selected
@@ -47,7 +48,6 @@ function Map() {
   }
 
   const google = window.google; // The constructor of the lib googgle map
-
 
   useEffect(() => { // On Map open
     const listener = e => { // Event on press Escape unselect all selected Map component
@@ -92,18 +92,6 @@ function Map() {
     });
   }
 
-  const onNewAltar = (altar) => { // Event when an altar is created
-    google.maps.event.addListener(altar, 'click', function (event) { // Add Event onClick to the altar selectedDrawed: the new altar can be selected
-      setSelectedDrawed(altar); // Select the drawed componenet: altar
-    });
-  }
-
-  const onNewItem = (item) => { // Event when a item is created
-    google.maps.event.addListener(item, 'click', function (event) { // Add Event onClick to the item selectedDrawed: the new item can be selected
-      setSelectedDrawed(item); // Select the drawed componenet: item
-    });
-  }
-
   const onPolygonComplete = React.useCallback(function onPolygonComplete(poly) { // Event when a polygon is created
     const polyArray = poly.getPath().getArray(); // Get all the coordinates of the polygone
     if(polyArray.length >= 3 ) // If the polygone have more/or 3 coordinates it's a polygone
@@ -122,7 +110,6 @@ function Map() {
       poly.setMap(null); // The polygone is remove
     }
   }, []);
-
  
   
   return (
@@ -180,9 +167,10 @@ function Map() {
        */}
       {canDrawMapZone && (
         <DrawingManager // Create a new Drawing Manager
+          defaultDrawingMode={google.maps.drawing.OverlayType.POLYGON} // Set the defalt Drawing mode to polygon
           onPolygonComplete={onPolygonComplete} // Set the new Event onPolygonComplete with our custom onPolygonComplete
           defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
+            drawingControl: false, // Show the Drawing Manager
             drawingControlOptions: { // Initiate the button and drawing options
               position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
               drawingModes: [ // Set the drawing options
@@ -192,57 +180,9 @@ function Map() {
           }}     
         />
       )}
-      {/**
-       * Create an Drawing Manager for the marker altar
-       * Can draw marker only
-       */}
-      {canDrawAltar && (
-        <DrawingManager // Create a new Drawing Manager
-          onMarkerComplete={onNewAltar} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewAltar
-          defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
-            drawingControlOptions: { // Initiate the button and drawing options
-              position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
-              drawingModes: [ // Set the drawing options
-                google.maps.drawing.OverlayType.MARKER // We can draw markers
-              ],
-            },
-            markerOptions:{ // Initiate the option of drawed markers
-              icon:{ // Initaite the icon of the markers
-                url: `/mapMarker.png`, // take the icon on /public
-                scaledSize: new window.google.maps.Size(100, 100) // resize the icon
-              }
-            }  
-          }}
-             
-        />
-      )}
-      {/**
-       * Create an Drawing Manager for the marker item
-       * Can draw marker only
-       */}
-      {canDrawItem && (
-        <DrawingManager // Create a new Drawing Manager
-          onMarkerComplete={onNewItem} // Set the new Event onMarkerComplete with our custom onMarkerComplete: onNewItem
-          defaultOptions={{ // Initiate the Drawing Manager options
-            drawingControl: true, // Show the Drawing Manager
-            drawingControlOptions: { // Initiate the button and drawing options
-              position: google.maps.ControlPosition.TOP_CENTER, // Set the drawing manager on the center of the map
-              drawingModes: [ // Set the drawing options
-                google.maps.drawing.OverlayType.MARKER, // We can draw markers
-              ],
-            },
-            markerOptions:{ // Initiate the option of drawed markers
-              icon:{ // Initaite the icon of the markers
-                url: `/skateboarding.svg`, // take the icon on /public
-                scaledSize: new window.google.maps.Size(50, 50) // resize the icon
-              }
-            }
-          }}     
-        />
-        )}
-      
-      <MapControl position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
+
+      <MapControl setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
+      position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
         <Card className="border-1">
         <Navbar color="faded" className="border-1" light>
             <NavbarToggler className="mb-2" onClick={toggle}/>
