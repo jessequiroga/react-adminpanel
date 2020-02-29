@@ -49,6 +49,7 @@ export default class MapControl extends Component {
 
     // Add a listener for the click event
     this.map.addListener('click',(event)=>this.addLatLng(event,poly));
+    this.google.maps.event.addListener(poly, 'click',()=>this.props.setSelectedDrawed(poly));
   }
 
   addLatLng(event,poly) {
@@ -64,7 +65,6 @@ export default class MapControl extends Component {
       title: '#' + path.getLength(),
       map: this.map
     });
-    this.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
   }
 
   componentWillMount() {
