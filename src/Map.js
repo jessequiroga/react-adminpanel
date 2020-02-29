@@ -9,10 +9,11 @@ import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
 import * as altarData from "./data/altar.json";
+import fs from "fs";
 import myStyle from "./style";
 import "./Map.css";
 
-import MapControl from "./MapControl.js"
+import MapControl from "./DrawManager.js"
 
 function Map() {
   const [selectedAltar, setSelectedAltar] = useState(null); // Triger if an Altar is selected
@@ -22,6 +23,7 @@ function Map() {
   const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
+  const [map, setMap] = useState(null); // Trigger the map
 
   const toggle = () => { // Open/Close the menu
      changeIsOpen(!isOpen); // set true/false isOpen
@@ -47,7 +49,6 @@ function Map() {
   }
 
   const google = window.google; // The constructor of the lib googgle map
-
 
   useEffect(() => { // On Map open
     const listener = e => { // Event on press Escape unselect all selected Map component
@@ -122,11 +123,10 @@ function Map() {
       poly.setMap(null); // The polygone is remove
     }
   }, []);
-
  
   
   return (
-    <GoogleMap
+    <GoogleMap ref={(map) => setMap(map)}
       defaultZoom={17} // Initiate the defalt zoom view on the map
       defaultCenter={{ lat: 48.529377, lng: 7.73689 }} // Initiate the begin coordonate on the Iut pos
       //defaultCenter={{ lat: 45.421532, lng: -75.967189 }} //Ottawa
@@ -242,7 +242,8 @@ function Map() {
         />
         )}
       
-      <MapControl position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
+      <MapControl setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
+      position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
         <Card className="border-1">
         <Navbar color="faded" className="border-1" light>
             <NavbarToggler className="mb-2" onClick={toggle}/>
