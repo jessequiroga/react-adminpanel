@@ -38,8 +38,8 @@ export default class MapControl extends Component {
         id: zone.Id
       });
       poly.setMap(this.map);
-      window.google.maps.event.addListener(poly, 'click',()=>{if(!this.props.canDraw())this.props.setSelectedDrawed(poly)});
-      //this.props.setListZone(this.props.listZone.concat(poly));
+      window.google.maps.event.addListener(poly, 'click',()=>{this.props.setSelectedDrawed(poly)});
+      this.props.listZone.push(zone);
     });
   }
 

@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
+import $ from 'jquery';
 
 export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  addAltar = (event) =>
+  addAltar = (event) => // event add Altar marker
   {
     let newAltar = AltarManager.createAltar(event.latLng);
     let marker = newAltar.toMapElement();
@@ -21,8 +22,9 @@ export default class MapControl extends Component {
     Game.getInstance().addAltar(newAltar);
   }
 
-  addItem = (event) =>
+  addItem = (event) => // event add Item marker
   {
+    console.log(event);
     let newItem = ItemManager.createItem(event.latLng,{url:`/skateboarding.svg`,scaledSize: new window.google.maps.Size(50, 50)});
     let marker = newItem.toMapElement();
     marker.setMap(this.map);
@@ -32,29 +34,47 @@ export default class MapControl extends Component {
     Game.getInstance().addItem(newItem);
   }
 
-  componentWillMount() {
-    this.map = this.context[MAP];
-    this.divDrawManager = window.document.createElement('div');
-    this.map.controls[this.props.position].push(this.divDrawManager);
+  componentWillMount() { // MapControll creation
+    this.map = this.context[MAP]; // get the google map object
+    this.divDrawManager = window.document.createElement('div'); // create a body div
+    this.map.controls[this.props.position].push(this.divDrawManager); // put the body div on the map
   }
 
   componentDidUpdate() {
     if(this.props.canDrawItem || this.props.canDrawAltar || this.props.canDrawMapZone || !this.props.canDraw())
-        window.google.maps.event.clearListeners(this.map, 'click');
+    {
+        //delete the cursor option
+        $('div.gm-style').find('div[style*="z-index: 2000000000;"]').remove();
+        window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
+        this.props.listZone.forEach(zone => { // foreach polygon zone
+          window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
+        });
+    }
 
     if(this.props.canDrawItem)
-    {
-        this.map.addListener('click',this.addItem);
+    { 
+      //set the cursor style as cross
+      $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
+        this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
+        this.props.listZone.forEach(zone => { // foreach polygon zone
+          window.google.maps.event.addListener(zone, 'click',this.addItem); // add the action listener click add Altar on zone
+        });
     }
     else if(this.props.canDrawAltar)
     {
-        this.map.addListener('click',this.addAltar);
+      //set the cursor style as cross
+      $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
+      this.map.addListener('click',this.addAltar); // add the action listener click add Altar on the map
+      this.props.listZone.forEach(zone => { // foreach polygon zone
+        window.google.maps.event.addListener(zone,'click',this.addAltar); // add the action listener click add Altar on zone
+      });
     }        
   }
 
-  componentWillUnmount() {
-    this.map.controls[this.props.position].removeAt(this.divIndex);
+  componentWillUnmount() { // MapControll destroyer
+    this.map.controls[this.props.position].removeAt(this.divIndex); // remove the div body on the map
   }
+
   render() {
     return createPortal(this.props.children, this.divDrawManager);
   }

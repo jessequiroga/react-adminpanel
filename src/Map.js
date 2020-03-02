@@ -29,12 +29,7 @@ function Map() {
   }
 
   const canDraw = () => {
-      var cD = (canDrawMapZone || canDrawAltar || canDrawItem);
-      if (cD)listZone.forEach(zone => google.maps.event.clearListeners(zone, 'click'));
-      else listZone.forEach(zone =>google.maps.event.addListener(zone, 'click', function (event) { // Add Event onClick to the polygon selectedDrawed: the new polygon can be selected
-        if(!canDraw())setSelectedDrawed(zone); // Select the drawed componenet: polygon
-      }));
-      return cD;
+      return (canDrawMapZone || canDrawAltar || canDrawItem);
   }
 
   const changeCanDrawItem = () => { // Show the DrawingManager item and hidde the other DrawingManager
@@ -166,7 +161,7 @@ function Map() {
       });
 
       google.maps.event.addListener(poly, 'click', function (event) { // Add Event onClick to the polygon selectedDrawed: the new polygon can be selected
-        if(!canDraw())setSelectedDrawed(poly); // Select the drawed componenet: polygon
+        setSelectedDrawed(poly); // Select the drawed componenet: polygon
       });
       poly['type'] = 'zone';
       poly['id'] = ZoneManager.IncrId;
@@ -219,9 +214,9 @@ function Map() {
         />
       )}
 
-      <MapControl listZone={listZone} setListZone={setListZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+      <MapControl listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <DrawManager  canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
+      <DrawManager listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
       position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
         <Card className="border-1">
         <Navbar color="faded" className="border-1" light>
