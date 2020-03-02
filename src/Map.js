@@ -33,19 +33,19 @@ function Map() {
   }
 
   const changeCanDrawItem = () => { // Show the DrawingManager item and hidde the other DrawingManager
-    setCanDrawItem(true); // Show the DrawingManager item
+    canDrawItem?setCanDrawItem(false):setCanDrawItem(true); // Show the DrawingManager item
     setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
     setCanDrawAltar(false); // Hidde the DrawingManager Altar 
   }
 
   const changeCanDrawAltar = () => { // Show the DrawingManager item and hidde the other DrawingManager
-    setCanDrawAltar(true); // Show the DrawingManager Altar
+    canDrawAltar?setCanDrawAltar(false):setCanDrawAltar(true); // Show the DrawingManager Altar
     setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
     setCanDrawItem(false); // Hidde the DrawingManager Item
   }
 
   const changeCanDrawMapZone = () => { // Show the DrawingManager item and hidde the other DrawingManager
-    setCanDrawMapZone(true); // Show the DrawingManager Map Zone
+    canDrawMapZone?setCanDrawMapZone(false):setCanDrawMapZone(true); // Show the DrawingManager Map Zone
     setCanDrawAltar(false); // Hidde the DrawingManager Altar
     setCanDrawItem(false); // Hidde the DrawingManager Item
   }
@@ -224,13 +224,13 @@ function Map() {
             <Collapse isOpen={isOpen} navbar>
                 <Nav  navbar>
                     <NavItem className="mb-2">
-                        <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>
+                      {canDrawMapZone?<Button color="warning" onClick={changeCanDrawMapZone}>X</Button>:<Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
                     </NavItem>
                     <NavItem className="mb-2">
-                        <Button onClick={changeCanDrawAltar}>Put Altar</Button>
+                      {canDrawAltar?<Button color="warning" onClick={changeCanDrawAltar}>X</Button>:<Button onClick={changeCanDrawAltar}>Put Altar</Button>}
                     </NavItem>
                     <NavItem className="mb-2">
-                        <Button onClick={changeCanDrawItem}>Put Item</Button>
+                        {canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>}
                         <Collapse className="mt-2" isOpen={canDrawItem} navbar>
                             <Nav  navbar>
                                 <NavItem className="mb-2">
