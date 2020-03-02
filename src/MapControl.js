@@ -39,7 +39,7 @@ export default class MapControl extends Component {
       });
       poly.setMap(this.map);
       window.google.maps.event.addListener(poly, 'click',()=>{this.props.setSelectedDrawed(poly)});
-      this.props.listZone.push(zone);
+      this.props.listZone.push(poly);
     });
   }
 

@@ -49,6 +49,8 @@ export default class MapControl extends Component {
         this.props.listZone.forEach(zone => { // foreach polygon zone
           window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
         });
+        this.props.listZone.forEach(zone => console.log(zone));
+        console.log('refresh');
     }
 
     if(this.props.canDrawItem)
