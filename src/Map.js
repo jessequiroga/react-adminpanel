@@ -8,7 +8,6 @@ import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
 import myStyle from "./style";
-import "./Map.css";
 import Game from "./model/Game.js";
 import ZoneManager from "./model/Zone.js";
 
