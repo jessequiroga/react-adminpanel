@@ -7,7 +7,7 @@ import Map from "./Map.js";
 
 class GoogleMap extends Component {
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate() {
     return false;
   }
 

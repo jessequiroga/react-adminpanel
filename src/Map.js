@@ -32,6 +32,13 @@ function Map() {
       return (canDrawMapZone || canDrawAltar || canDrawItem);
   }
 
+  const cantDraw = () => 
+  {
+    setCanDrawAltar(false); // Hidde the DrawingManager Altar
+    setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
+    setCanDrawItem(false); // Hidde the DrawingManager Item
+  }
+
   const changeCanDrawItem = () => { // Show the DrawingManager item and hidde the other DrawingManager
     canDrawItem?setCanDrawItem(false):setCanDrawItem(true); // Show the DrawingManager item
     setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
@@ -57,9 +64,7 @@ function Map() {
       if (e.key === "Escape") {
         setSelectedDrawed(null); // Unselect Drawed component
         setSelectedEdited(null); // Unselect Edited component
-        setCanDrawAltar(false); // Hidde the DrawingManager Altar
-        setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
-        setCanDrawItem(false); // Hidde the DrawingManager Item
+        cantDraw();
       }
     };
     window.addEventListener("keydown", listener); // Set event keydown escape on this window
@@ -72,11 +77,14 @@ function Map() {
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
 
     let err = false;
-    console.log(component);
     switch(component.type)
     {
       case 'zone':
         err = Game.getInstance().removeZone(component);
+        var index = listZone.indexOf(component);
+        console.log("index",index);
+        if(index > -1)
+          setListZone(listZone.splice(index,1));
         break;
 
       case 'item':
@@ -93,15 +101,15 @@ function Map() {
         break;
     }
     console.log(err);
-    console.log(Game.getInstance());
     if(!err){
       component.setMap(null); // Unset the map attribut of the component for remove it
     }
+    console.log("zoneMap",listZone);
   }
 
   const beginEditing = (component) => { // Begin the Map component edition (Map Component component)
     component.setEditable?component.setEditable(true):component.setDraggable(true); // if it's an editing Map component we set the editing on true else we set the component draggable
-
+    cantDraw();
     /**
      * Replace the elemnt on click by the editing popup validation
      **/ 
@@ -216,8 +224,11 @@ function Map() {
 
       <MapControl listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <DrawManager listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
-      position={google.maps.ControlPosition.TOP_LEFT}> {/* Menu Show DrawingManager */}
+      <DrawManager listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
+      setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
+      canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
+      position={google.maps.ControlPosition.TOP_LEFT}>
+         {/* Menu Show DrawingManager */}
         <Card className="border-1">
         <Navbar color="faded" className="border-1" light>
             <NavbarToggler className="mb-2" onClick={toggle}/>
@@ -227,10 +238,10 @@ function Map() {
                       {canDrawMapZone?<Button color="warning" onClick={changeCanDrawMapZone}>X</Button>:<Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
                     </NavItem>
                     <NavItem className="mb-2">
-                      {canDrawAltar?<Button color="warning" onClick={changeCanDrawAltar}>X</Button>:<Button onClick={changeCanDrawAltar}>Put Altar</Button>}
+                      {(listZone.length > 0) ?canDrawAltar?<Button color="warning" onClick={changeCanDrawAltar}>X</Button>:<Button onClick={changeCanDrawAltar}>Put Altar</Button>:null}
                     </NavItem>
                     <NavItem className="mb-2">
-                        {canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>}
+                        {(listZone.length > 0) ?canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>:null}
                         <Collapse className="mt-2" isOpen={canDrawItem} navbar>
                             <Nav  navbar>
                                 <NavItem className="mb-2">

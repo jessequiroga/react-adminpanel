@@ -24,7 +24,6 @@ export default class MapControl extends Component {
 
   addItem = (event) => // event add Item marker
   {
-    console.log(event);
     let newItem = ItemManager.createItem(event.latLng,{url:`/skateboarding.svg`,scaledSize: new window.google.maps.Size(50, 50)});
     let marker = newItem.toMapElement();
     marker.setMap(this.map);
@@ -45,19 +44,22 @@ export default class MapControl extends Component {
     {
         //delete the cursor option
         $('div.gm-style').find('div[style*="z-index: 2000000000;"]').remove();
-        window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
+        //window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
         this.props.listZone.forEach(zone => { // foreach polygon zone
           window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
+          if(zone.editable)
+            window.google.maps.event.addListener(zone, 'click',()=>this.props.setSelectedEdited(zone));
+          else
+            window.google.maps.event.addListener(zone, 'click',()=>this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
         });
-        this.props.listZone.forEach(zone => console.log(zone));
-        console.log('refresh');
+        console.log(this.props.listZone,'refresh');
     }
 
     if(this.props.canDrawItem)
     { 
       //set the cursor style as cross
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
-        this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
+        //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
         this.props.listZone.forEach(zone => { // foreach polygon zone
           window.google.maps.event.addListener(zone, 'click',this.addItem); // add the action listener click add Altar on zone
         });
@@ -66,7 +68,7 @@ export default class MapControl extends Component {
     {
       //set the cursor style as cross
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
-      this.map.addListener('click',this.addAltar); // add the action listener click add Altar on the map
+      //this.map.addListener('click',this.addAltar); // add the action listener click add Altar on the map
       this.props.listZone.forEach(zone => { // foreach polygon zone
         window.google.maps.event.addListener(zone,'click',this.addAltar); // add the action listener click add Altar on zone
       });

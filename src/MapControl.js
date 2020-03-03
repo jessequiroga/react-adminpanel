@@ -48,6 +48,10 @@ export default class MapControl extends Component {
     this.initConfigMap();
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render()
   {
     return <div></div>
