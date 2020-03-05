@@ -52,7 +52,6 @@ export default class MapControl extends Component {
           else
             window.google.maps.event.addListener(zone, 'click',()=>this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
         });
-        console.log(this.props.listZone,'refresh');
     }
 
     if(this.props.canDrawItem)

@@ -81,7 +81,6 @@ function Map() {
       case 'zone':
         err = Game.getInstance().removeZone(component);
         var index = listZone.indexOf(component);
-        console.log("index",index);
         if(index > -1)
           setListZone(listZone.splice(index,1));
         break;
@@ -99,11 +98,9 @@ function Map() {
         console.log("pas de type");
         break;
     }
-    console.log(err);
     if(!err){
       component.setMap(null); // Unset the map attribut of the component for remove it
     }
-    console.log("zoneMap",listZone);
   }
 
   const beginEditing = (component) => { // Begin the Map component edition (Map Component component)
@@ -241,7 +238,7 @@ function Map() {
                     </NavItem>
                     <NavItem className="mb-2">
                         {(listZone.length > 0) ?canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>:null}
-                        <Collapse className="mt-2" isOpen={canDrawItem} navbar>
+                        {/*<Collapse className="mt-2" isOpen={canDrawItem} navbar>
                             <Nav  navbar>
                                 <NavItem className="mb-2">
                                     <Button onClick={() => console.log("Item 1")}>Item 1</Button>
@@ -253,7 +250,7 @@ function Map() {
                                     <Button onClick={() => console.log("Item 3")}>Item 3</Button>
                                 </NavItem>
                             </Nav>
-                        </Collapse>
+                        </Collapse>*/}
                     </NavItem>
                 </Nav>
             </Collapse>
