@@ -24,7 +24,7 @@ export default class MapControl extends Component {
 
   addItem = (event) => // event add Item marker
   {
-    let newItem = ItemManager.createItem(event.latLng,{url:`/skateboarding.svg`,scaledSize: new window.google.maps.Size(50, 50)});
+    let newItem = ItemManager.createItem(event.latLng,{url:`/magazine_de_culte.png`,scaledSize: new window.google.maps.Size(50, 50)});
     let marker = newItem.toMapElement();
     marker.setMap(this.map);
     marker['type'] = 'item';
