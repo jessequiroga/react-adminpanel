@@ -215,7 +215,15 @@ function Map() {
                 google.maps.drawing.OverlayType.POLYGON, // We can draw polygons
               ],
             },
-          }}     
+            polygonOptions:{
+              strokeColor: "#FF0000",
+              strokeOpacity: 1,
+              strokeWeight: 3,
+              fillColor: "#FF0000",
+              fillOpacity: 0.30,
+            }     
+          }}
+          
         />
       )}
 

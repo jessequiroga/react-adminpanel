@@ -53,6 +53,12 @@ export default class MapControl extends Component {
             window.google.maps.event.addListener(zone, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
         });
     }
+    else
+    {
+      this.props.listZone.forEach(zone => { // foreach polygon zone
+        window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
+      });
+    }
 
     if(this.props.canDrawItem)
     { 

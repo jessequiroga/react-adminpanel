@@ -31,11 +31,16 @@ export default class MapControl extends Component {
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
     });
 
-    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Zones.map(zone => { // For each altar on the configuration file Json
+    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Zones).length > 0) && game.default.Zones.map(zone => { // For each altar on the configuration file Json
       let poly =  new window.google.maps.Polygon({
         paths:zone.Coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
         type:'zone',
-        id: zone.Id
+        id: zone.Id,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1,
+        strokeWeight: 3,
+        fillColor: "#FF0000",
+        fillOpacity: 0.30,    
       });
       poly.setMap(this.map);
       window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
