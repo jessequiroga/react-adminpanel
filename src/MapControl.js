@@ -17,7 +17,7 @@ export default class MapControl extends Component {
         id: altar.Id
       });
       marker.setMap(this.map);
-      window.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
@@ -28,7 +28,7 @@ export default class MapControl extends Component {
         id: item.Id
       });
       marker.setMap(this.map);
-      window.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Zones.map(zone => { // For each altar on the configuration file Json
@@ -38,7 +38,7 @@ export default class MapControl extends Component {
         id: zone.Id
       });
       poly.setMap(this.map);
-      window.google.maps.event.addListener(poly, 'click',()=>{this.props.setSelectedDrawed(poly)});
+      window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
       this.props.listZone.push(poly);
     });
   }

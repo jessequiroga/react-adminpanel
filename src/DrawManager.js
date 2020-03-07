@@ -18,7 +18,7 @@ export default class MapControl extends Component {
     marker.setMap(this.map);
     marker['type'] = 'altar';
     marker['id'] = newAltar.Id;
-    window.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
+    window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
     Game.getInstance().addAltar(newAltar);
   }
 
@@ -29,7 +29,7 @@ export default class MapControl extends Component {
     marker.setMap(this.map);
     marker['type'] = 'item';
     marker['id'] = newItem.Id;
-    window.google.maps.event.addListener(marker, 'click',()=>this.props.setSelectedDrawed(marker));
+    window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
     Game.getInstance().addItem(newItem);
   }
 
@@ -40,7 +40,7 @@ export default class MapControl extends Component {
   }
 
   componentDidUpdate() {
-    if(this.props.canDrawItem || this.props.canDrawAltar || this.props.canDrawMapZone || !this.props.canDraw())
+    if(!this.props.canDraw())
     {
         //delete the cursor option
         $('div.gm-style').find('div[style*="z-index: 2000000000;"]').remove();
@@ -48,9 +48,9 @@ export default class MapControl extends Component {
         this.props.listZone.forEach(zone => { // foreach polygon zone
           window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
           if(zone.editable)
-            window.google.maps.event.addListener(zone, 'click',()=>this.props.setSelectedEdited(zone));
+            window.google.maps.event.addListener(zone, 'click',()=>!this.props.canDraw()&&this.props.setSelectedEdited(zone));
           else
-            window.google.maps.event.addListener(zone, 'click',()=>this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
+            window.google.maps.event.addListener(zone, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
         });
     }
 

@@ -111,7 +111,7 @@ function Map() {
      **/ 
     google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
     google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-      setSelectedEdited(component); // Select the edited component
+      !canDraw()&&setSelectedEdited(component); // Select the edited component
     });
   }
 
@@ -123,7 +123,7 @@ function Map() {
      **/
     google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
     google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-      setSelectedDrawed(component); // Select the drawed component
+      !canDraw()&&setSelectedDrawed(component); // Select the drawed component
     });
 
     let err = false;
@@ -165,8 +165,9 @@ function Map() {
       });
 
       google.maps.event.addListener(poly, 'click', function (event) { // Add Event onClick to the polygon selectedDrawed: the new polygon can be selected
-        setSelectedDrawed(poly); // Select the drawed componenet: polygon
+          !canDraw()&&setSelectedDrawed(poly); // Select the drawed componenet: polygon
       });
+
       poly['type'] = 'zone';
       poly['id'] = ZoneManager.IncrId;
 
