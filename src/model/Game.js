@@ -9,6 +9,7 @@
     Zones = [];
     Items = [];
     Altars = [];
+    Teams=[];
 
     constructor(
         name,
@@ -19,7 +20,8 @@
         players = [],
         zones = [],
         items = [],
-        altars = [])
+        altars = [],
+        teams=[])
     {      
         this.Name = name;
         this.Duration = duration;
@@ -30,6 +32,7 @@
         this.Zones = zones;
         this.Items = items;
         this.Altars = altars;
+        this.Teams = teams;
     }
 
     addZone(zone){
@@ -42,6 +45,10 @@
 
     addAltar(altar){
         this.Altars.push(altar);
+    }
+
+    addTeam(team){
+        this.Teams.push(team);
     }
 
     removeZone(zone){
@@ -77,6 +84,20 @@
         if(indexA!==-1)
         {
             this.Altars=this.Altars.filter( ({ Id }) => Id !== altar.id);
+        }
+        else err=true;
+
+        return err;
+
+    }
+
+    removeTeam(team){
+        var err = false;
+
+        var indexT = this.Teams.findIndex( ({ Id }) => Id === team.id);
+        if(indexT!==-1)
+        {
+            this.Teams=this.Teams.filter( ({ Id }) => Id !== team.id);
         }
         else err=true;
 

@@ -10,6 +10,7 @@ export default class Entity
         this.Position = position;
     }
 
+
     toMapElement(){};
 }
 

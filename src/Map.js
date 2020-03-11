@@ -161,7 +161,7 @@ function Map() {
     {
       let paths = []; // all the coordinates
       polyArray.forEach(function (path) { // For each coordinates we publish an array with only the latitude and the longitude of this coordinate
-        paths.push({ lat: path.lat(), lng: path.lng() }); // save the latitude and the longitude of this coordinate
+        paths.push([path.lat(), path.lng()]); // save the latitude and the longitude of this coordinate
       });
 
       google.maps.event.addListener(poly, 'click', function (event) { // Add Event onClick to the polygon selectedDrawed: the new polygon can be selected

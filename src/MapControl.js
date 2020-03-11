@@ -11,7 +11,7 @@ export default class MapControl extends Component {
   initConfigMap = () => {
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Altars).length > 0) && game.default.Altars.map(altar => { // For each altar on the configuration file Json
       let marker =  new window.google.maps.Marker({
-        position: altar.Position,
+        position: {lat:altar.Position[0],lat:altar.Position[1]},
         icon:altar.Icon,
         type:'altar',
         id: altar.Id
@@ -22,7 +22,7 @@ export default class MapControl extends Component {
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
       let marker =  new window.google.maps.Marker({
-        position: item.Position,
+        position: {lat:item.Position[0],lat:item.Position[1]},
         icon: item.Icon,
         type:'item',
         id: item.Id
@@ -32,8 +32,12 @@ export default class MapControl extends Component {
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Zones).length > 0) && game.default.Zones.map(zone => { // For each altar on the configuration file Json
+      var coordinates =[];
+      zone.Coordinates.forEach(coordinate => {
+        coordinates.push({lat:coordinate[0],lng:coordinate[1]});
+      });
       let poly =  new window.google.maps.Polygon({
-        paths:zone.Coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
+        paths:coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
         type:'zone',
         id: zone.Id,
         strokeColor: "#FF0000",
