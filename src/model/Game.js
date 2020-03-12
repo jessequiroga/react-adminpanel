@@ -6,9 +6,9 @@
     MinPlayer;
     IP;
     Players = [];
-    Zones = [];
+    Regions = [];
     Items = [];
-    Altars = [];
+    Flags = [];
     Teams=[];
 
     constructor(
@@ -20,7 +20,7 @@
         players = [],
         zones = [],
         items = [],
-        altars = [],
+        flags = [],
         teams=[])
     {      
         this.Name = name;
@@ -29,35 +29,35 @@
         this.MinPlayer = minPlayer;
         this.Ip = ip;
         this.BeginDate = players;
-        this.Zones = zones;
+        this.Regions = zones;
         this.Items = items;
-        this.Altars = altars;
+        this.Flags = flags;
         this.Teams = teams;
     }
 
-    addZone(zone){
-        this.Zones.push(zone);
+    addZone(region){
+        this.Regions.push(region);
     }
 
     addItem(item){
         this.Items.push(item);
     }
 
-    addAltar(altar){
-        this.Altars.push(altar);
+    addAltar(flag){
+        this.Flags.push(flag);
     }
 
     addTeam(team){
         this.Teams.push(team);
     }
 
-    removeZone(zone){
+    removeZone(region){
         var err = false;
 
-        var indexZ = this.Zones.findIndex( ({ Id }) => Id === zone.id);
+        var indexZ = this.Regions.findIndex( ({ Id }) => Id === region.id);
         if(indexZ!==-1)
         {
-            this.Zones=this.Zones.filter( ({ Id }) => Id !== zone.id);
+            this.Regions=this.Regions.filter( ({ Id }) => Id !== region.id);
         }
         else err=true;
 
@@ -77,13 +77,13 @@
         return err;
     }
 
-    removeAltar(altar){
+    removeAltar(flag){
         var err = false;
 
-        var indexA = this.Altars.findIndex( ({ Id }) => Id === altar.id);
+        var indexA = this.Flags.findIndex( ({ Id }) => Id === flag.id);
         if(indexA!==-1)
         {
-            this.Altars=this.Altars.filter( ({ Id }) => Id !== altar.id);
+            this.Flags=this.Flags.filter( ({ Id }) => Id !== flag.id);
         }
         else err=true;
 
@@ -105,13 +105,13 @@
 
     }
 
-    editZone(zone){
+    editZone(region){
         var err = false;
 
-        var indexZ = this.Zones.findIndex( ({ Id }) => Id === zone.id);
+        var indexZ = this.Regions.findIndex( ({ Id }) => Id === region.id);
         if(indexZ!==-1)
         {
-            this.Zones[indexZ].Position = zone.position;
+            this.Regions[indexZ].Position = region.position;
         }
         else err=true;
 
@@ -131,13 +131,13 @@
         return err;
     }
 
-    editAltar(altar){
+    editAltar(flag){
         var err = false;
 
-        var indexA = this.Altars.findIndex( ({ Id }) => Id === altar.id);
+        var indexA = this.Flags.findIndex( ({ Id }) => Id === flag.id);
         if(indexA!==-1)
         {
-            this.Altars[indexA].Position = altar.position;
+            this.Flags[indexA].Position = flag.position;
         }
         else err=true;
 
@@ -163,9 +163,10 @@ class SigletonGame { // Object Game to sigleton
                                         game.default.MinPlayer,
                                         game.default.Ip,
                                         game.default.Players,
-                                        game.default.Zones,
+                                        game.default.Regions,
                                         game.default.Items,
-                                        game.default.Altars);
+                                        game.default.Flags,
+                                        game.default.Teams);
                                             }
             if (!this.instance) {
                 this.instance = this.createInstance();

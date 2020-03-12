@@ -9,9 +9,9 @@ export default class MapControl extends Component {
   static contextTypes = { [MAP]: PropTypes.object }
 
   initConfigMap = () => {
-    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Altars).length > 0) && game.default.Altars.map(altar => { // For each altar on the configuration file Json
+    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Flags).length > 0) && game.default.Flags.map(altar => { // For each altar on the configuration file Json
       let marker =  new window.google.maps.Marker({
-        position: {lat:altar.Position[0],lat:altar.Position[1]},
+        position: {lat:altar.Position[0],lng:altar.Position[1]},
         icon:altar.Icon,
         type:'altar',
         id: altar.Id
@@ -22,7 +22,7 @@ export default class MapControl extends Component {
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
       let marker =  new window.google.maps.Marker({
-        position: {lat:item.Position[0],lat:item.Position[1]},
+        position: {lat:item.Position[0],lng:item.Position[1]},
         icon: item.Icon,
         type:'item',
         id: item.Id
@@ -31,7 +31,7 @@ export default class MapControl extends Component {
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
     });
 
-    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Zones).length > 0) && game.default.Zones.map(zone => { // For each altar on the configuration file Json
+    (Object.keys(game.default).length > 0) && (Object.keys(game.default.Regions).length > 0) && game.default.Regions.map(zone => { // For each altar on the configuration file Json
       var coordinates =[];
       zone.Coordinates.forEach(coordinate => {
         coordinates.push({lat:coordinate[0],lng:coordinate[1]});
