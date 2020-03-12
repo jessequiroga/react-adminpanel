@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
+import IconItem from './model/elements/IconItem'
 import $ from 'jquery';
 
 export default class MapControl extends Component {
@@ -24,7 +25,7 @@ export default class MapControl extends Component {
 
   addItem = (event) => // event add Item marker
   {
-    let newItem = ItemManager.createItem([event.latLng.lat(),event.latLng.lng()],{url:`/magazine_de_culte.png`,scaledSize: new window.google.maps.Size(50, 50)});
+    let newItem = ItemManager.createItem([event.latLng.lat(),event.latLng.lng()],"MagazineDeCult");
     let marker = newItem.toMapElement();
     marker.setMap(this.map);
     marker['type'] = 'item';

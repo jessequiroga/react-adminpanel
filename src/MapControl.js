@@ -1,6 +1,9 @@
 import React,{ Component } from 'react';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
+import ManagerItems from './model/elements/Item';
+import ManagerAltars from './model/elements/Altar';
+
 
 import * as game from "./data/map.json";
 
@@ -12,7 +15,7 @@ export default class MapControl extends Component {
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Flags).length > 0) && game.default.Flags.map(altar => { // For each altar on the configuration file Json
       let marker =  new window.google.maps.Marker({
         position: {lat:altar.Position[0],lng:altar.Position[1]},
-        icon:altar.Icon,
+        icon:ManagerAltars.getIcon(),
         type:'altar',
         id: altar.Id
       });
@@ -21,9 +24,10 @@ export default class MapControl extends Component {
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
+      var icone = ManagerItems.getIcon(item.Type);
       let marker =  new window.google.maps.Marker({
         position: {lat:item.Position[0],lng:item.Position[1]},
-        icon: item.Icon,
+        icon: icone,
         type:'item',
         id: item.Id
       });

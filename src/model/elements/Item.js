@@ -1,27 +1,44 @@
 import Marker from "./Marker";
+import IconItem from './IconItem'
 
 class Item extends Marker
 {
     Id;
     CaptureDate;
     UnavailableTime;
-    constructor(position,icon,id)
+    Type;
+    constructor(position,type,id)
     {
         super(position);
-        super.Icon = icon;
+        super.Type = type;
         this.Id = id;
-    }       
+    }
+
+    getIcon()
+    {
+        var icon = IconItem[this.Type];
+        return {url:icon.url,
+        scaledSize: new window.google.maps.Size(icon.scaledSize[0], icon.scaledSize[1])};
+    }
+    
 }
 
 class ItemManager
 {
     static IncrId=0;
 
-    static createItem(position,icon)
+    static createItem(position,type)
     {
-        var item = new Item(position,icon,this.IncrId);
+        var item = new Item(position,type,this.IncrId);
         this.IncrId++;
         return item;
+    }
+
+    static getIcon(type)
+    {
+        var icon = IconItem[type];
+        return {url:icon.url,
+        scaledSize: new window.google.maps.Size(50, 50)};
     }
 }
 
