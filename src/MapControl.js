@@ -24,10 +24,10 @@ export default class MapControl extends Component {
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
-      var icone = ManagerItems.getIcon(item.Type);
+      var icon = ManagerItems.getIcon(item.Type);
       let marker =  new window.google.maps.Marker({
         position: {lat:item.Position[0],lng:item.Position[1]},
-        icon: icone,
+        icon: icon,
         type:'item',
         id: item.Id
       });

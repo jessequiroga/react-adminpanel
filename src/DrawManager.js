@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
-import IconItem from './model/elements/IconItem'
 import $ from 'jquery';
 
 export default class MapControl extends Component {
