@@ -13,26 +13,50 @@ export default class MapControl extends Component {
 
   initConfigMap = () => {
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Flags).length > 0) && game.default.Flags.map(altar => { // For each altar on the configuration file Json
+      var visionCircle = new window.google.maps.Circle({
+        strokeColor: '#01A9DB',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#01A9DB',
+        fillOpacity: 0.35,
+        center: {lat:altar.Position[0],lng:altar.Position[1]},
+        radius: altar.VisionDistance
+      });
       let marker =  new window.google.maps.Marker({
         position: {lat:altar.Position[0],lng:altar.Position[1]},
         icon:ManagerAltars.getIcon(),
         type:'altar',
-        id: altar.Id
+        id: altar.Id,
+        visionCircle:visionCircle
       });
       marker.setMap(this.map);
+      visionCircle.setMap(this.map);
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
+      this.props.listVisionMarker.push(marker);
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
       var icon = ManagerItems.getIcon(item.Type);
+      var visionCircle = new window.google.maps.Circle({
+        strokeColor: '#01A9DB',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#01A9DB',
+        fillOpacity: 0.35,
+        center: {lat:item.Position[0],lng:item.Position[1]},
+        radius: item.VisionDistance
+      });
       let marker =  new window.google.maps.Marker({
         position: {lat:item.Position[0],lng:item.Position[1]},
         icon: icon,
         type:'item',
-        id: item.Id
-      });
+        id: item.Id,
+        visionCircle:visionCircle
+      }); 
       marker.setMap(this.map);
+      visionCircle.setMap(this.map);
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
+      this.props.listVisionMarker.push(marker);
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Regions).length > 0) && game.default.Regions.map(zone => { // For each altar on the configuration file Json

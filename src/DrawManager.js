@@ -6,31 +6,55 @@ import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
 import $ from 'jquery';
+import DrawConflict from './helper/DrawConflict.js';
 
 export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  addAltar = (event) => // event add Altar marker
+  addAltar = (mousePos) => // event add Altar marker
   {
-    let newAltar = AltarManager.createAltar([event.latLng.lat(),event.latLng.lng()]);
+    var conflict = false;
+    let newAltar = AltarManager.createAltar(mousePos);
     let marker = newAltar.toMapElement();
-    marker.setMap(this.map);
-    marker['type'] = 'altar';
-    marker['id'] = newAltar.Id;
-    window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
-    Game.getInstance().addAltar(newAltar);
+    let visionCircle =  marker.visionCircle;
+
+    console.log(this.props.listVisionMarker);
+    conflict =DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);
+    console.log(conflict);
+    if(!conflict)
+    {
+      marker.setMap(this.map);
+      visionCircle.setMap(this.map);
+      marker['type'] = 'altar';
+      marker['id'] = newAltar.Id;
+      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
+      Game.getInstance().addAltar(newAltar);
+      this.props.listVisionMarker.push(marker);
+    }
   }
 
-  addItem = (event) => // event add Item marker
+  addItem = (mousePos) => // event add Item marker
   {
-    let newItem = ItemManager.createItem([event.latLng.lat(),event.latLng.lng()],"MagazineDeCult");
+    var conflict = false;
+    let newItem = ItemManager.createItem(mousePos,"MagazineDeCult");
     let marker = newItem.toMapElement();
-    marker.setMap(this.map);
-    marker['type'] = 'item';
-    marker['id'] = newItem.Id;
-    window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
-    Game.getInstance().addItem(newItem);
+    let visionCircle =  marker.visionCircle;
+
+    console.log(this.props.listVisionMarker);
+    conflict = DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);    
+    console.log(conflict);
+    if(!conflict)
+    {
+      marker.setMap(this.map);
+      visionCircle.setMap(this.map);
+      marker['type'] = 'item';
+      marker['id'] = newItem.Id;
+      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(visionCircle, 'click',()=>this.conflictDrow(visionCircle));
+      Game.getInstance().addItem(newItem);
+      this.props.listVisionMarker.push(marker);
+    }
   }
 
   componentWillMount() { // MapControll creation
@@ -66,7 +90,7 @@ export default class MapControl extends Component {
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
         //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
         this.props.listZone.forEach(zone => { // foreach polygon zone
-          window.google.maps.event.addListener(zone, 'click',this.addItem); // add the action listener click add Altar on zone
+          window.google.maps.event.addListener(zone, 'click',(event)=>this.addItem([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
         });
     }
     else if(this.props.canDrawAltar)
@@ -75,7 +99,7 @@ export default class MapControl extends Component {
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
       //this.map.addListener('click',this.addAltar); // add the action listener click add Altar on the map
       this.props.listZone.forEach(zone => { // foreach polygon zone
-        window.google.maps.event.addListener(zone,'click',this.addAltar); // add the action listener click add Altar on zone
+        window.google.maps.event.addListener(zone,'click',(event)=>this.addAltar([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
       });
     }        
   }

@@ -22,6 +22,7 @@ function Map() {
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
   const [listZone, setListZone] = useState([]); // Listing of all the Component google-maps polygon
+  const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
 
   const toggle = () => { // Open/Close the menu
      changeIsOpen(!isOpen); // set true/false isOpen
@@ -227,9 +228,9 @@ function Map() {
         />
       )}
 
-      <MapControl listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+      <MapControl listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <DrawManager listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
+      <DrawManager listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
       canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
       position={google.maps.ControlPosition.TOP_LEFT}>
