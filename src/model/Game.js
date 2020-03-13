@@ -111,7 +111,7 @@
         var indexZ = this.Regions.findIndex( ({ Id }) => Id === region.id);
         if(indexZ!==-1)
         {
-            this.Regions[indexZ].Position = region.position;
+            this.Regions[indexZ].Position = [region.position.lat(),region.position.lng()];
         }
         else err=true;
 
@@ -124,7 +124,7 @@
         var indexI = this.Items.findIndex( ({ Id }) => Id === item.id);
         if(indexI!==-1)
         {
-            this.Items[indexI].Position = item.position;
+            this.Items[indexI].Position = [item.position.lat(),item.position.lng()];
         }
         else err=true;
 
@@ -137,7 +137,7 @@
         var indexA = this.Flags.findIndex( ({ Id }) => Id === flag.id);
         if(indexA!==-1)
         {
-            this.Flags[indexA].Position = flag.position;
+            this.Flags[indexA].Position = [flag.position.lat(),flag.position.lng()];
         }
         else err=true;
 

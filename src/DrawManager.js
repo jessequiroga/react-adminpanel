@@ -24,8 +24,9 @@ export default class MapControl extends Component {
       radius: marker.visionCircle.radius
     });
     var listVisionMarkerWithoutCurrent= this.props.listVisionMarker.filter( (fmarker) => fmarker !== marker);
-    var conflict= DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
-    if(!conflict)
+    var conflict = DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
+    var isInRegion = DrawConflict.isInRegion(this.props.listZone,marker);
+    if(!conflict && isInRegion)
     {
       marker.visionCircle.setMap(null);
       marker.visionCircle=visionCircle;

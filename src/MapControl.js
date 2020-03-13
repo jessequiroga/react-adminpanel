@@ -3,8 +3,8 @@ import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import ManagerItems from './model/elements/Item';
 import ManagerAltars from './model/elements/Altar';
+import ManagerZones from './model/Zone';
 import DrawConflict from './helper/DrawConflict.js';
-
 
 import * as game from "./data/map.json";
 
@@ -25,7 +25,8 @@ export default class MapControl extends Component {
     });
     var listVisionMarkerWithoutCurrent= this.props.listVisionMarker.filter( (fmarker) => fmarker !== marker);
     var conflict= DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
-    if(!conflict)
+    var isInRegion = DrawConflict.isInRegion(this.props.listZone,marker);
+    if(!conflict && isInRegion)
     {
       marker.visionCircle.setMap(null);
       marker.visionCircle=visionCircle;
@@ -67,6 +68,7 @@ export default class MapControl extends Component {
       window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
       window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       this.props.listVisionMarker.push(marker);
+      ManagerAltars.IncrId++;
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Items).length > 0) && game.default.Items.map(item => { // For each altar on the configuration file Json
@@ -93,6 +95,7 @@ export default class MapControl extends Component {
       window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
       window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       this.props.listVisionMarker.push(marker);
+      ManagerItems.IncrId++;
     });
 
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Regions).length > 0) && game.default.Regions.map(zone => { // For each altar on the configuration file Json
@@ -113,6 +116,7 @@ export default class MapControl extends Component {
       poly.setMap(this.map);
       window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
       this.props.listZone.push(poly);
+      ManagerZones.IncrId++;
     });
   }
 
