@@ -3,6 +3,7 @@ import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import ManagerItems from './model/elements/Item';
 import ManagerAltars from './model/elements/Altar';
+import DrawConflict from './helper/DrawConflict.js';
 
 
 import * as game from "./data/map.json";
@@ -10,6 +11,37 @@ import * as game from "./data/map.json";
 export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
+
+  visionCircleDragChange= (marker) =>
+  {   
+    let visionCircle = new window.google.maps.Circle({
+      strokeColor: '#01A9DB',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#01A9DB',
+      fillOpacity: 0.35,
+      center: marker.position,
+      radius: marker.visionCircle.radius
+    });
+    var listVisionMarkerWithoutCurrent= this.props.listVisionMarker.filter( (fmarker) => fmarker !== marker);
+    var conflict= DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
+    if(!conflict)
+    {
+      marker.visionCircle.setMap(null);
+      marker.visionCircle=visionCircle;
+      marker.visionCircle.setMap(this.map);
+    }
+  }
+
+  markerDragStop = (marker) => {
+    if(marker.position !== marker.visionCircle.center)
+    {
+      marker.position= marker.visionCircle.center;
+      marker.setMap(null);
+      marker.setMap(this.map);
+    }
+  }
+
 
   initConfigMap = () => {
     (Object.keys(game.default).length > 0) && (Object.keys(game.default.Flags).length > 0) && game.default.Flags.map(altar => { // For each altar on the configuration file Json
@@ -32,6 +64,8 @@ export default class MapControl extends Component {
       marker.setMap(this.map);
       visionCircle.setMap(this.map);
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
+      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       this.props.listVisionMarker.push(marker);
     });
 
@@ -56,6 +90,8 @@ export default class MapControl extends Component {
       marker.setMap(this.map);
       visionCircle.setMap(this.map);
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw() && this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
+      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       this.props.listVisionMarker.push(marker);
     });
 

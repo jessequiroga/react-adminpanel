@@ -38,7 +38,7 @@ class ItemManager
     {
         var icon = IconItem[type];
         return {url:icon.url,
-        scaledSize: new window.google.maps.Size(50, 50)};
+            scaledSize: new window.google.maps.Size(icon.scaledSize[0], icon.scaledSize[1])};
     }
 }
 

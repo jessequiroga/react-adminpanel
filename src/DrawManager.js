@@ -12,6 +12,36 @@ export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
+  visionCircleDragChange= (marker) =>
+  {   
+    let visionCircle = new window.google.maps.Circle({
+      strokeColor: '#01A9DB',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#01A9DB',
+      fillOpacity: 0.35,
+      center: marker.position,
+      radius: marker.visionCircle.radius
+    });
+    var listVisionMarkerWithoutCurrent= this.props.listVisionMarker.filter( (fmarker) => fmarker !== marker);
+    var conflict= DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
+    if(!conflict)
+    {
+      marker.visionCircle.setMap(null);
+      marker.visionCircle=visionCircle;
+      marker.visionCircle.setMap(this.map);
+    }
+  }
+
+  markerDragStop = (marker) => {
+    if(marker.position !== marker.visionCircle.center)
+    {
+      marker.position= marker.visionCircle.center;
+      marker.setMap(null);
+      marker.setMap(this.map);
+    }
+  }
+
   addAltar = (mousePos) => // event add Altar marker
   {
     var conflict = false;
@@ -19,16 +49,18 @@ export default class MapControl extends Component {
     let marker = newAltar.toMapElement();
     let visionCircle =  marker.visionCircle;
 
-    console.log(this.props.listVisionMarker);
+
     conflict =DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);
-    console.log(conflict);
     if(!conflict)
     {
-      marker.setMap(this.map);
       visionCircle.setMap(this.map);
+      visionCircle.draggable_changed = this.visionCircleDragChange;
+      marker.setMap(this.map);
       marker['type'] = 'altar';
       marker['id'] = newAltar.Id;
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
+      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
+      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       Game.getInstance().addAltar(newAltar);
       this.props.listVisionMarker.push(marker);
     }
@@ -36,22 +68,23 @@ export default class MapControl extends Component {
 
   addItem = (mousePos) => // event add Item marker
   {
+    
     var conflict = false;
     let newItem = ItemManager.createItem(mousePos,"MagazineDeCult");
     let marker = newItem.toMapElement();
     let visionCircle =  marker.visionCircle;
 
-    console.log(this.props.listVisionMarker);
     conflict = DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);    
-    console.log(conflict);
     if(!conflict)
     {
       marker.setMap(this.map);
       visionCircle.setMap(this.map);
+      //visionCircle.draggable_changed = this.visionCircleDragChange;
       marker['type'] = 'item';
       marker['id'] = newItem.Id;
       window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
-      window.google.maps.event.addListener(visionCircle, 'click',()=>this.conflictDrow(visionCircle));
+      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
+      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
       Game.getInstance().addItem(newItem);
       this.props.listVisionMarker.push(marker);
     }

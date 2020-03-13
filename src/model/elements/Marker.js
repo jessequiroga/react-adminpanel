@@ -8,7 +8,7 @@ export default class Marker extends Entity
         super(position);
     }
     toMapElement(){
-        var visionCircle = new window.google.maps.Circle({
+        let visionCircle = new window.google.maps.Circle({
             strokeColor: '#01A9DB',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -23,6 +23,7 @@ export default class Marker extends Entity
             icon: this.getIcon(),
             visionCircle:visionCircle
         });
+        visionCircle.marker = marker;
         
 
         return marker;

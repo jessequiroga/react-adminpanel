@@ -75,7 +75,7 @@ function Map() {
   }, []);
 
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
-
+    console.log(component);
     let err = false;
     switch(component.type)
     {
@@ -105,42 +105,59 @@ function Map() {
   }
 
   const beginEditing = (component) => { // Begin the Map component edition (Map Component component)
-    component.setEditable?component.setEditable(true):component.setDraggable(true); // if it's an editing Map component we set the editing on true else we set the component draggable
-    cantDraw();
-    /**
-     * Replace the elemnt on click by the editing popup validation
-     **/ 
-    google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
-    google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-      !canDraw()&&setSelectedEdited(component); // Select the edited component
-    });
-  }
-
-  const confirmeEditing = (component) => { // End the Map component edition (Map Component component)
-    component.setEditable?component.setEditable(false):component.setDraggable(false); // if it's an editing Map component we set the editing on false else we set the component undraggable
-
-    /**
-     * Replace the elemnt on click by the menu popup
-     **/
-    google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
-    google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-      !canDraw()&&setSelectedDrawed(component); // Select the drawed component
-    });
-
-    let err = false;
     console.log(component);
+    let err = false;
     switch(component.type)
     {
       case 'zone':
+        component.setEditable(true);
+        break;
+
+      case 'item':
+      case 'altar':
+        component.setDraggable(true);
+        break;
+
+      default:
+        err = true;
+        console.log("pas de type");
+        break;
+    } // if it's an editing Map component we set the editing on true else we set the component draggable
+    if(err)
+    {
+      console.log("erreur lors de la modif");
+    }
+    else
+    {
+      cantDraw();
+      /**
+       * Replace the elemnt on click by the editing popup validation
+       **/ 
+      google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
+      google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
+        !canDraw()&&setSelectedEdited(component); // Select the edited component
+      });
+  }
+  }
+
+  const confirmeEditing = (component) => { // End the Map component edition (Map Component component)
+    let err = false;
+    console.log(component);
+    switch(component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
+    {
+      case 'zone':
         err = Game.getInstance().editZone(component);
+        component.setEditable(false);
         break;
 
       case 'item':
         err = Game.getInstance().editItem(component);
+        component.setDraggable(false);
         break;
 
       case 'altar':
         err = Game.getInstance().editAltar(component);
+        component.setDraggable(false);
         break;
 
       default:
@@ -152,6 +169,15 @@ function Map() {
     if(err)
     {
       console.log("erreur lors de la modif");
+    }
+    else
+    { /**
+      * Replace the elemnt on click by the menu popup
+      **/
+     google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
+     google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
+       !canDraw()&&setSelectedDrawed(component); // Select the drawed component
+     });
     }
 
   }
