@@ -15,19 +15,18 @@ export default class DrawConflict {
         return result;
     }
 
-    static isInRegion(regionsCoordinates, marker) {
+    static isInRegion(regions, marker) {
         var point = new Point(marker.position);
         var result =false;
-        console.log(regionsCoordinates);
-        regionsCoordinates.forEach((regionCoordinates)=>{
-            var regionCoordinate = regionCoordinates.getPath().getArray();
+        for (const [index, regionCoordinates] of regions.entries()) {
+            var Coordinates = regionCoordinates.getPath().getArray();
             result = false;
-            var j = regionCoordinate.length - 1;
-            for (var i = 0; i < regionCoordinate.length; i++)
+            var j = Coordinates.length - 1;
+            for (var i = 0; i < Coordinates.length; i++)
             {
-                if ((new Point(regionCoordinate[i])).y < point.y && (new Point(regionCoordinate[j])).y >= point.y || (new Point(regionCoordinate[j])).y < point.y && (new Point(regionCoordinate[i])).y >= point.y)
+                if ((new Point(Coordinates[i])).y < point.y && (new Point(Coordinates[j])).y >= point.y || (new Point(Coordinates[j])).y < point.y && (new Point(Coordinates[i])).y >= point.y)
                 {
-                    if ((new Point(regionCoordinate[i])).x+ (point.y - (new Point(regionCoordinate[i])).y) / ((new Point(regionCoordinate[j])).y - (new Point(regionCoordinate[i])).y) * ((new Point(regionCoordinate[j])).x - (new Point(regionCoordinate[i])).x) < point.x)
+                    if ((new Point(Coordinates[i])).x+ (point.y - (new Point(Coordinates[i])).y) / ((new Point(Coordinates[j])).y - (new Point(Coordinates[i])).y) * ((new Point(Coordinates[j])).x - (new Point(Coordinates[i])).x) < point.x)
                     {
                         result = !result;
                     }
@@ -35,8 +34,10 @@ export default class DrawConflict {
                 j = i;
             }
             if(result == true)
-                return;
-        });
+            {
+                break;
+            }
+        };
         return result;
     }
 }
