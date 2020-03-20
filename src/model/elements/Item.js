@@ -12,6 +12,7 @@ class Item extends Marker
         super(position);
         super.Type = type;
         this.Id = id;
+        this.VisionDistance=20;
     }
 
     getIcon()

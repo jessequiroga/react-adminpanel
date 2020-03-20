@@ -1,7 +1,7 @@
 export default class Entity 
 {
     Position;
-    VisionDistance=30;
+    VisionDistance;
     ActionDistance;
     Name;
 
