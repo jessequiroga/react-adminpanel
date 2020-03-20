@@ -10,6 +10,7 @@ class Altar extends Marker
     {
         super(position);
         this.Id = id;
+        this.VisionDistance=30;
     }
 
     getIcon()
