@@ -11,26 +11,28 @@ export default class MapControl extends Component {
   static contextTypes = { [MAP]: PropTypes.object }
 
   initConfigMap = (game) => {
-    (Object.keys(game).length > 0) && (Object.keys(game.Flags).length > 0) && game.Flags.map(altar => { // For each altar on the configuration file Json
+    var canBeDifferent = true;
+    if(this.game == null || Object.keys(this.game).length <=0)
+    {
+      canBeDifferent = false;
+    }
+    
+    (Object.keys(game).length > 0) && (Object.keys(game.Flags).length > 0) && ( canBeDifferent?(this.game.Flags != game.Flags):true) &&  game.Flags.map(altar => { // For each altar on the configuration file Json
       let newAltar = ManagerAltars.createAltar(altar.Position);
       var withVisionCircle=true;
       newAltar.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone);
       Game.getInstance().addAltar(newAltar);
     });
 
-    (Object.keys(game).length > 0) && (Object.keys(game.Items).length > 0) && game.Items.map(item => { // For each altar on the configuration file Json
+    (Object.keys(game).length > 0) && (Object.keys(game.Items).length > 0) && (canBeDifferent?(this.game.Items != game.Items):true) && game.Items.map(item => { // For each altar on the configuration file Json
       let newItem = ManagerItems.createItem(item.Position,item.Type);
       var withVisionCircle=true;
       newItem.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone);
       Game.getInstance().addItem(newItem);
     });
 
-    (Object.keys(game).length > 0) && (Object.keys(game.Regions).length > 0) && game.Regions.map(zone => { // For each altar on the configuration file Json
-      var coordinates =[];
-      zone.Coordinates.forEach(coordinate => {
-        coordinates.push({lat:coordinate[0],lng:coordinate[1]});
-      });
-      let newZone = ManagerZones.createZone(coordinates);
+    (Object.keys(game).length > 0) && (Object.keys(game.Regions).length > 0) && (canBeDifferent?(this.game.Regions != game.Regions):true) && game.Regions.map(zone => { // For each altar on the configuration file Json
+      let newZone = ManagerZones.createZone(zone.Coordinates);
       let poly = newZone.toMapElement();
       poly.setMap(this.map);
       window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
@@ -46,11 +48,11 @@ export default class MapControl extends Component {
 
   componentDidUpdate() {
     var game = this.props.gameFromServeur;
-    if(Object.keys(game).length >0)
+    if(game != null && Object.keys(game).length >0)
     if(this.game == null || this.game != game)
     {
-      this.game = game;
       this.initConfigMap(game);
+      this.game = game;
     }
   }
 

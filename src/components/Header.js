@@ -1,12 +1,13 @@
 import React, { useState} from "react";
 import {Button, Nav, NavItem} from 'reactstrap';
-import Game from '../model/Game.js';
+import SocketMessage from '../model/SocketMessage';
+import SocketController from "../model/SocketController";
 function Header() {
 
   const saveMap = () => { // save the Map
-    var map = Game.getInstance(); // get the current map
-    var mapJsonised = JSON.stringify(map) // Jsonised the map
-    console.log(mapJsonised);
+    var configMessage = new SocketMessage(SocketMessage.TypeMessage.GAMESETUP).ContainedEntity;
+    console.log(configMessage);
+    SocketController.getSocket().send(configMessage)
   }
 
   return (

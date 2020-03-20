@@ -1,5 +1,7 @@
  class Game
 {
+    
+    GameType;
     Name;
     Duration;
     BeginDate;
@@ -12,6 +14,7 @@
     Teams=[];
 
     constructor(
+        gameType,
         name,
         duration,
         beginDate,
@@ -22,7 +25,8 @@
         items = [],
         flags = [],
         teams=[])
-    {      
+    {   
+        this.GameType = gameType;
         this.Name = name;
         this.Duration = duration;
         this.BeginDate = beginDate;
@@ -151,9 +155,14 @@
 }
 class SingletonGame { // Object Game to sigleton
         static instance;
+        static GameType = {
+            FLAG:"FLAG",
+            TIME:"TIME",
+            SUPREMACY:"SUPREMACY"
+        }
      
         static createInstance() {
-            var object = new Game("hug","60",new Date(),"3","127.0.0.1");
+            var object = new Game(this.GameType.FLAG,"hug","60",new Date(),"3","127.0.0.1");
             return object;
         }
      
@@ -161,7 +170,8 @@ class SingletonGame { // Object Game to sigleton
         static getInstance(game=null){
             if(game!=null)
             {
-                this.instance = new Game(game.default.Name,
+                this.instance = new Game(game.GameType,
+                                        game.default.Name,
                                         game.default.Duration,
                                         game.default.BeginDate,
                                         game.default.MinPlayer,

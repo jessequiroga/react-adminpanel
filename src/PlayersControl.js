@@ -9,18 +9,28 @@ export default class PlayerControl extends Component {
 
   markerPlayers = (players) =>
   {
+    for(const[playerMarker,index] in this.props.listMarkerPlayer){
+      playerMarker.setMap(null);
+      playerMarker.Id = null;
+      this.props.listMarkerPlayer.slice(index,1);
+    };
     players.forEach((player)=>{
       let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items);
-      newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+      let marker = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+      this.props.listMarkerPlayer.push(marker);
     });
   }
 
   componentWillMount() {
     this.map = this.context[MAP];
+    this.listPlayer = [];
   }
 
   componentDidUpdate() {
-    this.markerPlayers(this.props.listPlayer);
+    if(this.props.listPlayer.length>0 && (this.listPlayer.length ==0 || this.listPlayer !== this.props.listPlayer)){
+      this.markerPlayers(this.props.listPlayer);
+      this.listPlayer = this.props.listPlayer;
+    }
   }
 
   render()

@@ -14,6 +14,9 @@ import ZoneManager from "./model/Zone.js";
 import DrawManager from "./DrawManager.js";
 import MapControl from "./MapControl.js"
 import PlayersControl from "./PlayersControl";
+import SocketMessage from "./model/SocketMessage";
+import SocketController from "./model/SocketController";
+
 
 function Map() {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
@@ -25,45 +28,23 @@ function Map() {
   const [listZone, setListZone] = useState([]); // Listing of all the Component google-maps polygon
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
-  const[socket,setSocket] = useState({});
   const[gameFromServeur,setGameFromServeur] = useState(null);
+  const[listMarkerPlayer,setListMarkerPlayer] = useState([]);
 
   const connectWebsocket = () =>
   {
-    var socket = new WebSocket("ws://cultwars.net:5000/ws");
+    var socket = SocketController.getSocket();
 
-    socket.onopen = function () {
-        console.log("Connected.");
-        socket.send('{"Players":[{"Items":[{"Type":"CultMag","CanChangeVisionDistance":false,"Quantity":0,"AvailableDuration":0,"CanTeleport":false,"DeficiencyDuration":0,"Position":[0.0,0.0],"VisionDistance":10,"ActionDistance":9,"Name":"OUI","IsInActionRange":false}],"IsAFK":false,"InventorySize":2,"Team":null,"VisibleEntities":[],"IsInZone":false,"EntitiesInView":null,"Position":[48.52862258260694,7.738950470522221],"VisionDistance":10,"ActionDistance":8,"Name":"Numil","IsInActionRange":false},{"Items":[],"IsAFK":false,"InventorySize":0,"Team":null,"VisibleEntities":[],"IsInZone":false,"EntitiesInView":null,"Position":[48.528636792858585,7.736761787966069],"VisionDistance":5,"ActionDistance":3,"Name":"Flo","IsInActionRange":false}],"Regions":[{"Coordinates":[[48.53101112845478,7.7336177050018495],[48.52689728697087,7.733285111084003],[48.527515450291084,7.7417072473907655],[48.53203420812144,7.7410849748993105],[48.5322899748082,7.734937351837177]],"Id":0}],"Items":[{"Type": "CultMag","CanChangeVisionDistance": false,"Quantity": 0,"AvailableDuration": 0,"CanTeleport": false,"DeficiencyDuration": 0,"Position": [48.52862258260694,7.734950470522221],"VisionDistance": 10,"ActionDistance": 9,"Name": "OUI","IsInActionRange": false}],"Flags":[],"Teams":[],"Name":"hug","Duration":"60","BeginDate":"2020-03-20T15:25:08.962Z","MinPlayer":"3","Ip":"127.0.0.1"}');
-        
-    }
     socket.onmessage = function(event){
-        try{
-          var game = JSON.parse(event.data);
-          if(gameFromServeur == null)
-            setGameFromServeur(game);
-          if("Players" in game)
-            setListPlayer(listPlayer.concat(game.Players));
-        }
-        catch (e)
-        {
-          console.log("error",e);
-        }
-    }
-
-    socket.onclose = function (event) {
-        if (event.wasClean) {
-            console.log('Disconnected.');
-        } else {
-            console.log('Connection lost.'); // for example if server processes is killed
-        }
-        console.log('Code: ' + event.code + '. Reason: ' + event.reason);
-    };
-
-    socket.onerror = function (error) {
-        console.log("Error: " + error.message);
-    };
-    
+          var game = SocketMessage.getType(event.data);
+          if(game != null)
+          {
+            if(gameFromServeur == null)
+              setGameFromServeur(game);
+            if("Players" in game)
+              setListPlayer(listPlayer.concat(game.Players));
+          }
+    }    
   }
 
   const toggle = () => { // Open/Close the menu
@@ -297,7 +278,7 @@ function Map() {
 
       <MapControl gameFromServeur={gameFromServeur} listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <PlayersControl canDraw={canDraw} gameFromServeur={gameFromServeur} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
+      <PlayersControl canDraw={canDraw} gameFromServeur={gameFromServeur} listMarkerPlayer={listMarkerPlayer} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
 
       <DrawManager listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 

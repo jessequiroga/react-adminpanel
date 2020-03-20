@@ -9,8 +9,12 @@ class Zone
     }
 
     toMapElement(){
+        var coordinates =[];
+        this.Coordinates.forEach(coordinate => {
+          coordinates.push({lat:coordinate[0],lng:coordinate[1]});
+        });
         return new window.google.maps.Polygon({
-            paths:this.Coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
+            paths:coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
             type:this.constructor.name,
             id: this.Id,
             strokeColor: "#FF0000",
