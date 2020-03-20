@@ -8,10 +8,23 @@ class Player extends Marker
     InventorySize;
     Team;
     VisibleEntities;
-    constructor(position,id)
+    constructor(position,team,visibleEntities,inventorySize,isAFK,items,id)
     {
         super(position);
         this.Id = id;
+        this.Team = team;
+        this.VisibleEntities = visibleEntities;
+        this.InventorySize = inventorySize;
+        this.IsAFK = isAFK;
+        this.Items = items;
+    }
+
+    getIcon()
+    {
+        return {
+            url:`/magazine_de_culte_c.png`,
+            scaledSize: new window.google.maps.Size(100, 100)
+        };
     }
     
 }
@@ -20,9 +33,9 @@ class PlayerManager
 {
     static IncrId=0;
 
-    static createPlayer(position)
+    static createPlayer(position,team,visibleEntities,inventorySize,isAFK,items)
     {
-        var item = new Player(position,this.IncrId);
+        var item = new Player(position,team,visibleEntities,inventorySize,isAFK,items,this.IncrId);
         this.IncrId++;
         return item;
     }

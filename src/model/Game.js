@@ -149,7 +149,7 @@
 
     }
 }
-class SigletonGame { // Object Game to sigleton
+class SingletonGame { // Object Game to sigleton
         static instance;
      
         static createInstance() {
@@ -179,4 +179,4 @@ class SigletonGame { // Object Game to sigleton
         }
 }
 
-export default SigletonGame;
+export default SingletonGame;

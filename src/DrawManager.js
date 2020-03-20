@@ -6,89 +6,27 @@ import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
 import $ from 'jquery';
-import DrawConflict from './helper/DrawConflict.js';
 
 export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  visionCircleDragChange= (marker) =>
-  {   
-    let visionCircle = new window.google.maps.Circle({
-      strokeColor: '#01A9DB',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#01A9DB',
-      fillOpacity: 0.35,
-      center: marker.position,
-      radius: marker.visionCircle.radius
-    });
-    var listVisionMarkerWithoutCurrent= this.props.listVisionMarker.filter( (fmarker) => fmarker !== marker);
-    var conflict = DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle);
-    var isInRegion = DrawConflict.isInRegion(this.props.listZone,marker);
-    if(!conflict && isInRegion)
-    {
-      marker.visionCircle.setMap(null);
-      marker.visionCircle=visionCircle;
-      marker.visionCircle.setMap(this.map);
-    }
-  }
-
-  markerDragStop = (marker) => {
-    if(marker.position !== marker.visionCircle.center)
-    {
-      marker.position= marker.visionCircle.center;
-      marker.setMap(null);
-      marker.setMap(this.map);
-    }
-  }
-
   addAltar = (mousePos) => // event add Altar marker
   {
-    var conflict = false;
     let newAltar = AltarManager.createAltar(mousePos);
-    let marker = newAltar.toMapElement();
-    let visionCircle =  marker.visionCircle;
-
-
-    conflict =DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);
-    if(!conflict)
-    {
-      visionCircle.setMap(this.map);
-      visionCircle.draggable_changed = this.visionCircleDragChange;
-      marker.setMap(this.map);
-      marker['type'] = 'altar';
-      marker['id'] = newAltar.Id;
-      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
-      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
-      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
-      Game.getInstance().addAltar(newAltar);
-      this.props.listVisionMarker.push(marker);
-    }
+    var withColision=true;
+    var withVisionCircle=true;
+    newAltar.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone,withColision,this.props.listVisionMarker);
+    Game.getInstance().addAltar(newAltar);
   }
 
   addItem = (mousePos) => // event add Item marker
   {
-    
-    var conflict = false;
-    let newItem = ItemManager.createItem(mousePos,"MagazineDeCult");
-    let marker = newItem.toMapElement();
-    let visionCircle =  marker.visionCircle;
-
-    conflict = DrawConflict.isConflict(this.props.listVisionMarker,visionCircle);    
-    if(!conflict)
-    {
-      marker.setMap(this.map);
-      visionCircle.setMap(this.map);
-      //visionCircle.draggable_changed = this.visionCircleDragChange;
-      marker['type'] = 'item';
-      marker['id'] = newItem.Id;
-      window.google.maps.event.addListener(marker, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(marker));
-      window.google.maps.event.addListener(marker, "position_changed",()=>this.visionCircleDragChange(marker));
-      window.google.maps.event.addListener(marker, "dragend",()=>this.markerDragStop(marker));
-      Game.getInstance().addItem(newItem);
-      this.props.listVisionMarker.push(marker);
-    }
+    let newItem = ItemManager.createItem(mousePos,"CultMag");
+    var withColision=true;
+    var withVisionCircle=true;
+    newItem.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone,withColision,this.props.listVisionMarker);
+    Game.getInstance().addItem(newItem);
   }
 
   componentWillMount() { // MapControll creation

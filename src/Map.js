@@ -13,6 +13,7 @@ import ZoneManager from "./model/Zone.js";
 
 import DrawManager from "./DrawManager.js";
 import MapControl from "./MapControl.js"
+import PlayersControl from "./PlayersControl";
 
 function Map() {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
@@ -23,6 +24,47 @@ function Map() {
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
   const [listZone, setListZone] = useState([]); // Listing of all the Component google-maps polygon
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
+  const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
+  const[socket,setSocket] = useState({});
+  const[gameFromServeur,setGameFromServeur] = useState(null);
+
+  const connectWebsocket = () =>
+  {
+    var socket = new WebSocket("ws://cultwars.net:5000/ws");
+
+    socket.onopen = function () {
+        console.log("Connected.");
+        socket.send('{"Players":[{"Items":[{"Type":"CultMag","CanChangeVisionDistance":false,"Quantity":0,"AvailableDuration":0,"CanTeleport":false,"DeficiencyDuration":0,"Position":[0.0,0.0],"VisionDistance":10,"ActionDistance":9,"Name":"OUI","IsInActionRange":false}],"IsAFK":false,"InventorySize":2,"Team":null,"VisibleEntities":[],"IsInZone":false,"EntitiesInView":null,"Position":[48.52862258260694,7.738950470522221],"VisionDistance":10,"ActionDistance":8,"Name":"Numil","IsInActionRange":false},{"Items":[],"IsAFK":false,"InventorySize":0,"Team":null,"VisibleEntities":[],"IsInZone":false,"EntitiesInView":null,"Position":[48.528636792858585,7.736761787966069],"VisionDistance":5,"ActionDistance":3,"Name":"Flo","IsInActionRange":false}],"Regions":[{"Coordinates":[[48.53101112845478,7.7336177050018495],[48.52689728697087,7.733285111084003],[48.527515450291084,7.7417072473907655],[48.53203420812144,7.7410849748993105],[48.5322899748082,7.734937351837177]],"Id":0}],"Items":[{"Type": "CultMag","CanChangeVisionDistance": false,"Quantity": 0,"AvailableDuration": 0,"CanTeleport": false,"DeficiencyDuration": 0,"Position": [48.52862258260694,7.734950470522221],"VisionDistance": 10,"ActionDistance": 9,"Name": "OUI","IsInActionRange": false}],"Flags":[],"Teams":[],"Name":"hug","Duration":"60","BeginDate":"2020-03-20T15:25:08.962Z","MinPlayer":"3","Ip":"127.0.0.1"}');
+        
+    }
+    socket.onmessage = function(event){
+        try{
+          var game = JSON.parse(event.data);
+          if(gameFromServeur == null)
+            setGameFromServeur(game);
+          if("Players" in game)
+            setListPlayer(listPlayer.concat(game.Players));
+        }
+        catch (e)
+        {
+          console.log("error",e);
+        }
+    }
+
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            console.log('Disconnected.');
+        } else {
+            console.log('Connection lost.'); // for example if server processes is killed
+        }
+        console.log('Code: ' + event.code + '. Reason: ' + event.reason);
+    };
+
+    socket.onerror = function (error) {
+        console.log("Error: " + error.message);
+    };
+    
+  }
 
   const toggle = () => { // Open/Close the menu
      changeIsOpen(!isOpen); // set true/false isOpen
@@ -60,6 +102,8 @@ function Map() {
   const google = window.google; // The constructor of the lib googgle map
 
   useEffect(() => { // On Map open
+    connectWebsocket(); //chargement du websocket
+    
     const listener = e => { // Event on press Escape unselect all selected Map component
       if (e.key === "Escape") {
         setSelectedDrawed(null); // Unselect Drawed component
@@ -78,18 +122,18 @@ function Map() {
     let err = false;
     switch(component.type)
     {
-      case 'zone':
+      case 'Zone':
         err = Game.getInstance().removeZone(component);
         var index = listZone.indexOf(component);
         if(index > -1)
           setListZone(listZone.splice(index,1));
         break;
 
-      case 'item':
+      case 'Item':
         err = Game.getInstance().removeItem(component);
         break;
 
-      case 'altar':
+      case 'Altar':
         err = Game.getInstance().removeAltar(component);
         break;
 
@@ -107,12 +151,12 @@ function Map() {
     let err = false;
     switch(component.type)
     {
-      case 'zone':
+      case 'Zone':
         component.setEditable(true);
         break;
 
-      case 'item':
-      case 'altar':
+      case 'Item':
+      case 'Altar':
         component.setDraggable(true);
         break;
 
@@ -142,17 +186,17 @@ function Map() {
     let err = false;
     switch(component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
     {
-      case 'zone':
+      case 'Zone':
         err = Game.getInstance().editZone(component);
         component.setEditable(false);
         break;
 
-      case 'item':
+      case 'Item':
         err = Game.getInstance().editItem(component);
         component.setDraggable(false);
         break;
 
-      case 'altar':
+      case 'Altar':
         err = Game.getInstance().editAltar(component);
         component.setDraggable(false);
         break;
@@ -251,7 +295,9 @@ function Map() {
         />
       )}
 
-      <MapControl listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+      <MapControl gameFromServeur={gameFromServeur} listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+
+      <PlayersControl canDraw={canDraw} gameFromServeur={gameFromServeur} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
 
       <DrawManager listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
