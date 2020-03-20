@@ -111,7 +111,11 @@
         var indexZ = this.Regions.findIndex( ({ Id }) => Id === region.id);
         if(indexZ!==-1)
         {
-            this.Regions[indexZ].Position = [region.position.lat(),region.position.lng()];
+            let paths = []; // all the coordinates
+            region.getPath().forEach(function (path) { // For each coordinates we publish an array with only the latitude and the longitude of this coordinate
+                paths.push([path.lat(), path.lng()]); // save the latitude and the longitude of this coordinate
+            });
+            this.Regions[indexZ].Coordinates = [paths];
         }
         else err=true;
 

@@ -75,7 +75,6 @@ function Map() {
   }, []);
 
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
-    console.log(component);
     let err = false;
     switch(component.type)
     {
@@ -105,7 +104,6 @@ function Map() {
   }
 
   const beginEditing = (component) => { // Begin the Map component edition (Map Component component)
-    console.log(component);
     let err = false;
     switch(component.type)
     {
@@ -142,7 +140,6 @@ function Map() {
 
   const confirmeEditing = (component) => { // End the Map component edition (Map Component component)
     let err = false;
-    console.log(component);
     switch(component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
     {
       case 'zone':
