@@ -25,7 +25,6 @@ function Map() {
   const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
-  const [listZone, setListZone] = useState([]); // Listing of all the Component google-maps polygon
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
   const[gameFromServeur,setGameFromServeur] = useState(null);
@@ -105,9 +104,6 @@ function Map() {
     {
       case 'Zone':
         err = Game.getInstance().removeZone(component);
-        var index = listZone.indexOf(component);
-        if(index > -1)
-          setListZone(listZone.splice(index,1));
         break;
 
       case 'Item':
@@ -125,6 +121,8 @@ function Map() {
     }
     if(!err){
       component.setMap(null); // Unset the map attribut of the component for remove it
+      if(component.type != "Zone")
+        component.visionCircle.setMap(null); // Unset the map attribut of the component for remove it
     }
   }
 
@@ -219,9 +217,9 @@ function Map() {
 
       poly['type'] = 'zone';
       poly['id'] = ZoneManager.IncrId;
-
-      Game.getInstance().addZone(ZoneManager.createZone(paths));
-      setListZone(listZone.concat(poly));
+      let polyObject = ZoneManager.createZone(paths);
+      polyObject.MapEntity = poly;
+      Game.getInstance().addZone(polyObject);
     }
     else // If the polygone have less of 3 coordinates it's not a polygone
     {
@@ -276,15 +274,15 @@ function Map() {
         />
       )}
 
-      <MapControl gameFromServeur={gameFromServeur} listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+      <MapControl gameFromServeur={gameFromServeur} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
       <PlayersControl canDraw={canDraw} gameFromServeur={gameFromServeur} listMarkerPlayer={listMarkerPlayer} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
 
-      <DrawManager listVisionMarker={listVisionMarker} listZone={listZone} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
+      <DrawManager listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
-      canDrawAltar={canDrawAltar} canDrawItem={canDrawItem}  
+      canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} 
       position={google.maps.ControlPosition.TOP_LEFT}>
-         {/* Menu Show DrawingManager */}
+        {/* Menu Show DrawingManager */}
         <Card className="border-1">
         <Navbar color="faded" className="border-1" light>
             <NavbarToggler className="mb-2" onClick={toggle}/>
@@ -294,10 +292,10 @@ function Map() {
                       {canDrawMapZone?<Button color="warning" onClick={changeCanDrawMapZone}>X</Button>:<Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
                     </NavItem>
                     <NavItem className="mb-2">
-                      {(listZone.length > 0) ?canDrawAltar?<Button color="warning" onClick={changeCanDrawAltar}>X</Button>:<Button onClick={changeCanDrawAltar}>Put Altar</Button>:null}
+                      {(Game.getInstance().Regions.length > 0) ?canDrawAltar?<Button color="warning" onClick={changeCanDrawAltar}>X</Button>:<Button onClick={changeCanDrawAltar}>Put Altar</Button>:null}
                     </NavItem>
                     <NavItem className="mb-2">
-                        {(listZone.length > 0) ?canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>:null}
+                        {(Game.getInstance().Regions.length > 0) ?canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>:null}
                         {/*<Collapse className="mt-2" isOpen={canDrawItem} navbar>
                             <Nav  navbar>
                                 <NavItem className="mb-2">

@@ -55,6 +55,26 @@
         this.Teams.push(team);
     }
 
+    findZoneById(regionId){
+        var indexZ = this.Regions.findIndex( ({ Id }) => Id === regionId);
+        return indexZ;
+    }
+
+    findItemById(itemId){
+        var indexI = this.Items.findIndex( ({ Id }) => Id === itemId);
+        return indexI;
+    }
+
+    findAltarById(flagId){
+        var indexA = this.Flags.findIndex( ({ Id }) => Id === flagId);
+        return indexA;
+    }
+
+    findTeamById(teamId){
+        var indexT = this.Teams.findIndex( ({ Id }) => Id === teamId);
+        return indexT;
+    }
+
     removeZone(region){
         var err = false;
 

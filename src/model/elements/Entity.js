@@ -4,6 +4,7 @@ export default class Entity
     VisionDistance;
     ActionDistance;
     Name;
+    MapEntity=null;
 
     constructor(position)
     {

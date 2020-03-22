@@ -16,7 +16,7 @@ export default class MapControl extends Component {
     let newAltar = AltarManager.createAltar(mousePos);
     var withColision=true;
     var withVisionCircle=true;
-    newAltar.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone,withColision,this.props.listVisionMarker);
+    newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addAltar(newAltar);
   }
 
@@ -25,7 +25,7 @@ export default class MapControl extends Component {
     let newItem = ItemManager.createItem(mousePos,"CultMag");
     var withColision=true;
     var withVisionCircle=true;
-    newItem.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed,withVisionCircle,this.props.listZone,withColision,this.props.listVisionMarker);
+    newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addItem(newItem);
   }
 
@@ -41,18 +41,18 @@ export default class MapControl extends Component {
         //delete the cursor option
         $('div.gm-style').find('div[style*="z-index: 2000000000;"]').remove();
         //window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
-        this.props.listZone.forEach(zone => { // foreach polygon zone
-          window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
+        Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
+          window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
           if(zone.editable)
-            window.google.maps.event.addListener(zone, 'click',()=>!this.props.canDraw()&&this.props.setSelectedEdited(zone));
+            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedEdited(zone));
           else
-            window.google.maps.event.addListener(zone, 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
+            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
         });
     }
     else
     {
-      this.props.listZone.forEach(zone => { // foreach polygon zone
-        window.google.maps.event.clearListeners(zone, 'click'); // clear all action add Element on zone
+      Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
+        window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
       });
     }
 
@@ -60,18 +60,18 @@ export default class MapControl extends Component {
     { 
       //set the cursor style as cross
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
-        //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
-        this.props.listZone.forEach(zone => { // foreach polygon zone
-          window.google.maps.event.addListener(zone, 'click',(event)=>this.addItem([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
-        });
+      //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
+      Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
+        window.google.maps.event.addListener(zone.toMapElement(), 'click',(event)=>this.addItem([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
+      });
     }
     else if(this.props.canDrawAltar)
     {
       //set the cursor style as cross
       $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
       //this.map.addListener('click',this.addAltar); // add the action listener click add Altar on the map
-      this.props.listZone.forEach(zone => { // foreach polygon zone
-        window.google.maps.event.addListener(zone,'click',(event)=>this.addAltar([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
+      Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
+        window.google.maps.event.addListener(zone.toMapElement(),'click',(event)=>this.addAltar([event.latLng.lat(),event.latLng.lng()])); // add the action listener click add Altar on zone
       });
     }        
   }
