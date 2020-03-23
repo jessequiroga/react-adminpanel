@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import ManagerPlayers from './model/elements/Player';
+import Game from './model/Game';
 
 export default class PlayerControl extends Component {
 
@@ -9,15 +10,20 @@ export default class PlayerControl extends Component {
 
   markerPlayers = (players) =>
   {
-    for(const[playerMarker,index] in this.props.listMarkerPlayer){
-      playerMarker.setMap(null);
-      playerMarker.Id = null;
-      this.props.listMarkerPlayer.slice(index,1);
-    };
     players.forEach((player)=>{
-      let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items);
-      let marker = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
-      this.props.listMarkerPlayer.push(marker);
+
+      if(player.Id != null)
+      {
+        let indexP = Game.getInstance().findPlayerById(player.Id)
+        if( indexP != -1)
+            Game.getInstance().removePlayer(Game.getInstance().Players[indexP]);
+
+        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items);
+        let marker = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+        Game.getInstance().addPlayer(marker);
+      }
+      else
+        console.log("Un id n'est pas indiqué pour le player: ", player);
     });
   }
 

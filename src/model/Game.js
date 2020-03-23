@@ -55,6 +55,10 @@
         this.Teams.push(team);
     }
 
+    addPlayer(player){
+        this.Players.push(player);
+    }
+
     findZoneById(regionId){
         var indexZ = this.Regions.findIndex( ({ Id }) => Id === regionId);
         return indexZ;
@@ -73,6 +77,11 @@
     findTeamById(teamId){
         var indexT = this.Teams.findIndex( ({ Id }) => Id === teamId);
         return indexT;
+    }
+
+    findPlayerById(playerId){
+        var indexP = this.Players.findIndex( ({ Id }) => Id === playerId);
+        return indexP;
     }
 
     removeZone(region){
@@ -122,6 +131,20 @@
         if(indexT!==-1)
         {
             this.Teams=this.Teams.filter( ({ Id }) => Id !== team.id);
+        }
+        else err=true;
+
+        return err;
+
+    }
+
+    removePlayer(player){
+        var err = false;
+
+        var indexP = this.Players.findIndex( ({ Id }) => Id === player.id);
+        if(indexP!==-1)
+        {
+            this.Players=this.Players.filter( ({ Id }) => Id !== player.id);
         }
         else err=true;
 
