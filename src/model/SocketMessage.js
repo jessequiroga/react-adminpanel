@@ -6,28 +6,95 @@ export default class SocketMessage {
             POS: "POS",
             ACTION: "ACTION",
             USEITEM: "USEITEM",
-            GAMESETUP: "GAMESETUP"
+            GAMESETUP: "GAMESETUP",
+            NOMAP: "NOMAP",
+            PLAYERCONNECT: "PLAYERCONNECT"
         }
 
     MessageType;
     ContainedEntity;
-    GameConfigFile;
 
-    constructor(type) {
-        this.MessageType = type;
-        var map = Game.getInstance(); // get the current map
-        this.ContainedEntity = JSON.stringify(map) // Jsonised the map
+    constructor(Json,type=null) {
+        if(type==null && typeof(Json) =="string")
+        {
+            var message = SocketMessage.getMessage(Json);
+            this.MessageType = SocketMessage.TypeMessage[Object.keys(SocketMessage.TypeMessage)[message.Type]];
+            switch(this.MessageType)
+            {
+                case "GAMESETUP":
+                    this.ContainedEntity = message.Game;
+                    break;
+                case "NOMAP":
+                    this.ContainedEntity = null;
+                    break;
+            }
+            
+        }
+        if(type!=null && typeof(Json) =="object")
+        {
+            let findType = true;
+            switch(type)
+            {
+                case "GAMESETUP":
+                    this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
+                    break;
+                default:
+                    findType = false;
+                    break;
+            }
+            if(findType)
+            {
+                this.MessageType = Object.keys(SocketMessage.TypeMessage).indexOf(type);
+            }
+            
+        }
+        if(type!=null && typeof(Json) =="string")
+        {
+            let findType = true;
+            switch(type)
+            {
+                case "GAMESETUP":
+                    this.ContainedEntity = Json; // Jsonised the map
+                    break;
+                default:
+                    findType = false;
+                    break;
+            }
+            if(findType)
+            {
+                this.MessageType = type ;
+            }
+        }
     }
 
-    static getType(Json) {
+    static getMessage(Json) {
         try {
-            var game = JSON.parse(Json);
+            var message = JSON.parse(Json);
         }
         catch (e) {
             return null;
         }
 
-        return game;
+        return message;
     }
+
+    toJson(){
+        let result ="";
+        let jsonObject = {Type:Object.keys(SocketMessage.TypeMessage).indexOf(this.MessageType)}
+        switch(this.MessageType)
+        {
+            case "GAMESETUP":
+                jsonObject.Game = JSON.parse(this.ContainedEntity);
+                result = JSON.stringify(jsonObject);
+                break;
+            case "NOMAP":
+                result = null;
+                break;
+            default:
+                break;
+        }
+        return result; 
+    }
+
 }
 

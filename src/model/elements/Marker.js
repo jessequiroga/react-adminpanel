@@ -2,12 +2,20 @@ import Entity from "./Entity";
 import Game from "../Game";
 import DrawConflict from '../../helper/DrawConflict.js';
 
-const visionCircleDragChange= (marker,map,listVisionMarker,withColision) =>
-  {  
+const visionCircleDragChange= (marker,map,withColision) =>
+  { 
+    let listVisionMarker = [];
+    Game.getInstance().Items.forEach(item => {
+      listVisionMarker.push(item.toMapElement());
+    });
+    Game.getInstance().Flags.forEach(flag => {
+      listVisionMarker.push(flag.toMapElement());
+    });
     let listZone = [];
     Game.getInstance().Regions.forEach(zone => {
       listZone.push(zone.toMapElement());
     });
+
     let visionCircle = new window.google.maps.Circle({
       strokeColor: '#01A9DB',
       strokeOpacity: 0.8,
@@ -58,13 +66,6 @@ export default class Marker extends Entity
 
         if (marker == null)
         {
-          let listVisionMarker = [];
-          Game.getInstance().Items.forEach(item => {
-            listVisionMarker.push(item.toMapElement());
-          });
-          Game.getInstance().Flags.forEach(flag => {
-            listVisionMarker.push(flag.toMapElement());
-          });
           var conflict = false;
 
           let visionCircle = new window.google.maps.Circle({
@@ -88,15 +89,15 @@ export default class Marker extends Entity
 
           
           if(withColision){
-              conflict = DrawConflict.isConflict(listVisionMarker,visionCircle);    
+              conflict = DrawConflict.isConflict(visionCircle);    
               if(!conflict)
               {
-                  marker.setMap(map);
-                  visionCircle.setMap(map);
-                  if(this.constructor.name != "Player")
-                    window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,listVisionMarker,withColision));
-                  window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
+                marker.setMap(map);
+                visionCircle.setMap(map);
+                if(this.constructor.name != "Player")
+                  window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
+                window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,withColision));
+                window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }
           else
@@ -107,7 +108,7 @@ export default class Marker extends Entity
               if (withVisionCircle)
               {
                   visionCircle.setMap(map);
-                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,listVisionMarker,withColision));
+                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,withColision));
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }

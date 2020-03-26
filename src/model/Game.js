@@ -214,20 +214,18 @@ class SingletonGame { // Object Game to sigleton
             if(game!=null)
             {
                 this.instance = new Game(game.GameType,
-                                        game.default.Name,
-                                        game.default.Duration,
-                                        game.default.BeginDate,
-                                        game.default.MinPlayer,
-                                        game.default.Ip,
-                                        game.default.Players,
-                                        game.default.Regions,
-                                        game.default.Items,
-                                        game.default.Flags,
-                                        game.default.Teams);
-                                            }
-            if (!this.instance) {
-                this.instance = this.createInstance();
+                                        game.Name,
+                                        game.Duration,
+                                        game.BeginDate,
+                                        game.MinPlayer,
+                                        game.Ip,
+                                        game.Players,
+                                        game.Regions,
+                                        game.Items,
+                                        game.Flags,
+                                        game.Teams);
             }
+            
             return this.instance;
         }
 }

@@ -27,7 +27,6 @@ function Map() {
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
-  const[gameFromServeur,setGameFromServeur] = useState(null);
   const[listMarkerPlayer,setListMarkerPlayer] = useState([]);
 
   const connectWebsocket = () =>
@@ -35,14 +34,20 @@ function Map() {
     var socket = SocketController.getSocket();
 
     socket.onmessage = function(event){
-          var game = SocketMessage.getType(event.data);
-          if(game != null)
-          {
-            if(gameFromServeur == null)
-              setGameFromServeur(game);
-            if("Players" in game)
-              setListPlayer(listPlayer.concat(game.Players));
-          }
+      let message = new SocketMessage(event.data);
+      switch(message.MessageType)
+      {
+        case SocketMessage.TypeMessage.PLAYERCONNECT:
+          let players = message.ContainedEntity;
+          setListPlayer(listPlayer.concat(players));
+        break;
+        default:
+          if(message.MessageType!=null)
+            console.log("pas d'action pour ce type de message:",message.MessageType);
+          else
+            console.log("message non traitable: ",event.data);
+          break;
+      }
     }    
   }
 
@@ -274,9 +279,9 @@ function Map() {
         />
       )}
 
-      <MapControl gameFromServeur={gameFromServeur} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
+      <MapControl listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <PlayersControl canDraw={canDraw} gameFromServeur={gameFromServeur} listMarkerPlayer={listMarkerPlayer} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
+      <PlayersControl canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
 
       <DrawManager listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
