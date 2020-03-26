@@ -21,10 +21,21 @@ class Player extends Marker
 
     getIcon()
     {
-        return {
-            url:`/magazine_de_culte_c.png`,
-            scaledSize: new window.google.maps.Size(100, 100)
-        };
+        if(this.Team == null)
+        {
+            return {
+                
+                url:`/mapMaker.png`,
+                scaledSize: new window.google.maps.Size(100, 100)
+            };
+        }
+        else
+        {
+            return {
+                url:`/cultist_`+this.Team.Color+`.png`,
+                scaledSize: new window.google.maps.Size(100, 100)
+            }
+        }
     }
     
 }

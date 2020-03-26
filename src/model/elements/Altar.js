@@ -5,6 +5,7 @@ class Altar extends Marker
     Id;
     CaptureDate;
     UnavailableTime;
+    Team;
 
     constructor(position,id)
     {
@@ -15,10 +16,20 @@ class Altar extends Marker
 
     getIcon()
     {
-        return {
-            url:`/mapMarker.png`,
-            scaledSize: new window.google.maps.Size(100, 100)
-        };
+        if(this.Team == null)
+        {
+            return {    
+                url:`/altar_unreached.png`,
+                scaledSize: new window.google.maps.Size(80, 80)
+            };
+        }
+        else
+        {
+            return {
+                url:`/altar_captured_`+this.Team.Color+`.png`,
+                scaledSize: new window.google.maps.Size(80, 80)
+            }
+        }
     }
 
 }
@@ -36,9 +47,9 @@ class AltarManager
 
     static getIcon()
     {
-        return {
-            url:`/mapMarker.png`,
-            scaledSize: new window.google.maps.Size(100, 100)
+        return {   
+            url:`/altar_unreached.png`,
+            scaledSize: new window.google.maps.Size(80, 80)
         };
     }
 }

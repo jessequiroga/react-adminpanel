@@ -5,6 +5,7 @@
     Name;
     Duration;
     BeginDate;
+    EndDate;
     MinPlayer;
     IP;
     Players = [];
@@ -18,6 +19,7 @@
         name,
         duration,
         beginDate,
+        endDate,
         minPlayer,
         ip,
         players = [],
@@ -30,6 +32,7 @@
         this.Name = name;
         this.Duration = duration;
         this.BeginDate = beginDate;
+        this.EndDate = endDate;
         this.MinPlayer = minPlayer;
         this.Ip = ip;
         this.Players = players;
@@ -217,6 +220,7 @@ class SingletonGame { // Object Game to sigleton
                                         game.Name,
                                         game.Duration,
                                         game.BeginDate,
+                                        game.EndDate,
                                         game.MinPlayer,
                                         game.Ip,
                                         game.Players,

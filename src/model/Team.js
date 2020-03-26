@@ -3,6 +3,7 @@ export default class Team
     Id;
     Color;
     Players;
+    Markers;
     Name;
 
     constructor(position)

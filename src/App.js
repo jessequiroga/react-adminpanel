@@ -5,11 +5,23 @@ import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import MapConfigPannel from "./MapConfigPannel";
 import Game from "./model/Game";
+import ModalEndGame from "./ModalEndGame";
+import ModalBeginGame from "./ModalBeginGame";
+
 
 function App() {
   let [gameInstance,setGameInstance] = useState(false);
   let [configNeeded,setConfigNeeded]  = useState(true);
+  let [gameEnded,setGameEnded]  = useState(false);
+  let [gameBegin,setGameBegin]  = useState(true);
   
+  /*Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+  console.log((new Date()).addDays(1).toJSON());*/
+
   useEffect(() => { // On Open Admin 
     let conn = SocketController.getSocket();
     conn.onmessage = function(event){
@@ -24,7 +36,15 @@ function App() {
           {
             let game = message.ContainedEntity;
             setGameInstance(true);
-            Game.getInstance(game);
+            let this_game = Game.getInstance(game);
+            if((new Date()) > (new Date(this_game.EndDate)))
+            {
+              setGameEnded(true);
+            }
+            else if((new Date(this_game.BeginDate)) > (new Date()))
+            {
+              setGameBegin(false);
+            }
           }
           break;
       }
@@ -32,10 +52,12 @@ function App() {
   }, []);
   
   return (
-    <>
+    <>  
         {configNeeded&&<MapConfigPannel setConfigNeeded={setConfigNeeded}/>}
         {gameInstance&&<Header/>}
         {gameInstance&&<GoogleMap/>}
+        {gameInstance&&<ModalBeginGame gameBegin={gameBegin}/>}
+        {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
         {!gameInstance&&<span>No Game Instance For the moment sorry</span>}
     </>
   );
