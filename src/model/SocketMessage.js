@@ -90,6 +90,9 @@ export default class SocketMessage {
             case "NOMAP":
                 result = null;
                 break;
+            case "ADMINCONNECT":
+                result = JSON.stringify(jsonObject);
+                break;
             default:
                 break;
         }
