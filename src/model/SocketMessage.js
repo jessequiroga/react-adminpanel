@@ -17,16 +17,29 @@ export default class SocketMessage {
     constructor(Json,type=null) {
         if(type==null && typeof(Json) =="string")
         {
+            let findType = true;
             var message = SocketMessage.getMessage(Json);
-            this.MessageType = SocketMessage.TypeMessage[Object.keys(SocketMessage.TypeMessage)[message.Type]];
-            switch(this.MessageType)
+
+            let messageType = SocketMessage.TypeMessage[Object.keys(SocketMessage.TypeMessage)[message.Type]];
+            switch(messageType)
             {
                 case "GAMESETUP":
                     this.ContainedEntity = message.Game;
                     break;
+                case "PLAYERCONNECT":
+                    console.log("Game: ",message);
+                    this.ContainedEntity = message.Players; // Jsonised the map
+                    break;
                 case "NOMAP":
                     this.ContainedEntity = null;
                     break;
+                default:
+                    findType = false;
+                    break;
+            }
+            if(findType)
+            {
+                this.MessageType = messageType;
             }
             
         }
@@ -38,13 +51,16 @@ export default class SocketMessage {
                 case "GAMESETUP":
                     this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
                     break;
+                case "PLAYERCONNECT":
+                    this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
+                    break;
                 default:
                     findType = false;
                     break;
             }
             if(findType)
             {
-                this.MessageType = Object.keys(SocketMessage.TypeMessage).indexOf(type);
+                this.MessageType = type;
             }
             
         }
@@ -65,7 +81,7 @@ export default class SocketMessage {
             }
             if(findType)
             {
-                this.MessageType = type ;
+                this.MessageType = type;
             }
         }
     }
@@ -84,7 +100,6 @@ export default class SocketMessage {
     toJson(){
         let result ="";
         let jsonObject = {Type:Object.keys(SocketMessage.TypeMessage).indexOf(this.MessageType)}
-        console.log(jsonObject);
         switch(this.MessageType)
         {
             case "GAMESETUP":

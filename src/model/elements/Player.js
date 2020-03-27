@@ -32,7 +32,7 @@ class Player extends Marker
         else
         {
             return {
-                url:`/cultist_`+this.Team.Color+`.png`,
+                url:`/cultist_`+this.Team.Color.toLowerCase()+`.png`,
                 scaledSize: new window.google.maps.Size(100, 100)
             }
         }

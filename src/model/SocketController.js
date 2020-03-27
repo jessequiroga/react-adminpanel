@@ -3,8 +3,7 @@ const createWebsocket = () => {
     var socket = new WebSocket("ws://cultwars.net:5000/ws");
 
     socket.onopen = function () {
-        console.log("Connected.");
-        console.log((new SocketMessage("{}",SocketMessage.TypeMessage.ADMINCONNECT)).toJson());
+       console.log("Connected.");
        socket.send((new SocketMessage("{}",SocketMessage.TypeMessage.ADMINCONNECT)).toJson());        
     }
 

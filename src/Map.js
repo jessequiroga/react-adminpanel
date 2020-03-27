@@ -39,6 +39,7 @@ function Map() {
       {
         case SocketMessage.TypeMessage.PLAYERCONNECT:
           let players = message.ContainedEntity;
+          console.log("players: ",players);
           setListPlayer(listPlayer.concat(players));
         break;
         default:

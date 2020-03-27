@@ -9,7 +9,7 @@ class Zone
         this.Id = id;
     }
 
-    toMapElement(){
+    toMapElement(map=null){
 
         let poly = this.MapEntity;
         if(poly == null )
@@ -22,6 +22,7 @@ class Zone
                 paths:coordinates, // Initiate the coordinates of the marker with the json altar.geometry.coordinates
                 type:this.constructor.name,
                 id: this.Id,
+                map: map,
                 strokeColor: "#FF0000",
                 strokeOpacity: 1,
                 strokeWeight: 3,

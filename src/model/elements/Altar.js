@@ -26,7 +26,7 @@ class Altar extends Marker
         else
         {
             return {
-                url:`/altar_captured_`+this.Team.Color+`.png`,
+                url:`/altar_captured_`+this.Team.Color.toLowerCase()+`.png`,
                 scaledSize: new window.google.maps.Size(80, 80)
             }
         }
