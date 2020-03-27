@@ -5,8 +5,9 @@ import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import MapConfigPannel from "./MapConfigPannel";
 import Game from "./model/Game";
-import ModalEndGame from "./ModalEndGame";
-import ModalBeginGame from "./ModalBeginGame";
+import ModalEndGame from "./components/ModalEndGame";
+import ModalBeginGame from "./components/ModalBeginGame";
+import ModalListPlayer from "./components/ModalListPlayer";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   let [configNeeded,setConfigNeeded]  = useState(false);
   let [gameEnded,setGameEnded]  = useState(false);
   let [gameBegin,setGameBegin]  = useState(true);
+  let [listPlayerOpen,setListPlayerOpen] = useState(false);
   
   /*Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
@@ -54,10 +56,11 @@ function App() {
   return (
     <>  
         {configNeeded&&<MapConfigPannel setConfigNeeded={setConfigNeeded}/>}
-        {gameInstance&&<Header/>}
+        {gameInstance&&<Header setListPlayerOpen={setListPlayerOpen}/>}
         {gameInstance&&<GoogleMap/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
+        {gameInstance&&<ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen}/>}
         {!gameInstance&&<span>No Game Instance For the moment sorry</span>}
     </>
   );

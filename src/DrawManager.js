@@ -43,10 +43,10 @@ export default class MapControl extends Component {
         //window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
         Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
           window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
-          if(zone.editable)
-            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedEdited(zone));
+          if(zone.toMapElement().editable)
+            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedEdited(zone.toMapElement()));
           else
-            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone)); // clear all action add Element on zone
+            window.google.maps.event.addListener(zone.toMapElement(), 'click',()=>!this.props.canDraw()&&this.props.setSelectedDrawed(zone.toMapElement())); // clear all action add Element on zone
         });
     }
     else

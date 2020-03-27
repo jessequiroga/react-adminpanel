@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from 'reactstrap';
-import Game from "./model/Game";
+import React from "react";
+import {Table } from 'reactstrap';
+import Game from "../model/Game";
 
-function ModalBeginGame({ gameBegin }) {
+function PlayersListDisplay() {
 
-    let [modalOpen, setModalOpen] = useState(!gameBegin);
     let listTeamswithPlayer = null;
     let listTeams = null;
 
-    useEffect(() => { // On Open Admin 
-        setModalOpen(!gameBegin);
-    }, [gameBegin]);
-
-    let closeModal = () => {
-        setModalOpen(false);
-    }
     if (Game.getInstance() && Object.keys(Game.getInstance()).length > 0 && Object.keys(Game.getInstance().Players).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
         let _listPlayers = Game.getInstance().Players;
         let _listTeams = Game.getInstance().Teams;
@@ -50,29 +42,21 @@ function ModalBeginGame({ gameBegin }) {
     }
     return (
         <>
-            <Modal isOpen={modalOpen}>
-                <ModalHeader className="text-center text-light bg-dark" >The Game wasn't begin</ModalHeader>
-                <ModalBody className="text-center font-weight-bold">
-                    {listTeamswithPlayer ? <Table className="text-center">
-                        <thead>
-                            <tr>
-                                {listTeams}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {listTeamswithPlayer}
-                        </tbody>
-                    </Table> : <span>No Team</span>}
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={closeModal} color="dark">Edit Map</Button>
-                </ModalFooter>
-            </Modal>
+            {listTeamswithPlayer ? <Table className="text-center">
+                <thead>
+                    <tr>
+                        {listTeams}
+                    </tr>
+                </thead>
+                <tbody>
+                    {listTeamswithPlayer}
+                </tbody>
+            </Table> : <span>No Team</span>}
         </>
     );
 
 }
-export default ModalBeginGame;
+export default PlayersListDisplay;
 
 
 
