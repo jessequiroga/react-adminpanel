@@ -46,7 +46,6 @@ export default class PlayerControl extends Component {
 
   newPlayerInLobby = (players) =>
   {
-    console.log(players);
     players.forEach((player)=>{
       if(player.Id != null)
       {
@@ -81,8 +80,6 @@ export default class PlayerControl extends Component {
     if(Game.getInstance() != null)
     {
       let this_game = Game.getInstance();
-      console.log("gameEnded",(new Date()) > (new Date(this_game.EndDate)))
-      console.log("gameBegin",(new Date(this_game.BeginDate)) > (new Date()))
       if((new Date()) > (new Date(this_game.EndDate)))
       {
         gameEnded=true;
@@ -91,7 +88,6 @@ export default class PlayerControl extends Component {
       {
         gameBegin=false;
       }
-      console.log(gameBegin,gameEnded);
       if(gameBegin && !gameEnded)
         this.newMarkerPlayers(Game.getInstance().Players.slice(0),true);
       
@@ -106,7 +102,6 @@ export default class PlayerControl extends Component {
     if(Game.getInstance() != null)
     {
       let this_game = Game.getInstance();
-      console.log("gameBegin",(new Date(this_game.BeginDate)) > (new Date()))
       if((new Date()) > (new Date(this_game.EndDate)))
       {
         gameEnded=true;

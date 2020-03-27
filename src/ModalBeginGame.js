@@ -5,7 +5,8 @@ import Game from "./model/Game";
 function ModalBeginGame({ gameBegin }) {
 
     let [modalOpen, setModalOpen] = useState(!gameBegin);
-    let list_Team = null;
+    let listTeamswithPlayer = null;
+    let listTeams = null;
 
     useEffect(() => { // On Open Admin 
         setModalOpen(!gameBegin);
@@ -14,25 +15,34 @@ function ModalBeginGame({ gameBegin }) {
     let closeModal = () => {
         setModalOpen(false);
     }
-    Game.getInstance() && console.log(Game.getInstance().Regions);
     if (Game.getInstance() && Object.keys(Game.getInstance()).length > 0 && Object.keys(Game.getInstance().Players).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
-        let listPlayers = Game.getInstance().Players;
-        let listTeams = Game.getInstance().Teams;
-        list_Team = Object.keys(listTeams).map(function (keyT, index) // List Teams
+        let _listPlayers = Game.getInstance().Players;
+        let _listTeams = Game.getInstance().Teams;
+
+        listTeams = Object.keys(_listTeams).map(function (keyT, index) // List Teams
         {
-            let team = listTeams[keyT];
-            let listPlayersInTeam = Object.keys(listPlayers).map(function (keyP, index) // List Players in current Team
+            let team = _listTeams[keyT];
+            console.log(team.Color.toLowerCase());
+            return <th>
+                {team.Name}
+                <span style={{backgroundColor:team.Color.toLowerCase(),display: "flex", width: "auto",height: "10px"}}/>
+            </th>
+        });
+
+        listTeamswithPlayer = Object.keys(_listTeams).map(function (keyT, index) // List Teams
+        {
+            let team = _listTeams[keyT];
+            let listPlayersInTeam = Object.keys(_listPlayers).map(function (keyP, index) // List Players in current Team
             {
-                let player = listPlayers[keyP];
-                if (player.Team == team)
-                    return <tr key={player.id}>
-                        <td className="text-center">{player.name}</td>
-                    </tr>;
+                let player = _listPlayers[keyP];
+                if (player.Team.Id == team.Id)
+                    return <td className="text-center">{player.Name}</td>;
+
 
             });
+            console.log(listPlayersInTeam);
             return <tr key={team.id}>
-                <td>{team.Name}</td>
-                <td>{listPlayersInTeam}</td>
+                {listPlayersInTeam}
             </tr>;
 
         });
@@ -43,15 +53,14 @@ function ModalBeginGame({ gameBegin }) {
             <Modal isOpen={modalOpen}>
                 <ModalHeader className="text-center text-light bg-dark" >The Game wasn't begin</ModalHeader>
                 <ModalBody className="text-center font-weight-bold">
-                    {list_Team ? <Table className="text-center">
+                    {listTeamswithPlayer ? <Table className="text-center">
                         <thead>
                             <tr>
-                                <th>Team Name</th>
-                                <th>Players</th>
+                                {listTeams}
                             </tr>
                         </thead>
                         <tbody>
-                            {list_Team}
+                            {listTeamswithPlayer}
                         </tbody>
                     </Table> : <span>No Team</span>}
                 </ModalBody>

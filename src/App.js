@@ -26,7 +26,6 @@ function App() {
     let conn = SocketController.getSocket();
     conn.onmessage = function(event){
       var message = new SocketMessage(event.data);
-      console.log("MessageServeur",message);
       switch(message.MessageType)
       {
         case SocketMessage.TypeMessage.NOMAP:

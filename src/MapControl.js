@@ -60,7 +60,6 @@ export default class MapControl extends Component {
         let exist =false;
         if(zone.Id != null)
         {
-          console.log("zone",zone);
           var indexZ = Game.getInstance().findZoneById(zone.Id);
           if(indexZ !== -1)
           {

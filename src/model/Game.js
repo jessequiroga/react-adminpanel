@@ -63,9 +63,7 @@
     }
 
     findZoneById(regionId){
-        console.log(regionId);
         var indexZ = this.Regions.findIndex( ({ Id }) => Id === regionId);
-        console.log("findZoneById",this.Regions);
         return indexZ;
     }
 
@@ -203,7 +201,6 @@
 
     replaceRegion(indexZ,newRegion){
         this.Regions[indexZ] = newRegion;
-        console.log(this.Regions);
     }
 
     replaceAltar(indexA,newAltar){
