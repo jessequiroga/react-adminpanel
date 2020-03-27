@@ -11,7 +11,7 @@ import ModalBeginGame from "./ModalBeginGame";
 
 function App() {
   let [gameInstance,setGameInstance] = useState(false);
-  let [configNeeded,setConfigNeeded]  = useState(true);
+  let [configNeeded,setConfigNeeded]  = useState(false);
   let [gameEnded,setGameEnded]  = useState(false);
   let [gameBegin,setGameBegin]  = useState(true);
   
