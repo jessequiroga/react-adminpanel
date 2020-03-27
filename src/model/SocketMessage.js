@@ -56,6 +56,9 @@ export default class SocketMessage {
                 case "GAMESETUP":
                     this.ContainedEntity = Json; // Jsonised the map
                     break;
+                case "ADMINCONNECT":
+                    this.ContainedEntity = null;
+                    break;
                 default:
                     findType = false;
                     break;
@@ -81,6 +84,7 @@ export default class SocketMessage {
     toJson(){
         let result ="";
         let jsonObject = {Type:Object.keys(SocketMessage.TypeMessage).indexOf(this.MessageType)}
+        console.log(jsonObject);
         switch(this.MessageType)
         {
             case "GAMESETUP":

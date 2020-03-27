@@ -4,7 +4,8 @@ const createWebsocket = () => {
 
     socket.onopen = function () {
         console.log("Connected.");
-       socket.send((new SocketMessage("{}",SocketMessage.TypeMessage.ADMINCONNECT).toJson()));        
+        console.log((new SocketMessage("{}",SocketMessage.TypeMessage.ADMINCONNECT)).toJson());
+       socket.send((new SocketMessage("{}",SocketMessage.TypeMessage.ADMINCONNECT)).toJson());        
     }
 
     socket.onclose = function (event) {
