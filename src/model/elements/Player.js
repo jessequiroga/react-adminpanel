@@ -2,16 +2,15 @@ import Marker from "./Marker";
 
 class Player extends Marker
 {
-    Id;
     Items;
     IsAFK;
     InventorySize;
     Team;
     VisibleEntities;
-    constructor(position,team,visibleEntities,inventorySize,isAFK,items,id)
+    constructor(position,name,team,visibleEntities,inventorySize,isAFK,items,id)
     {
-        super(position);
-        this.Id = id;
+        console.log("CreatePlayer",id);
+        super(position,name,id);
         this.Team = team;
         this.VisibleEntities = visibleEntities;
         this.InventorySize = inventorySize;
@@ -42,12 +41,9 @@ class Player extends Marker
 
 class PlayerManager
 {
-    static IncrId=0;
-
-    static createPlayer(position,team,visibleEntities,inventorySize,isAFK,items)
+    static createPlayer(position,name,team,visibleEntities,inventorySize,isAFK,items,id)
     {
-        var item = new Player(position,team,visibleEntities,inventorySize,isAFK,items,this.IncrId);
-        this.IncrId++;
+        var item = new Player(position,name,team,visibleEntities,inventorySize,isAFK,items,id);
         return item;
     }
 

@@ -8,14 +8,18 @@ export default class SocketMessage {
             USEITEM: "USEITEM",
             GAMESETUP: "GAMESETUP",
             NOMAP: "NOMAP",
-            PLAYERCONNECT: "PLAYERCONNECT"
+            PLAYERCONNECT: "PLAYERCONNECT",
+            ENTITYUPDATE:"ENTITYUPDATE",
+            ENTITYDELETE:"ENTITYDELETE",
+            ENTITYADD:"ENTITYADD",
+            OK:"OK"
         }
 
     MessageType;
     ContainedEntity;
 
     constructor(Json,type=null) {
-        if(type==null && typeof(Json) =="string")
+        if(type==null && typeof(Json) =="string") //Read
         {
             let findType = true;
             var message = SocketMessage.getMessage(Json);
@@ -27,7 +31,6 @@ export default class SocketMessage {
                     this.ContainedEntity = message.Game;
                     break;
                 case "PLAYERCONNECT":
-                    console.log("Game: ",message);
                     this.ContainedEntity = message.Players; // Jsonised the map
                     break;
                 case "NOMAP":
@@ -43,28 +46,17 @@ export default class SocketMessage {
             }
             
         }
-        if(type!=null && typeof(Json) =="object")
+        if(type!=null && typeof(Json) =="object") //Write with object
         {
             let findType = true;
-            switch(type)
+            if(Object.keys(SocketMessage.TypeMessage).indexOf(type) != -1)
             {
-                case "GAMESETUP":
-                    this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
-                    break;
-                case "PLAYERCONNECT":
-                    this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
-                    break;
-                default:
-                    findType = false;
-                    break;
-            }
-            if(findType)
-            {
+                this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
                 this.MessageType = type;
             }
             
         }
-        if(type!=null && typeof(Json) =="string")
+        if(type!=null && typeof(Json) =="string") //Write with string
         {
             let findType = true;
             switch(type)
@@ -73,6 +65,9 @@ export default class SocketMessage {
                     this.ContainedEntity = Json; // Jsonised the map
                     break;
                 case "ADMINCONNECT":
+                    this.ContainedEntity = null;
+                    break;
+                case "ENTITYADD":
                     this.ContainedEntity = null;
                     break;
                 default:
@@ -110,6 +105,10 @@ export default class SocketMessage {
                 result = null;
                 break;
             case "ADMINCONNECT":
+                result = JSON.stringify(jsonObject);
+                break;
+            case "ENTITYADD":
+                jsonObject.push(JSON.parse(this.ContainedEntity));
                 result = JSON.stringify(jsonObject);
                 break;
             default:

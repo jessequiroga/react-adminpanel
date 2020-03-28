@@ -21,7 +21,7 @@ function Header({setListPlayerOpen}) {
       <Nav navbar>
         <Nav className="justify-content-center">
           <NavItem className="mr-4">
-            <Button onClick={saveMap}>Save Map</Button>
+            {/*<Button onClick={saveMap}>Save Map</Button>*/}
           </NavItem>
           <NavItem className="mr-4">
             <Button onClick={showListPlayer}>Show Connected Players</Button>

@@ -226,6 +226,8 @@ function Map() {
       let polyObject = ZoneManager.createZone(paths);
       polyObject.MapEntity = poly;
       Game.getInstance().addZone(polyObject);
+      let socket = SocketController.getSocket();
+      socket.send((new SocketMessage(polyObject,SocketMessage.TypeMessage.ENTITYADD)));
     }
     else // If the polygone have less of 3 coordinates it's not a polygone
     {

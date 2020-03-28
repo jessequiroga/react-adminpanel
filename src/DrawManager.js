@@ -6,8 +6,10 @@ import AltarManager from './model/elements/Altar.js';
 import ItemManager from './model/elements/Item.js';
 import Game from './model/Game.js';
 import $ from 'jquery';
+import SocketController from './model/SocketController.js';
+import SocketMessage from './model/SocketMessage.js';
 
-export default class MapControl extends Component {
+export default class DrawManager extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
@@ -18,6 +20,7 @@ export default class MapControl extends Component {
     var withVisionCircle=true;
     newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addAltar(newAltar);
+    this.conn.send((new SocketMessage(newAltar,SocketMessage.TypeMessage.ENTITYADD)));
   }
 
   addItem = (mousePos) => // event add Item marker
@@ -27,12 +30,14 @@ export default class MapControl extends Component {
     var withVisionCircle=true;
     newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addItem(newItem);
+    this.conn.send((new SocketMessage(newItem,SocketMessage.TypeMessage.ENTITYADD)));
   }
 
   componentWillMount() { // MapControll creation
     this.map = this.context[MAP]; // get the google map object
     this.divDrawManager = window.document.createElement('div'); // create a body div
     this.map.controls[this.props.position].push(this.divDrawManager); // put the body div on the map
+    this.conn = SocketController.getSocket();
   }
 
   componentDidUpdate() {

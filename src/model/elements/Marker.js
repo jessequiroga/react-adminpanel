@@ -55,9 +55,9 @@ const markerDragStop = (marker,map) => {
 export default class Marker extends Entity
 {
     Icon;
-    constructor(position)
+    constructor(position,name=null,id=null)
     {
-        super(position);
+        super(position,name,id);
     }
 
     toMapElement(map,setSelectedDrawed={},withVisionCircle=false,withColision=false){

@@ -15,6 +15,7 @@ export default class PlayerControl extends Component {
       if(player.Id != null && player.Position != null)
       {
         let indexP = Game.getInstance().findPlayerById(player.Id)
+        console.log("Player",indexP,player.Id,player.Name)
         if( indexP != -1)
         {
           if(!Initiate)
@@ -22,7 +23,7 @@ export default class PlayerControl extends Component {
           exist = true;
         }
 
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items);
+        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Name,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
         newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
 
         if(exist)
@@ -50,13 +51,16 @@ export default class PlayerControl extends Component {
       if(player.Id != null)
       {
         let exist = false;
-        let indexP = Game.getInstance().findPlayerById(player.Id)
+        let indexP = Game.getInstance().findPlayerById(player.Id);
+        console.log("Game Players",Game.getInstance().Players);
+        console.log("Player",indexP,player.Id,player.Name);
         if( indexP != -1)
         {
           exist = true;
         }
 
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items);
+        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Name,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+        console.log(newPlayer);
         if(exist)
         {
           Game.getInstance().replacePlayer(indexP,newPlayer);

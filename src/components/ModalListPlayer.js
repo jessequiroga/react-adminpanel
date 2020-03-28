@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PlayersListDisplay from "./PlayersListDisplay";
+import Game from "../model/Game";
 
-function ModalListPlayer({ listPlayerOpen, setListPlayerOpen }) {
+function ModalListPlayer( {listPlayerOpen, setListPlayerOpen} ) {
+
+    let [listPlayer,setListPlayer] = useState(null);
 
     let closeModal = () => {
         setListPlayerOpen(false);
     }
+
     return (
         <>
             <Modal isOpen={listPlayerOpen}>

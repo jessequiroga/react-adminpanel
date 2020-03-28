@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PlayersListDisplay from "./PlayersListDisplay";
+import Game from "../model/Game";
 
 function ModalBeginGame({ gameBegin }) {
 
     let [modalOpen, setModalOpen] = useState(!gameBegin);
+    let [listPlayer,setListPlayer] = useState(null);
 
     useEffect(() => { // On Open Admin 
         setModalOpen(!gameBegin);
@@ -13,6 +15,7 @@ function ModalBeginGame({ gameBegin }) {
     let closeModal = () => {
         setModalOpen(false);
     }
+    
     return (
         <>
             <Modal isOpen={modalOpen}>

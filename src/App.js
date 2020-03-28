@@ -17,13 +17,6 @@ function App() {
   let [gameBegin,setGameBegin]  = useState(true);
   let [listPlayerOpen,setListPlayerOpen] = useState(false);
   
-  /*Date.prototype.addDays = function(days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-  console.log((new Date()).addDays(1).toJSON());*/
-
   useEffect(() => { // On Open Admin 
     let conn = SocketController.getSocket();
     conn.onmessage = function(event){
@@ -52,6 +45,11 @@ function App() {
       }
     }    
   }, []);
+
+  useEffect(() => { // On Game.getInstance().Players change
+    if(Game.getInstance()&&Game.getInstance().Players!=null)
+      console.log("newPlayer");
+  }, [(Game.getInstance()&&Game.getInstance().Players!=null&&Game.getInstance().Players)]);
   
   return (
     <>  

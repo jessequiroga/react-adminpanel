@@ -3,15 +3,13 @@ import IconItem from './IconItem'
 
 class Item extends Marker
 {
-    Id;
     CaptureDate;
     UnavailableTime;
     Type;
-    constructor(position,type,id)
+    constructor(position,type)
     {
         super(position);
         super.Type = type;
-        this.Id = id;
         this.VisionDistance=20;
     }
 
@@ -26,12 +24,10 @@ class Item extends Marker
 
 class ItemManager
 {
-    static IncrId=0;
 
     static createItem(position,type)
     {
-        var item = new Item(position,type,this.IncrId);
-        this.IncrId++;
+        var item = new Item(position,type);
         return item;
     }
 

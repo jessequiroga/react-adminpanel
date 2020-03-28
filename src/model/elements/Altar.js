@@ -2,15 +2,13 @@ import Marker from "./Marker";
 
 class Altar extends Marker
 {
-    Id;
     CaptureDate;
     UnavailableTime;
     Team;
 
-    constructor(position,id)
+    constructor(position)
     {
         super(position);
-        this.Id = id;
         this.VisionDistance=30;
     }
 
@@ -36,12 +34,9 @@ class Altar extends Marker
 
 class AltarManager
 {
-    static IncrId=0;
-
     static createAltar(position)
     {
-        var altar = new Altar(position,this.IncrId);
-        this.IncrId++;
+        var altar = new Altar(position);
         return altar;
     }
 

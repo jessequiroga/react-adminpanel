@@ -60,6 +60,7 @@
 
     addPlayer(player){
         this.Players.push(player);
+        console.log("add",player);
     }
 
     findZoneById(regionId){
