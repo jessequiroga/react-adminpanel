@@ -18,4 +18,3 @@ export default class Team
         this.Players.push(player);
     }
 }
-

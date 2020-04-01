@@ -2,14 +2,17 @@ import Point from './Point.js';
 import Game from '../model/Game';
 
 export default class DrawConflict {
-    static isConflict(visionCircle) {
-        let listVisionMarker = [];
-        Game.getInstance().Items.forEach(item => {
-        listVisionMarker.push(item.toMapElement());
-        });
-        Game.getInstance().Flags.forEach(flag => {
-        listVisionMarker.push(flag.toMapElement());
-        });
+    static isConflict(visionCircle,listVisionMarker=null) {
+        if(listVisionMarker == null)
+        {
+            listVisionMarker = [];
+            Game.getInstance().Items.forEach(item => {
+            listVisionMarker.push(item.toMapElement());
+            });
+            Game.getInstance().Flags.forEach(flag => {
+            listVisionMarker.push(flag.toMapElement());
+            });
+        }
         var result = false;
         listVisionMarker.forEach((m) => {
             var visionMarker = m.visionCircle;

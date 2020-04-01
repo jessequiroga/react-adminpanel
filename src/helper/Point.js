@@ -2,10 +2,10 @@ export default class Point {
     x;
     y;
 
-    constructor({lat,lng})
+    constructor(element)
     {
-        this.x = lat();
-        this.y = lng();
+        this.x = element.lat();
+        this.y = element.lng();
     }
 
     distanceTo(point){

@@ -26,7 +26,7 @@ const visionCircleDragChange= (marker,map,withColision) =>
       radius: marker.visionCircle.radius
     });
     var listVisionMarkerWithoutCurrent= listVisionMarker.filter( (fmarker) => fmarker !== marker);
-    var conflict = withColision?DrawConflict.isConflict(listVisionMarkerWithoutCurrent,visionCircle):false;
+    var conflict = withColision?DrawConflict.isConflict(visionCircle,listVisionMarkerWithoutCurrent):false;
     var isInRegion = DrawConflict.isInRegion(listZone,marker);
     if(withColision && !conflict && isInRegion)
     {
