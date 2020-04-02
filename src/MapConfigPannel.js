@@ -48,13 +48,13 @@ function MapConfigPannel({setConfigNeeded}) {
   }
   
   return (
-    <>
+    <div onDragOver={dragOverHandler}>
         <span>Please upload a config file</span>
-        <div id="drop_zone" onDrop={onFileDrop} onDragOver={dragOverHandler} style={drop_zone}>
+        <div id="drop_zone" onDrop={onFileDrop}  style={drop_zone}>
             <a href="#" onClick={browseUploadFile}>+</a>
             <p>Drag the config.json file to this Drop Zone ...</p>
         </div>
-    </>
+    </div>
   );
 
 }
