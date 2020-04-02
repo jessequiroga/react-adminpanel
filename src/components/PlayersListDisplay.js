@@ -1,5 +1,6 @@
 import React from "react";
 import Game from "../model/Game";
+import { Col, Container, Row } from "reactstrap";
 
 function PlayersListDisplay() {
 
@@ -16,29 +17,36 @@ function PlayersListDisplay() {
             {
                 let player = _listPlayers[keyP];
                 if (player.Team.Id == team.Id)
-                    return <span className="text-center">{player.Name}</span>;
+                    return <span className="text-center" style={{ marginTop: "7px" }} >{player.Name}</span>; 
 
 
             });
-            return <div key={team.id} style={{marginRight:"20px",border:"2px",borderStyle:"solid"}}>
-                <div>
-                    <span>{team.Name}</span>
-                    <span style={{backgroundColor:team.Color.toLowerCase(),display: "flex", width: "auto",height: "10px"}}/>
+
+            return <Col xs="6" sm="4">
+                <div key={team.id}>
+                    <div>
+                        <span style={{ fontSize:"18px", fontWeight:"bold" }}>Team {team.Name}</span>
+                        <span style={{ backgroundColor: team.Color.toLowerCase(), display: "flex", width: "auto", height: "4px", marginTop: "7px" }} />
+                    </div>
+                    <div style={{ display: "grid" }}>
+                        {listPlayersInTeam}
+                    </div>
                 </div>
-                <div style={{display:"grid"}}>
-                    {listPlayersInTeam}
-                </div>
-            </div>;
+            </Col>;
 
         });
 
     }
-    
+
     return (
         <>
-            {listTeamswithPlayer ? <div style={{display:"flex",width:"auto"}} className="text-center">
-                    {listTeamswithPlayer}
-            </div> : <span>No Team</span>}
+            {listTeamswithPlayer ?
+                <Container>
+                    <Row>
+                        {listTeamswithPlayer}
+                    </Row>
+                </Container>
+                : <span>No Team</span>}
         </>
     );
 
