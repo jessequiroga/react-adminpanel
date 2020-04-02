@@ -47,7 +47,6 @@ export default class MapControl extends Component {
             //Game.getInstance().Items[indexI].toMapElement().setMap(null);
             exist = true;
           }
-          console.log("item",item.Id);
           let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
           var withVisionCircle=true;
           newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);

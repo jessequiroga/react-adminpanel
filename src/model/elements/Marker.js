@@ -5,7 +5,6 @@ import DrawConflict from '../../helper/DrawConflict.js';
 const visionCircleDragChange= (marker,map,withColision) =>
   { 
     let listVisionMarker = [];
-    console.log(Game.getInstance().Items);
     Game.getInstance().Items.forEach(item => {
       listVisionMarker.push(item.toMapElement());
     });
@@ -95,7 +94,7 @@ export default class Marker extends Entity
                 visionCircle.setMap(map);
                 if(this.constructor.name != "Player")
                   window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-                window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,withColision));
+                window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,true));
                 window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }
@@ -107,7 +106,7 @@ export default class Marker extends Entity
               if (withVisionCircle)
               {
                   visionCircle.setMap(map);
-                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,withColision));
+                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,true));
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }

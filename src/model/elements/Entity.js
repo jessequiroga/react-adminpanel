@@ -21,9 +21,6 @@ export default class Entity
             this.Id = Entity.IncrId;
             Entity.IncrId++;
         }
-        console.log("this.constructor.name",this.constructor.name)
-        console.log('id',Id)
-        console.log("this.Id",this.Id);
         this.Position = Position;
         this.ActionDistance = ActionDistance
         this.IsInActionRange = IsInActionRange

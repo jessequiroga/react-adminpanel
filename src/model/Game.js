@@ -212,7 +212,6 @@
 
     replaceItem(indexI,newItem){
         //console.log("this.Items[indexI]",this.Items[indexI]);
-        console.log("newItem",newItem.Id);
         this.Items[indexI] = newItem;
     }
 
