@@ -12,7 +12,7 @@ import ModalListPlayer from "./components/ModalListPlayer";
 
 function App() {
   let [gameInstance,setGameInstance] = useState(false);
-  let [configNeeded,setConfigNeeded]  = useState(false);
+  let [configNeeded,setConfigNeeded]  = useState(true); // MODIF false
   let [gameEnded,setGameEnded]  = useState(false);
   let [gameBegin,setGameBegin]  = useState(true);
   let [listPlayerOpen,setListPlayerOpen] = useState(false);

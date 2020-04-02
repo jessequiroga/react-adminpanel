@@ -42,17 +42,21 @@ function MapConfigPannel({setConfigNeeded}) {
   }
 
   let drop_zone = {
-    border: "5px solid blue",
-    width:  "200px",
-    height: "100px",
+    textAlign:"center",
+    height: "300px",
+    background: "url(drop_here.png) center",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
   }
   
   return (
     <>
-        <span>Please upload a config file</span>
+        <div style={{textAlign:"center"}}>
+        <span style={{ color:"grey", fontSize:"27px", fontWeight:"bold" }}>Please upload a config file</span>
         <div id="drop_zone" onDrop={onFileDrop} onDragOver={dragOverHandler} style={drop_zone}>
-            <a href="#" onClick={browseUploadFile}>+</a>
-            <p>Drag the config.json file to this Drop Zone ...</p>
+            <a style={{ margin:"45%", color:"grey", fonttextDecoration: "none",fontSize:"50px" }} href ="#" onClick={browseUploadFile}>+</a>
+            {/*<p>Drag the config.json file to this Drop Zone ...</p>*/}
+        </div>
         </div>
     </>
   );

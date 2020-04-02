@@ -50,7 +50,7 @@ function PlayersListDisplay() {
                         {listTeamswithPlayer}
                     </Row>
                 </Container>
-                : <span>No Team</span>}
+                : <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Team</span>}
         </>
     );
 
