@@ -27,7 +27,8 @@ function Map() {
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
-  const[listMarkerPlayer,setListMarkerPlayer] = useState([]);
+  const [listMarkerPlayer,setListMarkerPlayer] = useState([]);
+  const [listPlayerPos,setListPlayerPos] = useState([]);
 
   const connectWebsocket = () =>
   {
@@ -39,9 +40,12 @@ function Map() {
       {
         case SocketMessage.TypeMessage.PLAYERCONNECT:
           let players = message.ContainedEntity;
-          console.log("players: ",players);
           setListPlayer(listPlayer.concat(players));
         break;
+        case SocketMessage.TypeMessage.POS:
+          let playersPos = message.ContainedEntity;
+          setListPlayer(listPlayerPos.concat(playersPos));
+          break;
         default:
           if(message.MessageType!=null)
             console.log("pas d'action pour ce type de message:",message.MessageType);
@@ -284,7 +288,7 @@ function Map() {
 
       <MapControl listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed}/>
 
-      <PlayersControl canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
+      <PlayersControl canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed}/>
 
       <DrawManager listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
