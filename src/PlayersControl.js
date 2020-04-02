@@ -18,27 +18,32 @@ export default class PlayerControl extends Component {
         let indexP = Game.getInstance().findPlayerById(player.Id);
         if( indexP != -1)
         {
+          let _currentPlayer = Game.getInstance().Players[indexP];
           if(!Initiate)
-            Game.getInstance().Players[indexP].toMapElement().setMap(null);
-          exist = true;
-        }
-
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-        var marker = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
-
-        if(exist)
-        {
-          Game.getInstance().replacePlayer(indexP,newPlayer);
+          {
+            if( _currentPlayer.MapEntity !== null)
+            {
+              _currentPlayer.toMapElement().setPosition(player.Position);
+              _currentPlayer.toMapElement().visionCircle.setPosition(player.Position);
+            }
+            else
+            {
+              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+              newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+              Game.getInstance().replacePlayer(indexP,newPlayer);
+            }
+          }
         }
         else
         {
           if(!Initiate)
           {
+            let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+            newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
             Game.getInstance().addPlayer(newPlayer);
             Entity.IncrId++;
           }
-        }
-          
+        }          
       }
       else
         console.log("Un id n'est pas indiqué pour le player: ", player);

@@ -220,32 +220,32 @@
 
 }
 class SingletonGame { // Object Game to sigleton
-        static instance;
-        static GameType = {
-            FLAG:"FLAG",
-            TIME:"TIME",
-            SUPREMACY:"SUPREMACY"
-        }   
+    static instance;
+    static GameType = {
+        FLAG:"FLAG",
+        TIME:"TIME",
+        SUPREMACY:"SUPREMACY"
+    }   
 
-        static getInstance(game=null){
-            if(game!=null)
-            {
-                this.instance = new Game(game.GameType,
-                                        game.Name,
-                                        game.Duration,
-                                        game.BeginDate,
-                                        game.EndDate,
-                                        game.MinPlayer,
-                                        game.Ip,
-                                        game.Players,
-                                        game.Regions,
-                                        game.Items,
-                                        game.Flags,
-                                        game.Teams);
-            }
-            
-            return this.instance;
+    static getInstance(game=null){
+        if(game!=null)
+        {
+            this.instance = new Game(game.GameType,
+                                    game.Name,
+                                    game.Duration,
+                                    game.BeginDate,
+                                    game.EndDate,
+                                    game.MinPlayer,
+                                    game.Ip,
+                                    game.Players,
+                                    game.Regions,
+                                    game.Items,
+                                    game.Flags,
+                                    game.Teams);
         }
+        
+        return this.instance;
+    }
 }
 
 export default SingletonGame;
