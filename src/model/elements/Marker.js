@@ -6,14 +6,14 @@ const visionCircleDragChange= (marker,withColision) =>
   { 
     let listVisionMarker = [];
     Game.getInstance().Items.forEach(item => {
-      listVisionMarker.push(item.toMapElement());
+      if(item.toMapElement)listVisionMarker.push(item.toMapElement());
     });
     Game.getInstance().Flags.forEach(flag => {
-      listVisionMarker.push(flag.toMapElement());
+      if(flag.toMapElement)listVisionMarker.push(flag.toMapElement());
     });
     let listZone = [];
     Game.getInstance().Regions.forEach(zone => {
-      listZone.push(zone.toMapElement());
+      if(zone.toMapElement)listZone.push(zone.toMapElement());
     });
 
     var listVisionMarkerWithoutCurrent= listVisionMarker.filter( (fmarker) => fmarker !== marker);

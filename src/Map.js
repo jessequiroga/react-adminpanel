@@ -48,6 +48,8 @@ function Map() {
           _listPlayerPos[playersPos.Id] = playersPos;
           setListPlayerPos(_listPlayerPos);
           break;
+        case SocketMessage.TypeMessage.OK:
+          break;
         default:
           if(message.MessageType!=null)
             console.log("pas d'action pour ce type de message:",message.MessageType);

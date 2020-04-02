@@ -70,6 +70,9 @@ export default class SocketMessage {
                 case "POS":
                     this.ContainedEntity = message.Player;
                     break;
+                case "OK":
+                this.ContainedEntity = null;
+                    break;
                 default:
                     findType = false;
                     break;
