@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Container, Row } fr
 import PlayersListDisplay from "./PlayersListDisplay";
 import Game from "../model/Game";
 
-function ModalBeginGame({ gameBegin }) {
+function ModalBeginGame({ gameBegin,instanceListPlayer }) {
 
     let [modalOpen, setModalOpen] = useState(!gameBegin);
     let [listPlayer, setListPlayer] = useState(null);
@@ -22,7 +22,7 @@ function ModalBeginGame({ gameBegin }) {
                 <ModalHeader className="text-center text-light bg-dark" >The Game wasn't begin</ModalHeader>
                 <ModalBody className="text-center font-weight-bold">
 
-                    <PlayersListDisplay />
+                    <PlayersListDisplay instanceListPlayer={instanceListPlayer} />
 
                 </ModalBody>
                 <ModalFooter>

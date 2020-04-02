@@ -2,21 +2,17 @@ import React from "react";
 import Game from "../model/Game";
 import { Col, Container, Row } from "reactstrap";
 
-function PlayersListDisplay() {
+function PlayersListDisplay({instanceListPlayer}) {
 
     let listTeamswithPlayer = null;
-
-    if (Game.getInstance() && Object.keys(Game.getInstance()).length > 0 && Object.keys(Game.getInstance().Players).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
-        let _listPlayers = Game.getInstance().Players;
+    if (instanceListPlayer && Object.keys(instanceListPlayer).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
+        let _listPlayers = instanceListPlayer;
         let _listTeams = Game.getInstance().Teams;
-        
-        
+    
         listTeamswithPlayer = Object.keys(_listTeams).map(function (keyT, index) // List Teams
         {
             let team = _listTeams[keyT];
 
-            
-            
             let listPlayersInTeam = Object.keys(_listPlayers).map(function (keyP, index) // List Players in current Team
             {
                 let player = _listPlayers[keyP];

@@ -60,7 +60,6 @@
 
     addPlayer(player){
         this.Players.push(player);
-        console.log("add",player);
     }
 
     findZoneById(regionId){
@@ -226,13 +225,7 @@ class SingletonGame { // Object Game to sigleton
             FLAG:"FLAG",
             TIME:"TIME",
             SUPREMACY:"SUPREMACY"
-        }
-     
-        static createInstance() {
-            var object = new Game(this.GameType.FLAG,"hug","60",new Date(),"3","127.0.0.1");
-            return object;
-        }
-     
+        }   
 
         static getInstance(game=null){
             if(game!=null)

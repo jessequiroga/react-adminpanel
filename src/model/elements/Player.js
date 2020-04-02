@@ -9,7 +9,6 @@ class Player extends Marker
     VisibleEntities;
     constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id)
     {
-        console.log("CreatePlayer",Id);
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         this.Team = team;
         this.VisibleEntities = visibleEntities;

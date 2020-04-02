@@ -15,8 +15,7 @@ export default class PlayerControl extends Component {
       let exist = false;
       if(player.Id != null && player.Position != null)
       {
-        let indexP = Game.getInstance().findPlayerById(player.Id)
-        console.log("Player",indexP,player.Id,player.Name)
+        let indexP = Game.getInstance().findPlayerById(player.Id);
         if( indexP != -1)
         {
           if(!Initiate)
@@ -25,7 +24,7 @@ export default class PlayerControl extends Component {
         }
 
         let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-        newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+        var marker = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
 
         if(exist)
         {
@@ -50,7 +49,7 @@ export default class PlayerControl extends Component {
   newPlayerInLobby = (players) =>
   {
     players.forEach((player)=>{
-      if(player.Id != null)
+      if(player !=null && player.Id != null)
       {
         let exist = false;
         let indexP = Game.getInstance().findPlayerById(player.Id);
@@ -60,7 +59,6 @@ export default class PlayerControl extends Component {
         }
 
         let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-        console.log(newPlayer);
         if(exist)
         {
           Game.getInstance().replacePlayer(indexP,newPlayer);
@@ -68,6 +66,7 @@ export default class PlayerControl extends Component {
         else
         {
           Game.getInstance().addPlayer(newPlayer);
+          Entity.IncrId++;
         }
       }
       else
@@ -102,7 +101,6 @@ export default class PlayerControl extends Component {
   componentDidUpdate() {
     let gameBegin = true;
     let gameEnded = false;
-
     if(Game.getInstance() != null)
     {
       let this_game = Game.getInstance();
@@ -116,15 +114,12 @@ export default class PlayerControl extends Component {
       }
     }
 
-    if(this.props.listPlayer.length>0 && (this.listPlayer.length ==0 || this.listPlayer !== this.props.listPlayer)){
-      this.listPlayer = this.props.listPlayer;
-      if(gameBegin && !gameEnded){
-        this.newMarkerPlayers(this.props.listPlayerPos);
-      }
-      else if (!gameBegin)
-      {
-        this.newPlayerInLobby(this.props.listPlayer);
-      }
+    if(gameBegin && !gameEnded){
+      this.newMarkerPlayers(this.props.listPlayerPos);
+    }
+    else if (!gameBegin)
+    {
+      this.newPlayerInLobby(this.props.listPlayer);
     }
   }
 

@@ -11,11 +11,13 @@ import ModalListPlayer from "./components/ModalListPlayer";
 
 
 function App() {
-  let [gameInstance,setGameInstance] = useState(false);
-  let [configNeeded,setConfigNeeded]  = useState(true); // MODIF false
-  let [gameEnded,setGameEnded]  = useState(false);
-  let [gameBegin,setGameBegin]  = useState(true);
-  let [listPlayerOpen,setListPlayerOpen] = useState(false);
+  const [gameInstance,setGameInstance] = useState(false);
+  const [configNeeded,setConfigNeeded]  = useState(false); // MODIF false
+  const [gameEnded,setGameEnded]  = useState(false);
+  const [gameBegin,setGameBegin]  = useState(true);
+  const [listPlayerOpen,setListPlayerOpen] = useState(false);
+  const [instanceListPlayer,setInstanceListPlayer] = useState(Game.getInstance());
+  const [time,setTime] = useState(new Date().toLocaleTimeString());
   
   useEffect(() => { // On Open Admin 
     let conn = SocketController.getSocket();
@@ -43,22 +45,22 @@ function App() {
           }
           break;
       }
-    }    
+    }
+    const id = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+      Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);
+    }, 1000);
+    return () => clearInterval(id); // this "clean" function is executed here on component unmount
   }, []);
-
-  useEffect(() => { // On Game.getInstance().Players change
-    if(Game.getInstance()&&Game.getInstance().Players!=null)
-      console.log("newPlayer");
-  }, [(Game.getInstance()&&Game.getInstance().Players!=null&&Game.getInstance().Players)]);
   
   return (
     <>  
         {configNeeded&&<MapConfigPannel setConfigNeeded={setConfigNeeded}/>}
         {gameInstance&&<Header setListPlayerOpen={setListPlayerOpen}/>}
         {gameInstance&&<GoogleMap/>}
-        {gameInstance&&<ModalBeginGame gameBegin={gameBegin}/>}
+        {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
-        {gameInstance&&<ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen}/>}
+        {gameInstance&&<ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen} instanceListPlayer={instanceListPlayer}/>}
         {!gameInstance&&<span>No Game Instance For the moment sorry</span>}
     </>
   );

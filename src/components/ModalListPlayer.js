@@ -3,9 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PlayersListDisplay from "./PlayersListDisplay";
 import Game from "../model/Game";
 
-function ModalListPlayer( {listPlayerOpen, setListPlayerOpen} ) {
-
-    let [listPlayer,setListPlayer] = useState(null);
+function ModalListPlayer( {listPlayerOpen, setListPlayerOpen, instanceListPlayer} ) {
 
     let closeModal = () => {
         setListPlayerOpen(false);
@@ -16,7 +14,7 @@ function ModalListPlayer( {listPlayerOpen, setListPlayerOpen} ) {
             <Modal isOpen={listPlayerOpen}>
                 <ModalHeader className="text-center text-light bg-dark">Connected Players</ModalHeader>
                 <ModalBody className="text-center">
-                    <PlayersListDisplay/>
+                    <PlayersListDisplay instanceListPlayer={instanceListPlayer}/>
                 </ModalBody>
                 <ModalFooter>
                     <Button onClick={closeModal} color="dark">Close</Button>

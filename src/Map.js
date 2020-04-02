@@ -44,7 +44,9 @@ function Map() {
         break;
         case SocketMessage.TypeMessage.POS:
           let playersPos = message.ContainedEntity;
-          setListPlayer(listPlayerPos.concat(playersPos));
+          let _listPlayerPos = listPlayerPos.slice(0);
+          _listPlayerPos[playersPos.Id] = playersPos;
+          setListPlayerPos(_listPlayerPos);
           break;
         default:
           if(message.MessageType!=null)
@@ -243,7 +245,7 @@ function Map() {
   
   return (
     <GoogleMap
-      defaultZoom={17} // Initiate the defalt zoom view on the map
+      defaultZoom={9} // Initiate the defalt zoom view on the map
       defaultCenter={{ lat: 48.529377, lng: 7.73689 }} // Initiate the begin coordonate on the Iut pos
       //defaultCenter={{ lat: 45.421532, lng: -75.967189 }} //Ottawa
       options= // Initiate all the option of the map
@@ -253,7 +255,7 @@ function Map() {
         keyboardShortcuts: false, // disable keyboard shortcuts
         scaleControl: true, // allow scale controle
         scrollwheel: true, // allow scroll wheel
-        streetViewControl: false, // Enlève la possibilité d'utilisé la fonction streetview
+        streetViewControl: false, // Disable the streetview
         styles: myStyle // change default map styles
       }}
     >

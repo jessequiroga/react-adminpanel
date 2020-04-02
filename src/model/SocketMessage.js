@@ -23,8 +23,8 @@ export default class SocketMessage {
         {
             let findType = true;
             var message = SocketMessage.getMessage(Json);
-
             let messageType = SocketMessage.TypeMessage[Object.keys(SocketMessage.TypeMessage)[message.Type]];
+
             switch(messageType)
             {
                 case "GAMESETUP":
@@ -36,8 +36,9 @@ export default class SocketMessage {
                 case "NOMAP":
                     this.ContainedEntity = null;
                     break;
-                case "Pos":
-                    this.ContainedEntity = message.Players;
+                case "POS":
+                    this.ContainedEntity = message.Player;
+                    break;
                 default:
                     findType = false;
                     break;
