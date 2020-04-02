@@ -7,10 +7,10 @@ export default class DrawConflict {
         {
             listVisionMarker = [];
             Game.getInstance().Items.forEach(item => {
-            listVisionMarker.push(item.toMapElement());
+                listVisionMarker.push(item.toMapElement());
             });
             Game.getInstance().Flags.forEach(flag => {
-            listVisionMarker.push(flag.toMapElement());
+                listVisionMarker.push(flag.toMapElement());
             });
         }
         var result = false;

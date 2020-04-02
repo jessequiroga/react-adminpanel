@@ -205,10 +205,14 @@
     }
 
     replaceAltar(indexA,newAltar){
+        //console.log("this.Flags[indexI]",this.Flags[indexA]);
+        //console.log("newItem",newAltar);
         this.Flags[indexA] = newAltar;
     }
 
     replaceItem(indexI,newItem){
+        //console.log("this.Items[indexI]",this.Items[indexI]);
+        console.log("newItem",newItem.Id);
         this.Items[indexI] = newItem;
     }
 

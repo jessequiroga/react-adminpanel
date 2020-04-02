@@ -5,6 +5,7 @@ import DrawConflict from '../../helper/DrawConflict.js';
 const visionCircleDragChange= (marker,map,withColision) =>
   { 
     let listVisionMarker = [];
+    console.log(Game.getInstance().Items);
     Game.getInstance().Items.forEach(item => {
       listVisionMarker.push(item.toMapElement());
     });
@@ -55,9 +56,9 @@ const markerDragStop = (marker,map) => {
 export default class Marker extends Entity
 {
     Icon;
-    constructor(position,name=null,id=null)
+    constructor(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,Id=null)
     {
-        super(position,name,id);
+        super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
     }
 
     toMapElement(map,setSelectedDrawed={},withVisionCircle=false,withColision=false){

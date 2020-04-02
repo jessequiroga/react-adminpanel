@@ -3,6 +3,7 @@ import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import ManagerPlayers from './model/elements/Player';
 import Game from './model/Game';
+import Entity from './model/elements/Entity';
 
 export default class PlayerControl extends Component {
 
@@ -23,7 +24,7 @@ export default class PlayerControl extends Component {
           exist = true;
         }
 
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Name,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
         newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
 
         if(exist)
@@ -35,6 +36,7 @@ export default class PlayerControl extends Component {
           if(!Initiate)
           {
             Game.getInstance().addPlayer(newPlayer);
+            Entity.IncrId++;
           }
         }
           
@@ -52,14 +54,12 @@ export default class PlayerControl extends Component {
       {
         let exist = false;
         let indexP = Game.getInstance().findPlayerById(player.Id);
-        console.log("Game Players",Game.getInstance().Players);
-        console.log("Player",indexP,player.Id,player.Name);
         if( indexP != -1)
         {
           exist = true;
         }
 
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.Name,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
         console.log(newPlayer);
         if(exist)
         {
