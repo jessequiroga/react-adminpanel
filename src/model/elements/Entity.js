@@ -1,6 +1,6 @@
 export default class Entity 
 {
-    static IncrId;
+    static IncrId = 0;
     Id;
     Position;
     VisionDistance;

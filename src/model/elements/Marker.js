@@ -85,8 +85,6 @@ export default class Marker extends Entity
               visionCircle:visionCircle,
               id : this.Id
           });
-          visionCircle.marker = marker;
-
           
           if(withColision){
               conflict = DrawConflict.isConflict(visionCircle);    
