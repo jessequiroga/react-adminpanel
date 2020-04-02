@@ -9,10 +9,14 @@ function PlayersListDisplay() {
     if (Game.getInstance() && Object.keys(Game.getInstance()).length > 0 && Object.keys(Game.getInstance().Players).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
         let _listPlayers = Game.getInstance().Players;
         let _listTeams = Game.getInstance().Teams;
-
+        
+        
         listTeamswithPlayer = Object.keys(_listTeams).map(function (keyT, index) // List Teams
         {
             let team = _listTeams[keyT];
+
+            
+            
             let listPlayersInTeam = Object.keys(_listPlayers).map(function (keyP, index) // List Players in current Team
             {
                 let player = _listPlayers[keyP];
@@ -22,7 +26,7 @@ function PlayersListDisplay() {
 
             });
 
-            return <Col xs="6" sm="4">
+            return <Col sm={Game.getInstance().Teams.length > 3 ? '4' : '6'}>
                 <div key={team.id}>
                     <div>
                         <span style={{ fontSize:"18px", fontWeight:"bold" }}>Team {team.Name}</span>

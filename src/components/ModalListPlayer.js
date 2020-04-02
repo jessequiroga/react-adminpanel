@@ -15,7 +15,7 @@ function ModalListPlayer( {listPlayerOpen, setListPlayerOpen} ) {
         <>
             <Modal isOpen={listPlayerOpen}>
                 <ModalHeader className="text-center text-light bg-dark">Connected Players</ModalHeader>
-                <ModalBody className="text-center font-weight-bold">
+                <ModalBody className="text-center">
                     <PlayersListDisplay/>
                 </ModalBody>
                 <ModalFooter>
