@@ -208,7 +208,8 @@ function Map() {
       **/
      google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
      google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-       !canDraw()&&setSelectedDrawed(component); // Select the drawed component
+     !canDraw()&&setSelectedDrawed(component); // Select the drawed component
+
      });
     }
 
@@ -233,7 +234,7 @@ function Map() {
       polyObject.MapEntity = poly;
       Game.getInstance().addZone(polyObject);
       let socket = SocketController.getSocket();
-      socket.send((new SocketMessage(polyObject,SocketMessage.TypeMessage.ENTITYADD)));
+      socket.send((new SocketMessage(polyObject,SocketMessage.TypeMessage.FLAGADD)).toJson());
     }
     else // If the polygone have less of 3 coordinates it's not a polygone
     {

@@ -1,4 +1,31 @@
 import Game from "./Game";
+function _objectWithoutProperties(obj, keys) {
+    var target = {};
+    for (var i in obj) {
+      if (keys.indexOf(i) >= 0) continue;
+      if(obj[i] instanceof Object && obj[i] !== null && !(obj[i] instanceof Date) && ((Array.isArray(obj[i]) && obj[i][0] instanceof Object) || !Array.isArray(obj[i]) ))
+      {
+        if(obj[i] instanceof Array)
+        {
+          target[i] = Object.values(_objectWithoutProperties(obj[i],keys));
+        }
+        else
+          target[i] = _objectWithoutProperties(obj[i],keys);
+      }
+      else
+      {
+        if(obj[i] instanceof Array)
+        {
+          target[i] = Object.values(obj[i]);
+        }
+        else
+          target[i] = obj[i];
+      }
+      
+    }
+    return target;
+  }
+
 export default class SocketMessage {
     static TypeMessage =
         {
@@ -9,10 +36,14 @@ export default class SocketMessage {
             GAMESETUP: "GAMESETUP",
             NOMAP: "NOMAP",
             PLAYERCONNECT: "PLAYERCONNECT",
-            ENTITYUPDATE:"ENTITYUPDATE",
-            ENTITYDELETE:"ENTITYDELETE",
-            ENTITYADD:"ENTITYADD",
-            OK:"OK"
+            FLAGUPDATE:"FLAGUPDATE",
+            FLAGDELETE:"FLAGDELETE",
+            FLAGADD:"FLAGADD",
+            OK:"OK",
+            REGIONADD:"REGIONADD",
+            ITEMADD:"ITEMADD",
+            ITEMUPDATE:"ITEMUPDATE",
+            ITEMDELETE:"ITEMDELETE"
         }
 
     MessageType;
@@ -51,10 +82,9 @@ export default class SocketMessage {
         }
         if(type!=null && typeof(Json) =="object") //Write with object
         {
-            let findType = true;
             if(Object.keys(SocketMessage.TypeMessage).indexOf(type) != -1)
             {
-                this.ContainedEntity = JSON.stringify(Json); // Jsonised the map
+                this.ContainedEntity = JSON.stringify(_objectWithoutProperties(Json,["MapEntity"])); // Jsonised the map
                 this.MessageType = type;
             }
             
@@ -110,12 +140,26 @@ export default class SocketMessage {
             case "ADMINCONNECT":
                 result = JSON.stringify(jsonObject);
                 break;
-            case "ENTITYADD":
-                jsonObject.push(JSON.parse(this.ContainedEntity));
+            case "FLAGADD":
+            case "FLAGUPDATE":
+            case "FLAGDELETE":
+                jsonObject.Flag = JSON.parse(this.ContainedEntity);
+                result = JSON.stringify(jsonObject);
+                break;
+            case "ITEMADD":
+            case "ITEMUPDATE":
+            case "ITEMDELETE":
+                jsonObject.Item = JSON.parse(this.ContainedEntity);
+                result = JSON.stringify(jsonObject);
+                break;
+            case "REGIONYADD":
+            case "REGIONUPDATE":
+            case "REGIONDELETE":
+                jsonObject.Region = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
             case "POS":
-                jsonObject.push(JSON.parse(this.ContainedEntity));
+                jsonObject.Player = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
             default:

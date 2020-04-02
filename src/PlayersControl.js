@@ -12,7 +12,6 @@ export default class PlayerControl extends Component {
   newMarkerPlayers = (players,Initiate=false) =>
   {
     players.forEach((player)=>{
-      let exist = false;
       if(player.Id != null && player.Position != null)
       {
         let indexP = Game.getInstance().findPlayerById(player.Id);
@@ -21,11 +20,12 @@ export default class PlayerControl extends Component {
           let _currentPlayer = Game.getInstance().Players[indexP];
           if(!Initiate)
           {
-            if( _currentPlayer.MapEntity !== null &&  _currentPlayer.MapEntity !== null)
+            if( _currentPlayer.MapEntity &&  _currentPlayer.MapEntity !== null)
             {
-              console.log(_currentPlayer);
-              _currentPlayer.toMapElement().setPosition(player.Position);
-              //_currentPlayer.toMapElement().visionCircle.setPosition(player.Position);
+              _currentPlayer.Position = player.Position;
+              _currentPlayer.toMapElement().setPosition({lat:player.Position[0],lng:player.Position[1]});
+              if(_currentPlayer.toMapElement().visionCircle)
+              _currentPlayer.toMapElement().visionCircle.setCenter({lat:player.Position[0],lng:player.Position[1]});
             }
             else
             {
@@ -46,7 +46,7 @@ export default class PlayerControl extends Component {
           }
         }          
       }
-      else
+      else if(!Initiate)     
         console.log("Un id n'est pas indiqué pour le player: ", player);
     });
   }

@@ -61,7 +61,9 @@ function App() {
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
         {gameInstance&&<ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen} instanceListPlayer={instanceListPlayer}/>}
-        {!gameInstance&&<span>No Game Instance For the moment sorry</span>}
+        <div style={{textAlign: "center",paddingTop: "20%"}}>
+          {!gameInstance&& !configNeeded &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
+        </div>
     </>
   );
 

@@ -2,7 +2,7 @@ import Entity from "./Entity";
 import Game from "../Game";
 import DrawConflict from '../../helper/DrawConflict.js';
 
-const visionCircleDragChange= (marker,map,withColision) =>
+const visionCircleDragChange= (marker,withColision) =>
   { 
     let listVisionMarker = [];
     Game.getInstance().Items.forEach(item => {
@@ -16,38 +16,23 @@ const visionCircleDragChange= (marker,map,withColision) =>
       listZone.push(zone.toMapElement());
     });
 
-    let visionCircle = new window.google.maps.Circle({
-      strokeColor: '#01A9DB',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#01A9DB',
-      fillOpacity: 0.35,
-      center: marker.position,
-      radius: marker.visionCircle.radius
-    });
     var listVisionMarkerWithoutCurrent= listVisionMarker.filter( (fmarker) => fmarker !== marker);
-    var conflict = withColision?DrawConflict.isConflict(visionCircle,listVisionMarkerWithoutCurrent):false;
+    var conflict = withColision?DrawConflict.isConflict(marker.position,marker.visionCircle.radius,listVisionMarkerWithoutCurrent):false;
     var isInRegion = DrawConflict.isInRegion(listZone,marker);
     if(withColision && !conflict && isInRegion)
     {
-      marker.visionCircle.setMap(null);
-      marker.visionCircle=visionCircle;
-      marker.visionCircle.setMap(map);
+      marker.visionCircle.setCenter(marker.position);
     }
     else if(!withColision && isInRegion)
     {
-      marker.visionCircle.setMap(null);
-      marker.visionCircle=visionCircle;
-      marker.visionCircle.setMap(map);
+      marker.visionCircle.setCenter(marker.position);
     }
   }
 
 const markerDragStop = (marker,map) => {
     if(marker.position !== marker.visionCircle.center)
     {
-      marker.position= marker.visionCircle.center;
-      marker.setMap(null);
-      marker.setMap(map);
+      marker.setPosition(marker.visionCircle.center);
     }
 }
 
@@ -75,11 +60,11 @@ export default class Marker extends Entity
               fillColor: '#01A9DB',
               fillOpacity: 0.35,
               center: {lat:this.Position[0],lng:this.Position[1]},
-              radius: this.VisionDistance
+              radius: this.VisionDistance*100
             });
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
-              title: 'new',
+              title: (this.constructor.name == "Player")?this.Name:this.constructor.name,
               type: this.constructor.name,
               icon: this.getIcon(),
               visionCircle:visionCircle,
@@ -87,16 +72,16 @@ export default class Marker extends Entity
           });
           
           if(withColision){
-              conflict = DrawConflict.isConflict(visionCircle);    
+              conflict = DrawConflict.isConflict(visionCircle.center,this.VisionDistance*100);    
               if(!conflict)
               {
                 marker.setMap(map);
+                visionCircle.setMap(map);
                 if(this.constructor.name != "Player")
                 {
                   window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-                  visionCircle.setMap(map);
                 }
-                window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,true));
+                window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
                 window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }
@@ -108,7 +93,7 @@ export default class Marker extends Entity
               if (withVisionCircle)
               {
                   visionCircle.setMap(map);
-                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,true));
+                  window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
           }

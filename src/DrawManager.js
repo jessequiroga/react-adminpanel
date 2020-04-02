@@ -20,7 +20,7 @@ export default class DrawManager extends Component {
     var withVisionCircle=true;
     newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addAltar(newAltar);
-    this.conn.send((new SocketMessage(newAltar,SocketMessage.TypeMessage.ENTITYADD)));
+    this.conn.send((new SocketMessage(newAltar,SocketMessage.TypeMessage.FLAGADD)).toJson());
   }
 
   addItem = (mousePos) => // event add Item marker
@@ -30,7 +30,9 @@ export default class DrawManager extends Component {
     var withVisionCircle=true;
     newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle,withColision);
     Game.getInstance().addItem(newItem);
-    this.conn.send((new SocketMessage(newItem,SocketMessage.TypeMessage.ENTITYADD)));
+    let message = (new SocketMessage(newItem,SocketMessage.TypeMessage.ITEMADD))
+    console.log("message",message.toJson());
+    this.conn.send(message);
   }
 
   componentWillMount() { // MapControll creation

@@ -2,7 +2,7 @@ import Point from './Point.js';
 import Game from '../model/Game';
 
 export default class DrawConflict {
-    static isConflict(visionCircle,listVisionMarker=null) {
+    static isConflict(visionCircleCenter,visionCircleRadius,listVisionMarker=null) {
         if(listVisionMarker == null)
         {
             listVisionMarker = [];
@@ -17,8 +17,8 @@ export default class DrawConflict {
         listVisionMarker.forEach((m) => {
             var visionMarker = m.visionCircle;
             var pointVisionMarker = new Point(visionMarker.center);
-            var pointNewMarker = new Point(visionCircle.center);
-            if (pointVisionMarker.distanceTo(pointNewMarker) <= (visionMarker.radius + visionCircle.radius)) {
+            var pointNewMarker = new Point(visionCircleCenter);
+            if (pointVisionMarker.distanceTo(pointNewMarker) <= (visionMarker.radius + visionCircleRadius)) {
                 result = true;
                 return;
             }
