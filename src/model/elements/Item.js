@@ -1,16 +1,27 @@
 import Marker from "./Marker";
 import IconItem from './IconItem'
+import { NavbarText } from "reactstrap";
 
 class Item extends Marker
 {
     CaptureDate;
+    AvailableDuration=0;
     UnavailableTime;
+    CanTeleport=false;
+    CanChangeVisionDistance = false;
+    DeficiencyDuration=0;
+    Quantity=1;
     Type;
-    constructor(position,type)
+    constructor(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id)
     {
-        super(position);
-        super.Type = type;
-        this.VisionDistance=20;
+        if(!VisionDistance)VisionDistance = 20;
+        super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
+        if(AvailableDuration)this.AvailableDuration=AvailableDuration;
+        if(CanChangeVisionDistance)this.CanChangeVisionDistance=CanChangeVisionDistance;
+        if(DeficiencyDuration)this.DeficiencyDuration=DeficiencyDuration;
+        if(CanTeleport)this.CanTeleport=CanTeleport;
+        if(Quantity)this.Quantity=Quantity;
+        super.Type = Type;
     }
 
     getIcon()
@@ -25,9 +36,9 @@ class Item extends Marker
 class ItemManager
 {
 
-    static createItem(position,type)
+    static createItem(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null)
     {
-        var item = new Item(position,type);
+        var item = new Item(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
         return item;
     }
 

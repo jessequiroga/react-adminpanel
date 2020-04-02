@@ -36,6 +36,8 @@ export default class SocketMessage {
                 case "NOMAP":
                     this.ContainedEntity = null;
                     break;
+                case "Pos":
+                    this.ContainedEntity = message.Players;
                 default:
                     findType = false;
                     break;
@@ -108,6 +110,10 @@ export default class SocketMessage {
                 result = JSON.stringify(jsonObject);
                 break;
             case "ENTITYADD":
+                jsonObject.push(JSON.parse(this.ContainedEntity));
+                result = JSON.stringify(jsonObject);
+                break;
+            case "POS":
                 jsonObject.push(JSON.parse(this.ContainedEntity));
                 result = JSON.stringify(jsonObject);
                 break;

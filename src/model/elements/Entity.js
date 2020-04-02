@@ -7,22 +7,25 @@ export default class Entity
     ActionDistance;
     Name;
     MapEntity=null;
+    IsInActionRange = false;
 
-    constructor(position,name=null,id=null)
+    constructor(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,Id=null)
     {
-        if(id)
+        
+        if(Id!==null)
         {
-            this.Id = id;
-            Entity.IncrId = id+1;
+            this.Id = Id;
         }
         else
         {
             this.Id = Entity.IncrId;
             Entity.IncrId++;
         }
-            
-        this.Position = position;
-        this.Name = name;
+        this.Position = Position;
+        this.ActionDistance = ActionDistance
+        this.IsInActionRange = IsInActionRange
+        this.VisionDistance = VisionDistance
+        this.Name = Name;
     }
 
 

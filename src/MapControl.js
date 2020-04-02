@@ -25,11 +25,13 @@ export default class MapControl extends Component {
             exist = true;
           }
 
-          let newAltar = ManagerAltars.createAltar(altar.Position);
+          let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id);
           var withVisionCircle=true;
           newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
           if(exist)
+          {
             Game.getInstance().replaceAltar(indexA,newAltar);
+          }
         }
         else
           console.log("erreur pas d'id pour l'altar:",altar);
@@ -45,8 +47,7 @@ export default class MapControl extends Component {
             //Game.getInstance().Items[indexI].toMapElement().setMap(null);
             exist = true;
           }
-
-          let newItem = ManagerItems.createItem(item.Position,item.Type);
+          let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
           var withVisionCircle=true;
           newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
           if(exist)
@@ -67,7 +68,7 @@ export default class MapControl extends Component {
             exist=true;
           }
 
-          let newZone = ManagerZones.createZone(zone.Coordinates);
+          let newZone = ManagerZones.createZone(zone.Coordinates,zone.Id);
           let poly = newZone.toMapElement(this.map);
           window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
           if(exist)

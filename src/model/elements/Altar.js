@@ -6,10 +6,12 @@ class Altar extends Marker
     UnavailableTime;
     Team;
 
-    constructor(position)
+    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id)
     {
-        super(position);
-        this.VisionDistance=30;
+        if(!VisionDistance)VisionDistance = 30;
+        super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
+        if(UnavailableTime)this.UnavailableTime=UnavailableTime;
+        if(CaptureDate)this.CaptureDate=CaptureDate;
     }
 
     getIcon()
@@ -34,9 +36,9 @@ class Altar extends Marker
 
 class AltarManager
 {
-    static createAltar(position)
+    static createAltar(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,UnavailableTime=null,CaptureDate=null,Id=null)
     {
-        var altar = new Altar(position);
+        var altar = new Altar(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id);
         return altar;
     }
 

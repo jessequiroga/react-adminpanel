@@ -7,10 +7,10 @@ class Player extends Marker
     InventorySize;
     Team;
     VisibleEntities;
-    constructor(position,name,team,visibleEntities,inventorySize,isAFK,items,id)
+    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id)
     {
-        console.log("CreatePlayer",id);
-        super(position,name,id);
+        console.log("CreatePlayer",Id);
+        super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         this.Team = team;
         this.VisibleEntities = visibleEntities;
         this.InventorySize = inventorySize;
@@ -41,9 +41,9 @@ class Player extends Marker
 
 class PlayerManager
 {
-    static createPlayer(position,name,team,visibleEntities,inventorySize,isAFK,items,id)
+    static createPlayer(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id)
     {
-        var item = new Player(position,name,team,visibleEntities,inventorySize,isAFK,items,id);
+        var item = new Player(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id);
         return item;
     }
 
