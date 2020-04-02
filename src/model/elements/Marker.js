@@ -91,9 +91,11 @@ export default class Marker extends Entity
               if(!conflict)
               {
                 marker.setMap(map);
-                visionCircle.setMap(map);
                 if(this.constructor.name != "Player")
+                {
                   window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
+                  visionCircle.setMap(map);
+                }
                 window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,map,true));
                 window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }

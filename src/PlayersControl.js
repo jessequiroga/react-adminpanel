@@ -21,10 +21,11 @@ export default class PlayerControl extends Component {
           let _currentPlayer = Game.getInstance().Players[indexP];
           if(!Initiate)
           {
-            if( _currentPlayer.MapEntity !== null)
+            if( _currentPlayer.MapEntity !== null &&  _currentPlayer.MapEntity !== null)
             {
+              console.log(_currentPlayer);
               _currentPlayer.toMapElement().setPosition(player.Position);
-              _currentPlayer.toMapElement().visionCircle.setPosition(player.Position);
+              //_currentPlayer.toMapElement().visionCircle.setPosition(player.Position);
             }
             else
             {
