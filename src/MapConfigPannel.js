@@ -37,22 +37,25 @@ function MapConfigPannel({setConfigNeeded}) {
 
   let browseUploadFile = (event) =>
   {
-    let configFile = event.target.files[0];
-    if(configFile.name === "map.json" && configFile.type === "application/json")
+    if(event.target && event.target.files && event.target.files.length>0)
     {
-        let fr = new FileReader();
-        let jsonMessage; 
-        fr.onload = function() { //Read the fichier => this.result = file.text()
-            jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
-            var conn = SocketController.getSocket();
-            conn.send(jsonMessage.toJson());
-            setConfigNeeded(false);
-        };
-        
-        fr.readAsText(configFile); //Run fr.onload
-        
+      let configFile = event.target.files[0];
+      if(configFile.name === "map.json" && configFile.type === "application/json")
+      {
+          let fr = new FileReader();
+          let jsonMessage; 
+          fr.onload = function() { //Read the fichier => this.result = file.text()
+              jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
+              var conn = SocketController.getSocket();
+              conn.send(jsonMessage.toJson());
+              setConfigNeeded(false);
+          };
+          
+          fr.readAsText(configFile); //Run fr.onload
+          
+      }
+      event.preventDefault();
     }
-    event.preventDefault();
   }
 
   let drop_zone = {

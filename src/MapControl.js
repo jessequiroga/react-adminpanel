@@ -5,6 +5,7 @@ import ManagerItems from './model/elements/Item';
 import ManagerAltars from './model/elements/Altar';
 import ManagerZones from './model/Zone';
 import Game from './model/Game.js';
+import Entity from './model/elements/Entity';
 
 export default class MapControl extends Component {
 
@@ -22,6 +23,8 @@ export default class MapControl extends Component {
           if(indexA !== -1)
           {
             //Game.getInstance().Flags[indexA].toMapElement().setMap(null);
+            if(Entity.IncrId<altar.Id)
+              Entity.IncrId = altar.Id;
             exist = true;
           }
 
@@ -45,6 +48,8 @@ export default class MapControl extends Component {
           if(indexI !== -1)
           {
             //Game.getInstance().Items[indexI].toMapElement().setMap(null);
+            if(Entity.IncrId<item.Id)
+              Entity.IncrId = item.Id;
             exist = true;
           }
           let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
@@ -65,6 +70,8 @@ export default class MapControl extends Component {
           if(indexZ !== -1)
           {
             //Game.getInstance().Regions[indexZ].toMapElement().setMap(null);
+            if(Entity.IncrId<zone.Id)
+              Entity.IncrId = zone.Id;
             exist=true;
           }
 
