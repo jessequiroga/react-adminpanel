@@ -87,6 +87,32 @@
         return indexP;
     }
 
+    getZoneById(regionId){
+        var indexZ = this.Regions.findIndex( ({ Id }) => Id === regionId);
+        return this.Regions[indexZ];
+    }
+
+    getItemById(itemId){
+        var indexI = this.Items.findIndex( ({ Id }) => Id === itemId);
+        return this.Items[indexI];
+    }
+
+    getAltarById(flagId){
+        var indexA = this.Flags.findIndex( ({ Id }) => Id === flagId);
+        return this.Flags[indexA];
+    }
+
+    getTeamById(teamId){
+        var indexT = this.Teams.findIndex( ({ Id }) => Id === teamId);
+        return this.Teams[indexT];
+    }
+
+    getPlayerById(playerId){
+        var indexP = this.Players.findIndex( ({ Id }) => Id === playerId);
+        return this.Players[indexP];
+    }
+
+
     removeZone(region){
         var err = false;
 

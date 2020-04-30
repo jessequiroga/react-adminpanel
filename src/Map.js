@@ -177,21 +177,27 @@ function Map() {
 
   const confirmeEditing = (component) => { // End the Map component edition (Map Component component)
     let err = false;
+    let message;
+    var socket = SocketController.getSocket();
+
     switch(component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
     {
       case 'Zone':
         err = Game.getInstance().editZone(component);
         component.setEditable(false);
+        message = new SocketMessage(Game.getInstance().getZoneById(component.id),SocketMessage.TypeMessage.ITEMUPDATE);
         break;
 
       case 'Item':
         err = Game.getInstance().editItem(component);
         component.setDraggable(false);
+        message = new SocketMessage(Game.getInstance().getItemById(component.id),SocketMessage.TypeMessage.ITEMUPDATE);
         break;
 
       case 'Altar':
         err = Game.getInstance().editAltar(component);
         component.setDraggable(false);
+        message = new SocketMessage(Game.getInstance().getAltarById(component.id),SocketMessage.TypeMessage.FLAGUPDATE);
         break;
 
       default:
@@ -205,7 +211,9 @@ function Map() {
       console.log("erreur lors de la modif");
     }
     else
-    { /**
+    { 
+      socket.send(message.toJson());
+      /**
       * Replace the elemnt on click by the menu popup
       **/
      google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
