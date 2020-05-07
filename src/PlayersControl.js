@@ -26,11 +26,21 @@ export default class PlayerControl extends Component {
               _currentPlayer.toMapElement().setPosition({lat:player.Position[0],lng:player.Position[1]});
               if(_currentPlayer.toMapElement().visionCircle)
               _currentPlayer.toMapElement().visionCircle.setCenter({lat:player.Position[0],lng:player.Position[1]});
+              if(player.IsAFK)
+              {
+                _currentPlayer.toMapElement().setMap(null);
+                _currentPlayer.toMapElement().visionCircle.setMap(null);
+              }
             }
             else
             {
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
               newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+              if(player.IsAFK)
+              {
+                newPlayer.toMapElement().setMap(null);
+                newPlayer.toMapElement().visionCircle.setMap(null);
+              }
               Game.getInstance().replacePlayer(indexP,newPlayer);
             }
           }
@@ -41,6 +51,11 @@ export default class PlayerControl extends Component {
           {
             let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
             newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+            if(player.IsAFK)
+            {
+              newPlayer.toMapElement().setMap(null);
+              newPlayer.toMapElement().visionCircle.setMap(null);
+            }
             Game.getInstance().addPlayer(newPlayer);
             Entity.IncrId++;
           }
@@ -49,6 +64,7 @@ export default class PlayerControl extends Component {
       else if(!Initiate)     
         console.log("Un id n'est pas indiqué pour le player: ", player);
     });
+    console.log("Player:",Game.getInstance().Players)
   }
 
 
@@ -78,30 +94,13 @@ export default class PlayerControl extends Component {
       else
         console.log("Un id n'est pas indiqué pour le player: ", player);
     });
+
+    console.log("Player:",Game.getInstance().Players)
   }
 
   componentWillMount() {
     this.map = this.context[MAP];
-    this.listPlayer = [];
-    let gameBegin = true;
-    let gameEnded = false;
-
-    if(Game.getInstance() != null)
-    {
-      let this_game = Game.getInstance();
-      if((new Date()) > (new Date(this_game.EndDate)))
-      {
-        gameEnded=true;
-      }
-      else if((new Date(this_game.BeginDate)) > (new Date()))
-      {
-        gameBegin=false;
-      }
-      if(gameBegin && !gameEnded)
-        this.newMarkerPlayers(Game.getInstance().Players.slice(0),true);
-      
-    }
-    
+    this.listPlayer = [];    
   }
 
   componentDidUpdate() {

@@ -36,13 +36,14 @@ function Map() {
 
     socket.onmessage = function(event){
       let message = new SocketMessage(event.data);
+      console.log(message);
       switch(message.MessageType)
       {
         case SocketMessage.TypeMessage.PLAYERCONNECT:
           let players = message.ContainedEntity;
           setListPlayer(listPlayer.concat(players));
         break;
-        case SocketMessage.TypeMessage.POS:
+        case SocketMessage.TypeMessage.GAMEUPDATE:
           let playersPos = message.ContainedEntity;
           let _listPlayerPos = listPlayerPos.slice(0);
           _listPlayerPos[playersPos.Id] = playersPos;

@@ -43,7 +43,8 @@ export default class SocketMessage {
             REGIONADD:"REGIONADD",
             ITEMADD:"ITEMADD",
             ITEMUPDATE:"ITEMUPDATE",
-            ITEMDELETE:"ITEMDELETE"
+            ITEMDELETE:"ITEMDELETE",
+            GAMEUPDATE:"GAMEUPDATE"
         }
 
     MessageType;
@@ -68,6 +69,9 @@ export default class SocketMessage {
                     this.ContainedEntity = null;
                     break;
                 case "POS":
+                    this.ContainedEntity = message.Player;
+                    break;
+                case "GAMEUPDATE":
                     this.ContainedEntity = message.Player;
                     break;
                 case "OK":
@@ -162,6 +166,10 @@ export default class SocketMessage {
                 result = JSON.stringify(jsonObject);
                 break;
             case "POS":
+                jsonObject.Player = JSON.parse(this.ContainedEntity);
+                result = JSON.stringify(jsonObject);
+                break;
+            case "GAMEUPDATE":
                 jsonObject.Player = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
