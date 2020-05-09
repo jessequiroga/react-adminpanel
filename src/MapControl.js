@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
-import ManagerItems from './model/elements/Item';
+import ManagerItems from './model/elements/ItemManager';
 import ManagerAltars from './model/elements/Altar';
 import ManagerZones from './model/Zone';
 import Game from './model/Game.js';

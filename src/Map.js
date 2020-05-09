@@ -16,6 +16,7 @@ import MapControl from "./MapControl.js"
 import PlayersControl from "./PlayersControl";
 import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
+import ItemManager from "./model/elements/ItemManager";
 
 
 function Map() {
@@ -24,6 +25,7 @@ function Map() {
   const [canDrawMapZone, setCanDrawMapZone] = useState(false); // Triger if the DrawingManger Map Zone is active
   const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
+  const [typeItemDraw, setTypeItemDraw] = useState(null); // Triger if the DrawingManger Item is active
   const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
@@ -68,7 +70,7 @@ function Map() {
   }
 
   const canDraw = () => {
-      return (canDrawMapZone || canDrawAltar || canDrawItem);
+      return (canDrawMapZone || canDrawAltar || (canDrawItem && typeItemDraw));
   }
 
   const cantDraw = () => 
@@ -80,6 +82,7 @@ function Map() {
 
   const changeCanDrawItem = () => { // Show the DrawingManager item and hidde the other DrawingManager
     canDrawItem?setCanDrawItem(false):setCanDrawItem(true); // Show the DrawingManager item
+    setTypeItemDraw(null);
     setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
     setCanDrawAltar(false); // Hidde the DrawingManager Altar 
   }
@@ -255,6 +258,13 @@ function Map() {
     }
     setCanDrawMapZone(false); // Hidde the DrawingManager Map Zone
   }, []);
+
+  const typesItem = Object.keys(ItemManager.TypesItem).map(key=>
+  {
+    return <NavItem className="mb-2">
+            <Button onClick={()=>{setTypeItemDraw(key)}}>{ItemManager.TypesItem[key]}</Button>
+          </NavItem>
+  });
  
   
   return (
@@ -308,7 +318,7 @@ function Map() {
 
       <DrawManager listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedEdited={setSelectedEdited} 
       setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone} 
-      canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} 
+      canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} typeItemDraw={typeItemDraw}
       position={google.maps.ControlPosition.TOP_LEFT}>
         {/* Menu Show DrawingManager */}
         <Card className="border-1">
@@ -324,19 +334,13 @@ function Map() {
                     </NavItem>
                     <NavItem className="mb-2">
                         {(Game.getInstance().Regions.length > 0) ?canDrawItem?<Button color="warning" onClick={changeCanDrawItem}>X</Button>:<Button onClick={changeCanDrawItem}>Put Item</Button>:null}
-                        {/*<Collapse className="mt-2" isOpen={canDrawItem} navbar>
+                        <Collapse className="mt-2" isOpen={canDrawItem} navbar>
                             <Nav  navbar>
-                                <NavItem className="mb-2">
-                                    <Button onClick={() => console.log("Item 1")}>Item 1</Button>
-                                </NavItem>
-                                <NavItem className="mb-2">
-                                    <Button onClick={() => console.log("Item 2")}>Item 2</Button>
-                                </NavItem>
-                                <NavItem className="mb-2">
-                                    <Button onClick={() => console.log("Item 3")}>Item 3</Button>
-                                </NavItem>
+                                {
+                                  typesItem
+                                }
                             </Nav>
-                        </Collapse>*/}
+                        </Collapse>
                     </NavItem>
                 </Nav>
             </Collapse>

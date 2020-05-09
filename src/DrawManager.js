@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import AltarManager from './model/elements/Altar.js';
-import ItemManager from './model/elements/Item.js';
+import ItemManager from './model/elements/ItemManager';
 import Game from './model/Game.js';
 import $ from 'jquery';
 import SocketController from './model/SocketController.js';
@@ -23,16 +23,14 @@ export default class DrawManager extends Component {
     SocketController.getSocket().send((new SocketMessage(newAltar, SocketMessage.TypeMessage.FLAGADD)).toJson());
   }
 
-  addItem = (mousePos) => // event add Item marker
+  addItem = (mousePos,type ="CultMag") => // event add Item marker
   {
-    let newItem = ItemManager.createItem(mousePos, "CultMag");
+    let newItem = ItemManager.createItem(mousePos, type);
     var withColision = true;
     var withVisionCircle = true;
     newItem.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
     Game.getInstance().addItem(newItem);
-    console.log(newItem);
     let message = (new SocketMessage(newItem, SocketMessage.TypeMessage.ITEMADD)).toJson();
-    console.log(message);
     SocketController.getSocket().send(message);
   }
 
@@ -62,12 +60,15 @@ export default class DrawManager extends Component {
     }
 
     if (this.props.canDrawItem) {
-      //set the cursor style as cross
-      $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
-      //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
-      Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
-        window.google.maps.event.addListener(zone.toMapElement(), 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
-      });
+      if(this.props.typeItemDraw)
+      {
+        //set the cursor style as cross
+        $('div.gm-style').find('div[style*="z-index: 106;"]').append('<div style="z-index: 2000000000; cursor: url(&quot;https://maps.gstatic.com/mapfiles/crosshair.cur&quot;), default; touch-action: none; position: absolute; left: -1280px; top: -332px; width: 2560px; height: 664px;"></div>');
+        //this.map.addListener('click',this.addItem); // add the action listener click add Altar on the map
+        Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
+          window.google.maps.event.addListener(zone.toMapElement(), 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
+        });
+      }
     }
     else if (this.props.canDrawAltar) {
       //set the cursor style as cross
