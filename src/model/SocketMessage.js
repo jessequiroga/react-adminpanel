@@ -72,7 +72,7 @@ export default class SocketMessage {
                     this.ContainedEntity = message.Player;
                     break;
                 case "GAMEUPDATE":
-                    this.ContainedEntity = message.Player;
+                    this.ContainedEntity = message.Players;
                     break;
                 case "OK":
                 this.ContainedEntity = null;

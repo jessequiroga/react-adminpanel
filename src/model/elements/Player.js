@@ -23,7 +23,7 @@ class Player extends Marker
         {
             return {
                 
-                url:`/mapMaker.png`,
+                url:`/mapMarker.png`,
                 scaledSize: new window.google.maps.Size(100, 100)
             };
         }
