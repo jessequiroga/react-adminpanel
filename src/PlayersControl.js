@@ -28,7 +28,13 @@ export default class PlayerControl extends Component {
             if(player.IsAFK)
             {
               _currentPlayer.toMapElement().setMap(null);
-              _currentPlayer.toMapElement().visionCircle.setMap(null);
+              if(_currentPlayer.toMapElement().visionCircle)
+                _currentPlayer.toMapElement().visionCircle.setMap(null);
+            }
+            else{
+              _currentPlayer.toMapElement().setMap(this.map);
+              if(_currentPlayer.toMapElement().visionCircle)
+                _currentPlayer.toMapElement().visionCircle.setMap(this.map);
             }
           }
           else
@@ -38,7 +44,8 @@ export default class PlayerControl extends Component {
             if(player.IsAFK)
             {
               newPlayer.toMapElement().setMap(null);
-              newPlayer.toMapElement().visionCircle.setMap(null);
+              if(newPlayer.toMapElement().visionCircle)
+                newPlayer.toMapElement().visionCircle.setMap(null);
             }
             Game.getInstance().replacePlayer(indexP,newPlayer);
           }
