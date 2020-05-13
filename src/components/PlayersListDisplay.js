@@ -5,7 +5,6 @@ import { Col, Container, Row } from "reactstrap";
 function PlayersListDisplay({instanceListPlayer}) {
 
     let listTeamswithPlayer = null;
-    console.log(Game.getInstance().Teams);
     if (Game.getInstance() && Game.getInstance().Teams && instanceListPlayer && Object.keys(instanceListPlayer).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
         let _listPlayers = instanceListPlayer;
         let _listTeams = Game.getInstance().Teams;
@@ -23,7 +22,7 @@ function PlayersListDisplay({instanceListPlayer}) {
 
             });
 
-            return <Col sm={Game.getInstance().Teams.length > 3 ? '4' : '6'}>
+            return <Col key={index} sm={Game.getInstance().Teams.length > 3 ? '4' : '6'}>
                 <div key={team.id}>
                     <div>
                         <span style={{ fontSize:"18px", fontWeight:"bold" }}>Team: <br/>{team.Name}</span>

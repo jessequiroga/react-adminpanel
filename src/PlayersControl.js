@@ -72,31 +72,32 @@ export default class PlayerControl extends Component {
   newPlayerInLobby = (players) =>
   {
     players.forEach((player)=>{
-      if(player !=null && player.Id != null)
+      if(player !=null && player.Id != null )
       {
-        let exist = false;
-        let indexP = Game.getInstance().findPlayerById(player.Id);
-        if( indexP != -1)
+        if(player.Position === null)
         {
-          exist = true;
-        }
+          let exist = false;
+          let indexP = Game.getInstance().findPlayerById(player.Id);
+          if( indexP != -1)
+          {
+            exist = true;
+          }
 
-        let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-        if(exist)
-        {
-          Game.getInstance().replacePlayer(indexP,newPlayer);
-        }
-        else
-        {
-          Game.getInstance().addPlayer(newPlayer);
-          Entity.IncrId++;
+          let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+          if(exist)
+          {
+            Game.getInstance().replacePlayer(indexP,newPlayer);
+          }
+          else
+          {
+            Game.getInstance().addPlayer(newPlayer);
+            Entity.IncrId++;
+          }
         }
       }
       else
         console.log("Un id n'est pas indiqué pour le player: ", player);
     });
-
-    console.log("Player:",Game.getInstance().Players)
   }
 
   componentWillMount() {
@@ -121,6 +122,7 @@ export default class PlayerControl extends Component {
     }
 
     if(gameBegin && !gameEnded){
+      this.newPlayerInLobby(this.props.listPlayer);
       this.newMarkerPlayers(this.props.listPlayerPos);
     }
     else if (!gameBegin)
