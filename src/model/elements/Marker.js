@@ -60,7 +60,7 @@ export default class Marker extends Entity
               fillColor: '#01A9DB',
               fillOpacity: 0.35,
               center: {lat:this.Position[0],lng:this.Position[1]},
-              radius: this.VisionDistance*100
+              radius: this.VisionDistance
             });
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
@@ -72,7 +72,7 @@ export default class Marker extends Entity
           });
           
           if(withColision){
-              conflict = DrawConflict.isConflict(visionCircle.center,this.VisionDistance*100);    
+              conflict = DrawConflict.isConflict(visionCircle.center,this.VisionDistance);    
               if(!conflict)
               {
                 marker.setMap(map);
