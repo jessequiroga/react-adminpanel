@@ -13,7 +13,8 @@ class Item extends Marker
     Type;
     constructor(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id)
     {
-        if(!VisionDistance)VisionDistance = 20;
+        if(!VisionDistance)VisionDistance = 120;
+        if(!ActionDistance)VisionDistance = 50;
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         if(AvailableDuration)this.AvailableDuration=AvailableDuration;
         if(CanChangeVisionDistance)this.CanChangeVisionDistance=CanChangeVisionDistance;

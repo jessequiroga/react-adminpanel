@@ -40,7 +40,7 @@ function MapConfigPannel({setConfigNeeded}) {
     if(event.target && event.target.files && event.target.files.length>0)
     {
       let configFile = event.target.files[0];
-      if(configFile.name === "map.json" && configFile.type === "application/json")
+      if(configFile.type === "application/json")
       {
           let fr = new FileReader();
           let jsonMessage; 
