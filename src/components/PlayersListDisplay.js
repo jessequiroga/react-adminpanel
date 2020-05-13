@@ -5,7 +5,8 @@ import { Col, Container, Row } from "reactstrap";
 function PlayersListDisplay({instanceListPlayer}) {
 
     let listTeamswithPlayer = null;
-    if (instanceListPlayer && Object.keys(instanceListPlayer).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
+    console.log(Game.getInstance().Teams);
+    if (Game.getInstance() && Game.getInstance().Teams && instanceListPlayer && Object.keys(instanceListPlayer).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {
         let _listPlayers = instanceListPlayer;
         let _listTeams = Game.getInstance().Teams;
     
@@ -52,6 +53,3 @@ function PlayersListDisplay({instanceListPlayer}) {
 
 }
 export default PlayersListDisplay;
-
-
-

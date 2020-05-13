@@ -261,7 +261,7 @@ function Map() {
 
   const typesItem = Object.keys(ItemManager.TypesItem).map(key=>
   {
-    return <NavItem className="mb-2">
+    return <NavItem key={key} className="mb-2">
             <Button onClick={()=>{setTypeItemDraw(key)}}>{ItemManager.TypesItem[key]}</Button>
           </NavItem>
   });
