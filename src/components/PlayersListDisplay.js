@@ -18,7 +18,7 @@ function PlayersListDisplay({instanceListPlayer}) {
             {
                 let player = _listPlayers[keyP];
                 if (player.Team.Id == team.Id)
-                    return <span className="text-center" style={{ marginTop: "7px" }} >{player.Name}</span>; 
+                    return <span key={player.Id} className="text-center" style={{ marginTop: "7px" }} >{player.Name}</span>; 
 
 
             });
@@ -47,7 +47,7 @@ function PlayersListDisplay({instanceListPlayer}) {
                         {listTeamswithPlayer}
                     </Row>
                 </Container>
-                : <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Team</span>}
+                : <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Player</span>}
         </>
     );
 
