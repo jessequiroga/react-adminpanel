@@ -507,7 +507,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       </DrawManager>
 
       {selectedDrawed && ( // If an drawed component was select
-        <InfoWindow // Show a new Info Window
+        <InfoWindow className="body-info"// Show a new Info Window
           onCloseClick={() => { // Initiate an Event on click to the x to close it
             setSelectedDrawed(null); // unselect the drawed component: close the Info Window
           }}
@@ -517,29 +517,30 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           }}
         >
 
-          <div> {/* Info Window body */}
-            {(selectedDrawed && selectedDrawed.type === "Altar") ?
-              <div>
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate && (new Date(Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime() ? <div><span>Capture Date: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate}</span></div> : <div><span>This Altar is free</span></div>}
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime ? <div><span>Unvailable Time: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime}</span></div> : <div><span>This Altar is available</span></div>}
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).Team ? <div><span>Team: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).Team.Name}</span></div> : <div><span>No Team had this Altar</span></div>}
-              </div> : null}
-            {(selectedDrawed && Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1) ?
-              <div>
-                {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CaptureDate && (new Date(Game.getInstance().getItemById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime() ? <div><span>Capture Date: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).CaptureDate}</span></div> : <div><span>This Item is free</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration ? <div><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration}</span></div> : <div><span>This Iteam is not available anymore</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).Quantity ? <div><span>Quantity: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).Quantity}</span></div> : <div><span>There is no item left in this point</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport ? <div><span>This iteam can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div> : <div><span>There item can not be teleported</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration ? <div><span>This iteam will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration} after some one take an item</span></div> : <div><span>There is no item left in this point</span></div>}
-              </div> : null}
-            <div>
-              <button onClick={() => { suppressComponent(selectedDrawed); setSelectedDrawed(null); }}>Supprimer</button>{/* add an button to remove the drawed component */}
-              <button onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
-              <button onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>{/* add an button to edit the drawed component */}
+              <div className="grp-info"> {/* Info Window body */}
+                {(selectedDrawed.type && selectedDrawed.type === "Altar")?
+                  <div>
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span>
+                    <span>{Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate}</span></div>:<div className="lib-res"><span>This Altar is free</span></div>}
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime?<div className="lib-res"><span className="lib">Unvailable Time: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime}</span></div>:<div className="lib-res"><span>This Altar is available</span></div>}
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).Team?<div className="lib"><span>Team: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).Team.Name}</span></div>:<div><span className="lib-res">No Team had this Altar</span></div>}
+                  </div>:null}
+                {(selectedDrawed.type && Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1)?
+                  <div>
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getItemById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).CaptureDate}</span></div>:<div className="lib-res"><span className="lib-res">This Item is free</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration?<div className="lib-res"><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration}</span></div>:<div><span className="lib-res">This Item is not available anymore</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).Quantity?<div ><span className="lib">Quantity: </span><span className="lib-res">{Game.getInstance().getItemById(selectedDrawed.id).Quantity}</span></div>:<div><span>There is no item left in this point</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport?<div><span>This iteam can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div>:<div className="lib-res"><span>There item can not be teleported</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration?<div  className="lib-res"><span className="lib">This item will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration} after some one take an item</span></div>:<div className="lib-res"><span>There is no item left in this point</span></div>}
+                  </div>:null}
+              <div className="group-btn">
+                <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
+                <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
+                {(selectedDrawed.type && selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
+              </div>
             </div>
-          </div>
         </InfoWindow>
-      )}
+      )}5
 
       {selectedMove && ( // If an edited component was select
         <InfoWindow // Show a new Info Window
@@ -552,11 +553,12 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           }}
         >
 
-          <div>
             <div>
-              <button onClick={() => { confirmeMoving(selectedMove); setSelectedMoved(null); }}>Validate</button> {/* add an button to validated the edited component */}
+              <p className="lib">New point location</p>
+              <div>
+                <button className="btn-move" onClick={()=>{confirmeMoving(selectedMove); setSelectedMoved(null);}}>Validate</button> {/* add an button to validated the edited component */}
+              </div>
             </div>
-          </div>
         </InfoWindow>
       )}
 

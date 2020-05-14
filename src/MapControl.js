@@ -121,14 +121,14 @@ export default class MapControl extends Component {
               Entity.IncrId = altar.Id;
             exist = true;
           }
-
+          if(altar.Team)
+            console.log("Team",altar.Team)
           let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
           var withVisionCircle=true;
           if(exist && Game.getInstance().Flags[indexA].toMapElement)
           {
             let altar = Game.getInstance().Flags[indexA].toMapElement();
-            console.log("Team",altar.Team);
-            if(altar.Team)
+            if(newAltar.Team)
               console.log(newAltar.getIcon());
             altar.setIcon(newAltar.getIcon());
             altar.setPosition({lat:newAltar.Position[0],lng:newAltar.Position[1]});
