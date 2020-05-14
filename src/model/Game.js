@@ -191,7 +191,7 @@
             region.getPath().forEach(function (path) { // For each coordinates we publish an array with only the latitude and the longitude of this coordinate
                 paths.push([path.lat(), path.lng()]); // save the latitude and the longitude of this coordinate
             });
-            this.Regions[indexZ].Coordinates = [paths];
+            this.Regions[indexZ].Coordinates = paths;
         }
         else err=true;
 

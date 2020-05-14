@@ -18,6 +18,7 @@ import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import ItemManager from "./model/elements/ItemManager";
 
+import TextDisplay from "./components/TextDisplay";
 
 function Map() {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
@@ -32,6 +33,22 @@ function Map() {
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
   const [listMarkerPlayer, setListMarkerPlayer] = useState([]);
   const [listPlayerPos, setListPlayerPos] = useState([]);
+
+
+  const [formularAttributeItem, setFormularAttributeItem] = useState({
+                                                                      captureDateChang: {value: '',errorMessage :'',isValid : true},
+                                                                      availableDurationChang: {value: '',errorMessage :'',isValid : true},
+                                                                      quantityChang: {value: '',errorMessage :'',isValid : true},
+                                                                      canTeleportChang: {value: '',errorMessage :'',isValid : true},
+                                                                      deficiencyDurationChang: {value: '',errorMessage :'',isValid : true}
+                                                                    }); // Formular to change all the selected entity attributes for an Item
+
+const [formularAttributeAltar, setFormularAttributeAltar] = useState({
+                                                                      captureDateChang: {value: '',errorMessage :'',isValid : true},
+                                                                      unvailableTimeChang: {value: '',errorMessage :'',isValid : true},
+                                                                      teamChang: {value: '',errorMessage :'',isValid : true}
+                                                                    }); // Formular to change all the selected entity attributes for an Altar
+
 
   const connectWebsocket = () => {
     var socket = SocketController.getSocket();
@@ -105,6 +122,7 @@ function Map() {
       if (e.key === "Escape") {
         setSelectedDrawed(null); // Unselect Drawed component
         setSelectedMoved(null); // Unselect Edited component
+        setSelectedEdited(null); // Unselect Edited component
         cantDraw();
       }
     };
@@ -116,60 +134,74 @@ function Map() {
   }, []);
 
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
+    console.log(component.type);
     let err = false;
-    switch (component.type) {
-      case 'Zone':
-        err = Game.getInstance().removeZone(component);
-        break;
-
-      case 'Item':
-        err = Game.getInstance().removeItem(component);
-        break;
-
-      case 'Altar':
-        err = Game.getInstance().removeAltar(component);
-        break;
-
-      default:
-        err = true;
-        console.log("pas de type");
-        break;
+    if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
+    {
+      err = Game.getInstance().removeItem(component);
     }
-    if (!err) {
+    else{
+      switch(component.type)
+      {
+        case 'Zone':
+          err = Game.getInstance().removeZone(component);
+          break;
+
+        case 'Altar':
+          err = Game.getInstance().removeAltar(component);
+          break;
+
+        default:
+          err = true;
+          console.log("pas de type");
+          break;
+      }
+    }
+    if(!err){
       component.setMap(null); // Unset the map attribut of the component for remove it
-      if (component.type != "Zone")
+      if(component.type != "Zone")
         component.visionCircle.setMap(null); // Unset the map attribut of the component for remove it
     }
   }
 
-  const beginMove = (component) => { // Begin the Map component edition (Map Component component)
+  const beginMove = (component) => { // Begin the Map component move (Map Component component)
     let err = false;
-    switch (component.type) {
-      case 'Zone':
-        component.setEditable(true);
-        break;
+    if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
+    {
+      component.setDraggable(true);
+    }
+    else{
+      switch(component.type)
+      {
+        case 'Zone':
+          component.setEditable(true);
+          break;
 
-      case 'Item':
-      case 'Altar':
-        component.setDraggable(true);
-        break;
+        case 'Altar':
+          component.setDraggable(true);
+          break;
 
-      default:
-        err = true;
-        console.log("pas de type");
-        break;
-    } // if it's an editing Map component we set the editing on true else we set the component draggable
-    if (err) {
+        default:
+          err = true;
+          console.log("pas de type");
+          break;
+      } // if it's an editing Map component we set the editing on true else we set the component draggable
+    }
+    if(err)
+    {
       console.log("erreur lors de la modif");
     }
-    else {
+    else
+    {
       cantDraw();
+      setSelectedEdited(null);
+      setSelectedMoved(null);
       /**
        * Replace the elemnt on click by the editing popup validation
-       **/
+       **/ 
       google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
       google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-        !canDraw() && setSelectedMoved(component); // Select the edited component
+        !canDraw()&&setSelectedMoved(component); // Select the moved component
       });
     }
   }
@@ -190,31 +222,32 @@ function Map() {
     let err = false;
     let message;
     var socket = SocketController.getSocket();
-
-    switch (component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
+    if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
     {
-      case 'Zone':
-        err = Game.getInstance().editZone(component);
-        component.setEditable(false);
-        message = new SocketMessage(Game.getInstance().getZoneById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
-        break;
+      err = Game.getInstance().editItem(component);
+      component.setDraggable(false);
+      message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
+    }
+    else{
+      switch (component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
+      {
+        case 'Zone':
+          err = Game.getInstance().editZone(component);
+          component.setEditable(false);
+          message = new SocketMessage(Game.getInstance().getZoneById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
+          break;
 
-      case 'Item':
-        err = Game.getInstance().editItem(component);
-        component.setDraggable(false);
-        message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
-        break;
+        case 'Altar':
+          err = Game.getInstance().editAltar(component);
+          component.setDraggable(false);
+          message = new SocketMessage(Game.getInstance().getAltarById(component.id), SocketMessage.TypeMessage.FLAGUPDATE);
+          break;
 
-      case 'Altar':
-        err = Game.getInstance().editAltar(component);
-        component.setDraggable(false);
-        message = new SocketMessage(Game.getInstance().getAltarById(component.id), SocketMessage.TypeMessage.FLAGUPDATE);
-        break;
-
-      default:
-        err = true;
-        console.log("pas de type");
-        break;
+        default:
+          err = true;
+          console.log("pas de type");
+          break;
+      }
     }
 
     if (err) {
@@ -288,7 +321,7 @@ function Map() {
         !canDraw() && setSelectedDrawed(poly); // Select the drawed componenet: polygon
       });
 
-      poly['type'] = 'zone';
+      poly['type'] = 'Zone';
       poly['id'] = ZoneManager.IncrId;
       let polyObject = ZoneManager.createZone(paths);
       polyObject.MapEntity = poly;
@@ -309,6 +342,59 @@ function Map() {
     </NavItem>
   });
 
+  const onSubmitEditAttributeAltar = (altarId) =>
+  {
+    let value = formularAttributeAltar.unvailableTimeChang.value;
+    let valid = formularAttributeAltar.unvailableTimeChang.isValid;
+
+    if(valid && value != "")
+    {
+      let altar = Game.getInstance().getAltarById(altarId);
+      let indexA = Game.getInstance().findAltarById(altarId);
+      altar.UnvailableTime = value;
+      Game.getInstance().replaceAltar(indexA,altar);
+    }
+  
+    setFormularAttributeAltar({
+                                captureDateChang: {value: '',errorMessage :'',isValid : true},
+                                unvailableTimeChang: {value: '',errorMessage :'',isValid : true},
+                                teamChang: {value: '',errorMessage :'',isValid : true}
+                              });
+  }
+
+  const onSubmitEditAttributeItem = (itemId) =>
+  {
+
+    let formulaireValide = true;
+    let content = {};
+    Object.keys(formularAttributeItem).map(x =>{
+        if(x!=="captureDateChang")
+        {
+          if(formularAttributeItem[x].value !== "" )
+            content[x] = formularAttributeItem[x].value
+
+          if(!formularAttributeItem[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
+              formulaireValide = false; // Le formulaire n'est pas valide
+        }
+    });
+
+    if(formulaireValide)
+    {
+      let item = Game.getInstance().getItemById(itemId);
+      let indexI = Game.getInstance().findAltarById(itemId);
+      Object.keys(formularAttributeItem).map(x =>{
+          item[x] = content[x];
+      });
+      Game.getInstance().replaceItem(indexI,item);
+      setFormularAttributeItem({
+                                captureDateChang: {value: '',errorMessage :'',isValid : true},
+                                availableDurationChang: {value: '',errorMessage :'',isValid : true},
+                                quantityChang: {value: '',errorMessage :'',isValid : true},
+                                canTeleportChang: {value: '',errorMessage :'',isValid : true},
+                                deficiencyDurationChang: {value: '',errorMessage :'',isValid : true}
+                              });
+    }
+  }
 
   return (
     <GoogleMap
@@ -457,23 +543,54 @@ function Map() {
         >
 
           <div>
-            {(selectedEdited.type && selectedEdited.type === "Altar") ?
-              <div>
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).CaptureDate && (new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime() ? <div><span>Capture Date: </span><span>{Game.getInstance().getAltarById(selectedEdited.id).CaptureDate}</span></div> : <div><span>This Altar is free</span></div>}
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime ? <div><span>Unvailable Time: </span><span>{Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime}</span></div> : <div><span>This Altar is available</span></div>}
-                {Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).Team ? <div><span>Team: </span><span>{Game.getInstance().getAltarById(selectedEdited.id).Team.Name}</span></div> : <div><span>No Team had this Altar</span></div>}
-              </div> : null}
-            {(selectedEdited.type && Object.keys(ItemManager.TypesItem).indexOf(selectedEdited.type) !== -1) ?
-              <div>
-                {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CaptureDate && (new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime() ? <div><span>Capture Date: </span><span>{Game.getInstance().getItemById(selectedEdited.id).CaptureDate}</span></div> : <div><span>This Item is free</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).AvailableDuration ? <div><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedEdited.id).AvailableDuration}</span></div> : <div><span>This Iteam is not available anymore</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).Quantity ? <div><span>Quantity: </span><span>{Game.getInstance().getItemById(selectedEdited.id).Quantity}</span></div> : <div><span>There is no item left in this point</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CanTeleport ? <div><span>This iteam can be teleported</span><span>{Game.getInstance().getItemById(selectedEdited.id).CanTeleport}</span></div> : <div><span>There item can not be teleported</span></div>}
-                {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration ? <div><span>This iteam will be vailable in: </span><span>{Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration} after some one take an item</span></div> : <div><span>There is no item left in this point</span></div>}
-              </div> : null}
-            <div>
-              <button onClick={() => { confirmeEditing(selectedEdited); setSelectedEdited(null); }}>Validate</button> {/* add an button to validated the edited component */}
-            </div>
+            {(selectedEdited.type && selectedEdited.type === "Altar")?
+              <form onSubmit={() => onSubmitEditAttributeAltar(selectedEdited.id)}>
+                <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).CaptureDate?
+                  <TextDisplay name="captureDateChang" type="date" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
+                </div>
+                <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime?
+                  <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeholder={new Date(Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime)}/>:
+                  <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeholder="This Altar is available"/>}
+                </div>
+                <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).Team?
+                  <TextDisplay name="teamChang" typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={Game.getInstance().getAltarById(selectedEdited.id).Team.Name}/>:
+                  <TextDisplay name="teamChang" typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="No Team had this Altar"/>}
+                </div>
+                <button>Validate</button> {/* add an button to validated the edited component */}
+              </form>
+            :null}
+
+            {(selectedEdited.type && Object.keys(ItemManager.TypesItem).indexOf(selectedEdited.type) !== -1)?
+              <form onSubmit={() => onSubmitEditAttributeItem(selectedEdited.id)}>
+                <div>
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CaptureDate?
+                  <TextDisplay name="captureDateChang" typeInput="" type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" typeInput="" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value="This Item is free"/>}
+                </div>
+                <div>
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).AvailableDuration?
+                  <TextDisplay name="availableDurationChang" typeInput="time" type="time" label="This item is available again in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder={new Date(Game.getInstance().getItemById(selectedEdited.id).AvailableDuration)}/>:
+                  <TextDisplay name="availableDurationChang" typeInput="time" type="time" label="This item is available again in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder=""/>}
+                </div>
+                <div>
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).Quantity?
+                  <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder={Game.getInstance().getItemById(selectedEdited.id).Quantity}/>:
+                  <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder="There is no item left in this point"/>}
+                </div>
+                <div>
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CanTeleport?
+                  <TextDisplay name="canTeleportChang" typeInput="boolean" label="This iteam can be teleported" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder={Game.getInstance().getItemById(selectedEdited.id).CanTeleport}/>:
+                  <TextDisplay name="canTeleportChang" typeInput="boolean" label="This iteam can be teleported" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder="There item can not be teleported"/>}
+                </div>
+                <div>
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration?
+                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This iteam will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder={new Date(Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration)}/>:
+                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This iteam will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeholder="There is no item left in this point"/>}
+                </div>
+                <button>Validate</button> {/* add an button to validated the edited component */}
+              </form>
+            :null}
           </div>
         </InfoWindow>
       )}

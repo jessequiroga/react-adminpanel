@@ -48,7 +48,7 @@ export default class DrawManager extends Component {
       Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
         window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
         if (zone.toMapElement().editable)
-          window.google.maps.event.addListener(zone.toMapElement(), 'click', () => !this.props.canDraw() && this.props.setSelectedEdited(zone.toMapElement()));
+          window.google.maps.event.addListener(zone.toMapElement(), 'click', () => !this.props.canDraw() && this.props.setSelectedMoved(zone.toMapElement()));
         else
           window.google.maps.event.addListener(zone.toMapElement(), 'click', () => !this.props.canDraw() && this.props.setSelectedDrawed(zone.toMapElement())); // clear all action add Element on zone
       });
@@ -78,10 +78,6 @@ export default class DrawManager extends Component {
         window.google.maps.event.addListener(zone.toMapElement(), 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
       });
     }
-  }
-
-  componentWillUnmount() { // MapControll destroyer
-    this.map.controls[this.props.position].removeAt(this.divIndex); // remove the div body on the map
   }
 
   render() {
