@@ -30,9 +30,6 @@ const SelectDisplay = (props) => {
     };
 
     const options = Object.keys(props.options).map(function(option,index){
-        console.log(props.options);
-        console.log(index);
-        console.log(option);
         return <option key={index} value={props.options[option].value} defaultValue={props.options[option].selected}>{props.options[option].label}</option>
     })
     return (

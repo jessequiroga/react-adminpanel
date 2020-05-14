@@ -41,8 +41,8 @@ export default class Marker extends Entity
 {
     Icon;
     constructor(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,Id=null)
-    {
-        super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
+    {     
+      super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
     }
 
     toMapElement(map,setSelectedDrawed={},withVisionCircle=false,withColision=false){

@@ -9,7 +9,8 @@ class Altar extends Marker
     constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team)
     {
         if(!VisionDistance)VisionDistance = 300;
-        if(!ActionDistance)VisionDistance = 100;
+        if(!ActionDistance)ActionDistance = 100;
+        //console.log(VisionDistance);
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         if(UnavailableTime)this.UnavailableTime=UnavailableTime;
         if(CaptureDate)this.CaptureDate=CaptureDate;

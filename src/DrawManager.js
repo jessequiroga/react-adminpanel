@@ -20,7 +20,8 @@ export default class DrawManager extends Component {
     var withVisionCircle = true;
     newAltar.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
     Game.getInstance().addAltar(newAltar);
-    SocketController.getSocket().send((new SocketMessage(newAltar, SocketMessage.TypeMessage.FLAGADD)).toJson());
+    let message = (new SocketMessage(newAltar, SocketMessage.TypeMessage.FLAGADD)).toJson();
+    SocketController.getSocket().send(message);
   }
 
   addItem = (mousePos,type ="CultMag") => // event add Item marker

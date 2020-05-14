@@ -11,14 +11,103 @@ export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  static _mapUpdate = null;
+  findById= (table,id)=>
+  {
+    let result = null;
+    var index = table.findIndex( ({ Id }) => Id === id);
+    if(index !==-1)
+      result = table[index];
+    return result;
+  }
+
+  isDiff = (mapUpdate) =>
+  {
+    let result = false;
+    let _mapUpdate =this._mapUpdate;
+
+    if(_mapUpdate === null)
+    {
+      console.log("pas de variable definie");
+      return true
+    }
+    /**
+     * Flags
+     */
+    if((mapUpdate.Flags === null && _mapUpdate.Flags !== null) || (_mapUpdate.Flags === null && mapUpdate.Flags !== null))
+    {
+      console.log("Flags null");
+      return true
+    }
+    if(mapUpdate.Flags !== null && typeof mapUpdate.Flags != "undefined")
+    {
+      Object.keys(mapUpdate.Flags).map(x=>{
+          let newFlag = mapUpdate.Flags[x];
+          let _currentFlag = this.findById(_mapUpdate.Flags,mapUpdate.Flags[x].Id);
+          if( JSON.stringify(newFlag) !== JSON.stringify(_currentFlag))
+          {
+            console.log("difference d'un Flag",newFlag,_currentFlag);
+            result = true;
+            return;
+          }
+      });
+    }
+
+    /**
+     * Items
+     */
+    if((mapUpdate.Items === null && _mapUpdate.Items !== null) || (_mapUpdate.Items === null && mapUpdate.Items !== null))
+    {
+      console.log("Items null");
+      return true
+    }
+    if(mapUpdate.Items !== null && typeof mapUpdate.Items != "undefined" )
+    {
+      Object.keys(mapUpdate.Items).map(x=>{
+        let newItem = mapUpdate.Items[x];
+        let _currentItem = this.findById(_mapUpdate.Items,mapUpdate.Items[x].Id);
+        if(JSON.stringify(newItem) !== JSON.stringify(_currentItem ))
+        {
+          console.log("difference d'un Item",newItem,_currentItem);
+          result = true;
+          return;
+        }
+      });
+    }
+
+
+    /**
+     * Zones
+     */
+    if((mapUpdate.Zones === null && _mapUpdate.Zones !== null) || (_mapUpdate.Zones === null && mapUpdate.Zones !== null))
+    {
+      console.log("Zones null");
+      return true
+    }
+    if(mapUpdate.Zones !== null && typeof mapUpdate.Zones != "undefined")
+    {
+      Object.keys(mapUpdate.Zones).map(x=>{
+        let newZone = mapUpdate.Flags[x];
+        let _currentZone = this.findById(_mapUpdate.Zones,mapUpdate.Zones[x].Id);
+        if(JSON.stringify(newZone) !== JSON.stringify(_currentZone) )
+        {
+          console.log("difference d'une Zone",newZone,_currentZone);
+          result = true;
+          return;
+        }
+      });
+    }
+    
+    return result;
+  }
 
   initConfigMap = (mapUpdate) => {
     if(Object.keys(Game.getInstance()).length >0)
     {
       let game;
       if(mapUpdate)
+      {
         game = mapUpdate;
+      }
       else
         game = Game.getInstance();
       (Object.keys(game.Flags).length > 0) && game.Flags.map(altar => { // For each altar on the websocket message
@@ -38,10 +127,14 @@ export default class MapControl extends Component {
           if(exist && Game.getInstance().Flags[indexA].toMapElement)
           {
             let altar = Game.getInstance().Flags[indexA].toMapElement();
+            console.log("Team",altar.Team);
+            if(altar.Team)
+              console.log(newAltar.getIcon());
             altar.setIcon(newAltar.getIcon());
             altar.setPosition({lat:newAltar.Position[0],lng:newAltar.Position[1]});
             if(altar.visionCircle)
               altar.visionCircle.setCenter({lat:newAltar.Position[0],lng:newAltar.Position[1]});
+            altar.id = newAltar.Id;
             newAltar.MapEntity=altar;
           }
           else{
@@ -76,6 +169,7 @@ export default class MapControl extends Component {
             item.setPosition({lat:newItem.Position[0],lng:newItem.Position[1]});
             if(item.visionCircle)
               item.visionCircle.setCenter({lat:newItem.Position[0],lng:newItem.Position[1]});
+            item.id = newItem.Id;
             newItem.MapEntity=item;
           }
           else{
@@ -109,6 +203,7 @@ export default class MapControl extends Component {
             newZone.Coordinates.forEach(coordinate => {
               coordinates.push({lat:coordinate[0],lng:coordinate[1]});
               });
+            poly.id = newZone.Id;
             poly.setPath(coordinates);
             newZone.MapEntity=poly;
           }
@@ -127,11 +222,16 @@ export default class MapControl extends Component {
 
   componentWillMount() {
     this.map = this.context[MAP];
+    this._mapUpdate = null;
     this.initConfigMap();
   }
 
   componentDidUpdate() {
-      this.initConfigMap();
+    if(this.isDiff(this.props.gameUpdate))
+    {
+      this._mapUpdate = this.props.gameUpdate;
+      this.initConfigMap(this.props.mapUpdate);
+    }
   }
 
   render()
