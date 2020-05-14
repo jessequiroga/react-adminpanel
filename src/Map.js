@@ -155,7 +155,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
   }, []);
 
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
-    console.log(component.type);
     let err = false;
     if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
     {
@@ -380,7 +379,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       let altar = Game.getInstance().getAltarById(altarId);
       let indexA = Game.getInstance().findAltarById(altarId);
       altar.UnvailableTime = value;
-      console.log(altar);
       Game.getInstance().replaceAltar(indexA,altar);
       let message = new SocketMessage(altar, SocketMessage.TypeMessage.FLAGUPDATE);
       SocketController.getSocket().send(message.toJson());
@@ -435,7 +433,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           let key = x.slice(0,chang)[0].toUpperCase() + x.slice(1,chang);
           item[key] = content[x];
       });
-      console.log(item);
       Game.getInstance().replaceItem(indexI,item);
       let message = new SocketMessage(item, SocketMessage.TypeMessage.ITEMUPDATE);
       SocketController.getSocket().send(message.toJson());

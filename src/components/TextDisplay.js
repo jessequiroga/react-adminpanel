@@ -125,9 +125,7 @@ const TextDisplay = (props) => {
 
             case "rep":
                 let indexChamp = input.indexOf("Rep");
-                console.log(indexChamp);
                 let champOrigin = input.slice(0,indexChamp);
-                console.log("brother",champOrigin);
                 checkTwinsInput(formular[input], formular[champOrigin],champOrigin, "The "+champOrigin)
                 break;
 
@@ -234,10 +232,8 @@ const TextDisplay = (props) => {
                 input.message ="";
             }
         } else {
-            console.log("key",key);
             if(key.indexOf("Chang")!=-1 && (!formular[key] || (formular[key] && formular[key].value == "")))
             {
-                console.log("ok");
                 input.message = "This field will not be change";
                 input.errorMessage = "";
                 input.isValid  = true;

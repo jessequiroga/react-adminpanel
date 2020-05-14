@@ -6,7 +6,6 @@ import ItemManager from "../model/elements/ItemManager";
 
 function ItemsDisplay({items}) {
 
-    console.log(items);
     let listItems = null;
     if (Game.getInstance() && items && Object.keys(items).length > 0 ) {
         let _listItems = items;
@@ -15,7 +14,6 @@ function ItemsDisplay({items}) {
         {
             let item = _listItems[keyI];
             let icon = ItemManager.getIcon("CultMag").url;
-            console.log(item);
             return <Row key={keyI}>
                         <img src={icon}></img>
                     </Row>
