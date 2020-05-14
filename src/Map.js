@@ -546,16 +546,16 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             {(selectedEdited.type && selectedEdited.type === "Altar")?
               <form onSubmit={() => onSubmitEditAttributeAltar(selectedEdited.id)}>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).CaptureDate?
-                  <TextDisplay name="captureDateChang" type="date" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
-                  <TextDisplay name="captureDateChang" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
+                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} type="date" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
                 </div>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime?
                   <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeholder={new Date(Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime)}/>:
                   <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeholder="This Altar is available"/>}
                 </div>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).Team?
-                  <TextDisplay name="teamChang" typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={Game.getInstance().getAltarById(selectedEdited.id).Team.Name}/>:
-                  <TextDisplay name="teamChang" typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="No Team had this Altar"/>}
+                  <TextDisplay name="teamChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={Game.getInstance().getAltarById(selectedEdited.id).Team.Name}/>:
+                  <TextDisplay name="teamChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="No Team had this Altar"/>}
                 </div>
                 <button>Validate</button> {/* add an button to validated the edited component */}
               </form>
@@ -565,8 +565,8 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               <form onSubmit={() => onSubmitEditAttributeItem(selectedEdited.id)}>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CaptureDate?
-                  <TextDisplay name="captureDateChang" typeInput="" type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
-                  <TextDisplay name="captureDateChang" typeInput="" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value="This Item is free"/>}
+                  <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}} type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}} label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value="This Item is free"/>}
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).AvailableDuration?
