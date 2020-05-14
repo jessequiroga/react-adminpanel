@@ -13,10 +13,10 @@ function ItemsDisplay({items}) {
         listItems = Object.keys(_listItems).map(function (keyI, index) // List Teams
         {
             let item = _listItems[keyI];
-            let icon = ItemManager.getIcon("CultMag").url;
-            return <Row key={keyI}>
-                        <img src={icon}></img>
-                    </Row>
+            let icon = ItemManager.getIcon(item.Type).url;
+            return <Col key={keyI}>
+                        <img style={{width: "60px"}} src={icon}></img>
+                    </Col>
 
         });
 
@@ -25,10 +25,11 @@ function ItemsDisplay({items}) {
     return (
         <>
             {listItems ?
-                <Container>
-                    <Col>
+                <Container style={{borderStyle:"outset",borderWidth: "2px"}}>
+                    <span>BackPack</span>
+                    <Row style={{borderStyle:"outset",borderWidth: "2px",backgroundColor:"#9d9b97a6"}}>
                         {listItems}
-                    </Col>                    
+                    </Row>                    
                 </Container>
                 : <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Items</span>}
         </>
