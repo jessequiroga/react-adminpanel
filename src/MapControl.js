@@ -123,7 +123,13 @@ export default class MapControl extends Component {
             altar.setIcon(newAltar.getIcon());
             altar.setPosition({lat:newAltar.Position[0],lng:newAltar.Position[1]});
             if(altar.visionCircle)
+            {
               altar.visionCircle.setCenter({lat:newAltar.Position[0],lng:newAltar.Position[1]});
+            }
+            if(altar.actionCircle)
+            {
+              altar.actionCircle.setCenter({lat:newAltar.Position[0],lng:newAltar.Position[1]});
+            }
             altar.id = newAltar.Id;
             newAltar.MapEntity=altar;
           }
@@ -157,8 +163,17 @@ export default class MapControl extends Component {
             let item = Game.getInstance().Items[indexI].toMapElement();
             item.setIcon(newItem.getIcon());
             item.setPosition({lat:newItem.Position[0],lng:newItem.Position[1]});
+
             if(item.visionCircle)
+            {
               item.visionCircle.setCenter({lat:newItem.Position[0],lng:newItem.Position[1]});
+            }
+            
+            if(item.actionCircle)
+            {
+              item.actionCircle.setCenter({lat:newItem.Position[0],lng:newItem.Position[1]});
+            }
+
             item.id = newItem.Id;
             newItem.MapEntity=item;
           }

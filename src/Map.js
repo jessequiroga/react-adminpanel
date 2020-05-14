@@ -170,7 +170,10 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     if(!err){
       component.setMap(null); // Unset the map attribut of the component for remove it
       if(component.type != "Zone")
+      {
         component.visionCircle.setMap(null); // Unset the map attribut of the component for remove it
+        component.actionCircle.setMap(null);
+      }
     }
   }
 

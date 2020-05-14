@@ -22,10 +22,12 @@ const visionCircleDragChange= (marker,withColision) =>
     if(withColision && !conflict && isInRegion)
     {
       marker.visionCircle.setCenter(marker.position);
+      marker.actionCircle.setCenter(marker.position)
     }
     else if(!withColision && isInRegion)
     {
       marker.visionCircle.setCenter(marker.position);
+      marker.actionCircle.setCenter(marker.position);
     }
   }
 
@@ -61,12 +63,23 @@ export default class Marker extends Entity
               center: {lat:this.Position[0],lng:this.Position[1]},
               radius: this.VisionDistance
             });
+          let actionCircle = new window.google.maps.Circle({
+              strokeColor: '#3A01DF',
+              strokeOpacity: 0.7,
+              strokeWeight: 2,
+              fillColor: '#3A01DF',
+              fillOpacity: 0.25,
+              center: {lat:this.Position[0],lng:this.Position[1]},
+              radius: this.ActionDistance
+            });
+
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
               title: (this.constructor.name == "Player")?this.Name:this.constructor.name,
               type: this.constructor.name,
               icon: this.getIcon(),
               visionCircle:visionCircle,
+              actionCircle:actionCircle,
               id : this.Id
           });
           
@@ -76,6 +89,7 @@ export default class Marker extends Entity
               {
                 marker.setMap(map);
                 visionCircle.setMap(map);
+                actionCircle.setMap(map);
                 if(this.constructor.name != "Player")
                 {
                   window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
@@ -92,6 +106,7 @@ export default class Marker extends Entity
               if (withVisionCircle)
               {
                   visionCircle.setMap(map);
+                  actionCircle.setMap(map);
                   window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
               }
