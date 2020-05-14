@@ -58,8 +58,22 @@ div#map {
     font-size: 22px;
     background-color: #C832FF !important;
     border-radius: 0.80rem !important;
-  }
-  
+}
+
+.btn-currentItem{
+    margin-left: 30px !important;
+    color: #FEFEFF !important;
+    font-weight: bold !important;
+    border-color: #44ffc4 !important;
+    font-size: 22px;
+    background-color: #44ffc4 !important;
+    border-radius: 0.80rem !important;
+}
+
+.btn-currentItem:hover{
+    background-color: #480f5c !important;
+}
+
 .btn-item:hover{
     background-color: #480f5c !important;
 }
@@ -69,12 +83,12 @@ div#map {
     font-weight: bold !important;
     border-color: #C832FF !important;
     font-size: 22px;
-    background-color: #44ffc4 !important;
+    background-color: #480f5c !important;
     border-radius: 0.80rem !important;
   }
   
 .btn-expand:hover{
-    background-color: #480f5c !important;
+    background-color: #44ffc4 !important;
 }
 
 .infowindow{

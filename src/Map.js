@@ -22,6 +22,8 @@ import TextDisplay from "./components/TextDisplay";
 import SelectDisplay from "./components/SelectDisplay";
 import Time from "./helper/Time";
 
+import $ from "jquery";
+
 import './Map.css';
 
 function Map() {
@@ -346,7 +348,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
   const typesItem = Object.keys(ItemManager.TypesItem).map(key => {
     return <NavItem key={key} className="mb-2">
-      <Button className="btn-item" onClick={() => { setTypeItemDraw(key) }}>{ItemManager.TypesItem[key]}</Button>
+      <Button className="btn-item" onClick={(e) => { setTypeItemDraw(key);$(".btn-currentItem").removeClass("btn-currentItem").addClass("btn-item"); ($(e.target).hasClass("btn-item"))?$(e.target).removeClass("btn-item") && $(e.target).addClass("btn-currentItem"):$(e.target).addClass("btn-item") && $(e.target).removeClass("btn-currentItem")}}>{ItemManager.TypesItem[key]}</Button>
     </NavItem>
   });
 
@@ -489,7 +491,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               {(Game.getInstance().Regions.length > 0) ? canDrawAltar ? <Button className="btn-expand" onClick={changeCanDrawAltar}>X</Button> : <Button onClick={changeCanDrawAltar}>Put Altar</Button> : null}
             </NavItem>
             <NavItem className="mb-2">
-              {(Game.getInstance().Regions.length > 0) ? canDrawItem ? <Button className="btn-expand" onClick={changeCanDrawItem}>X</Button> : <Button onClick={changeCanDrawItem}>Put Item</Button> : null}
+              {(Game.getInstance().Regions.length > 0) ? canDrawItem ? <Button className="btn-expand" onClick={changeCanDrawItem}>...</Button> : <Button onClick={changeCanDrawItem}>Put Item</Button> : null}
               <Collapse className="mt-2" isOpen={canDrawItem} navbar>
                 <Nav navbar>
                   {

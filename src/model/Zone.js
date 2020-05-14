@@ -39,10 +39,16 @@ class ZoneManager
 {
     static IncrId=0;
 
-    static createZone(coordinates)
+    static createZone(coordinates,Id=null)
     {
-        var zone = new Zone(coordinates,this.IncrId);
-        this.IncrId++;
+        var zone = null;
+        if(Id!= null)
+            zone = new Zone(coordinates,Id);
+        else
+        {
+            zone = new Zone(coordinates,this.IncrId);
+            this.IncrId++;
+        }
         return zone;
     }
 

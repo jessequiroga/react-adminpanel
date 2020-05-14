@@ -27,7 +27,6 @@ export default class MapControl extends Component {
 
     if(_mapUpdate === null)
     {
-      console.log("pas de variable definie");
       return true
     }
     /**
@@ -35,7 +34,6 @@ export default class MapControl extends Component {
      */
     if((mapUpdate.Flags === null && _mapUpdate.Flags !== null) || (_mapUpdate.Flags === null && mapUpdate.Flags !== null))
     {
-      console.log("Flags null");
       return true
     }
     if(mapUpdate.Flags !== null && typeof mapUpdate.Flags != "undefined")
@@ -45,7 +43,6 @@ export default class MapControl extends Component {
           let _currentFlag = this.findById(_mapUpdate.Flags,mapUpdate.Flags[x].Id);
           if( JSON.stringify(newFlag) !== JSON.stringify(_currentFlag))
           {
-            console.log("difference d'un Flag",newFlag,_currentFlag);
             result = true;
             return;
           }
@@ -57,7 +54,6 @@ export default class MapControl extends Component {
      */
     if((mapUpdate.Items === null && _mapUpdate.Items !== null) || (_mapUpdate.Items === null && mapUpdate.Items !== null))
     {
-      console.log("Items null");
       return true
     }
     if(mapUpdate.Items !== null && typeof mapUpdate.Items != "undefined" )
@@ -67,7 +63,6 @@ export default class MapControl extends Component {
         let _currentItem = this.findById(_mapUpdate.Items,mapUpdate.Items[x].Id);
         if(JSON.stringify(newItem) !== JSON.stringify(_currentItem ))
         {
-          console.log("difference d'un Item",newItem,_currentItem);
           result = true;
           return;
         }
@@ -80,7 +75,6 @@ export default class MapControl extends Component {
      */
     if((mapUpdate.Zones === null && _mapUpdate.Zones !== null) || (_mapUpdate.Zones === null && mapUpdate.Zones !== null))
     {
-      console.log("Zones null");
       return true
     }
     if(mapUpdate.Zones !== null && typeof mapUpdate.Zones != "undefined")
@@ -90,7 +84,6 @@ export default class MapControl extends Component {
         let _currentZone = this.findById(_mapUpdate.Zones,mapUpdate.Zones[x].Id);
         if(JSON.stringify(newZone) !== JSON.stringify(_currentZone) )
         {
-          console.log("difference d'une Zone",newZone,_currentZone);
           result = true;
           return;
         }
@@ -100,11 +93,11 @@ export default class MapControl extends Component {
     return result;
   }
 
-  initConfigMap = (mapUpdate) => {
+  configMap = (mapUpdate =null) => {
     if(Object.keys(Game.getInstance()).length >0)
     {
       let game;
-      if(mapUpdate)
+      if(mapUpdate != null)
       {
         game = mapUpdate;
       }
@@ -118,18 +111,15 @@ export default class MapControl extends Component {
           if(indexA !== -1)
           {
             if(Entity.IncrId<altar.Id)
-              Entity.IncrId = altar.Id;
+              Entity.IncrId = altar.Id+1;
             exist = true;
           }
-          if(altar.Team)
-            console.log("Team",altar.Team)
+
           let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
           var withVisionCircle=true;
           if(exist && Game.getInstance().Flags[indexA].toMapElement)
           {
             let altar = Game.getInstance().Flags[indexA].toMapElement();
-            if(newAltar.Team)
-              console.log(newAltar.getIcon());
             altar.setIcon(newAltar.getIcon());
             altar.setPosition({lat:newAltar.Position[0],lng:newAltar.Position[1]});
             if(altar.visionCircle)
@@ -157,7 +147,7 @@ export default class MapControl extends Component {
           if(indexI !== -1)
           {
             if(Entity.IncrId<item.Id)
-              Entity.IncrId = item.Id;
+              Entity.IncrId = item.Id+1;
             exist = true;
           }
           let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
@@ -190,7 +180,7 @@ export default class MapControl extends Component {
           if(indexZ !== -1)
           {
             if(Entity.IncrId<zone.Id)
-              Entity.IncrId = zone.Id;
+              Entity.IncrId = zone.Id+1;
             exist=true;
           }
 
@@ -223,14 +213,14 @@ export default class MapControl extends Component {
   componentWillMount() {
     this.map = this.context[MAP];
     this._mapUpdate = null;
-    this.initConfigMap();
+    this.configMap();
   }
 
   componentDidUpdate() {
     if(this.isDiff(this.props.gameUpdate))
     {
       this._mapUpdate = this.props.gameUpdate;
-      this.initConfigMap(this.props.mapUpdate);
+      this.configMap(this.props.gameUpdate);
     }
   }
 
