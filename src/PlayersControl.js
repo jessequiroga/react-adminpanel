@@ -145,7 +145,7 @@ export default class PlayerControl extends Component {
     }
 
     if(gameBegin && !gameEnded){
-      this.newPlayerInLobby(this.props.listPlayer);
+      //this.newPlayerInLobby(this.props.listPlayer);
       this.newMarkerPlayers(this.props.listPlayerPos);
     }
     else if (!gameBegin)
