@@ -42,6 +42,7 @@ export default class PlayerControl extends Component {
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
               newPlayer.MapEntity = _currentPlayer.toMapElement();
               Game.getInstance().replacePlayer(indexP,newPlayer);
+              this.props.setInstanceListPlayer(Game.getInstance().Players);
             }
             else
             {
@@ -57,6 +58,7 @@ export default class PlayerControl extends Component {
                   newPlayer.toMapElement().visionCircle.setMap(null);
               }*/
               Game.getInstance().replacePlayer(indexP,newPlayer);
+              this.props.setInstanceListPlayer(Game.getInstance().Players);
             }
           }
           else
@@ -70,8 +72,11 @@ export default class PlayerControl extends Component {
               newPlayer.toMapElement().visionCircle.setMap(null);
             }*/
             Game.getInstance().addPlayer(newPlayer);
+            this.props.setInstanceListPlayer(Game.getInstance().Players);
             if(Entity.IncrId<player.Id)
                 Entity.IncrId = player.Id+1;
+            else
+                Entity.IncrId ++;
 
           } 
         }         
@@ -100,11 +105,16 @@ export default class PlayerControl extends Component {
           if(exist)
           {
             Game.getInstance().replacePlayer(indexP,newPlayer);
+            this.props.setInstanceListPlayer(Game.getInstance().Players);
           }
           else
           {
             Game.getInstance().addPlayer(newPlayer);
-            Entity.IncrId++;
+            if(Entity.IncrId<player.Id)
+                Entity.IncrId = player.Id+1;
+            else
+              Entity.IncrId ++;
+            this.props.setInstanceListPlayer(Game.getInstance().Players);
           }
         }
       }

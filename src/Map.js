@@ -11,6 +11,7 @@ import myStyle from "./style";
 import Game from "./model/Game.js";
 import ZoneManager from "./model/Zone.js";
 
+import HtmlMap from "./HtmlMap";
 import DrawManager from "./DrawManager.js";
 import MapControl from "./MapControl.js"
 import PlayersControl from "./PlayersControl";
@@ -21,6 +22,8 @@ import ItemManager from "./model/elements/ItemManager";
 import TextDisplay from "./components/TextDisplay";
 import SelectDisplay from "./components/SelectDisplay";
 import Time from "./helper/Time";
+
+import ModalListPlayer from "./components/ModalListPlayer";
 
 import $ from "jquery";
 
@@ -40,7 +43,13 @@ function Map() {
   const [listMarkerPlayer, setListMarkerPlayer] = useState([]);
   const [listPlayerPos, setListPlayerPos] = useState([]);
   const [gameUpdate, setGameUpdate] =useState({});
+  const [listPlayerOpen, setListPlayerOpen] =useState(false);
+  const [instanceListPlayer, setInstanceListPlayer] =useState({});
 
+  const showListPlayer = () =>
+  {
+    setListPlayerOpen(true);
+  }
 
   const [formularAttributeItem, setFormularAttributeItem] = useState({
                                                                       captureDateChang: {value: '',errorMessage :'',isValid : true},
@@ -491,13 +500,19 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
       <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} />
 
-      <PlayersControl canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
+      <PlayersControl setInstanceListPlayer={setInstanceListPlayer} canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
 
       <DrawManager listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedMoved={setSelectedMoved}
         setSelectedDrawed={setSelectedDrawed} canDrawMapZone={canDrawMapZone}
         canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} typeItemDraw={typeItemDraw}
         position={google.maps.ControlPosition.TOP_LEFT}>
         {/* Menu Show DrawingManager */}
+          <Nav navbar>
+          <Nav className="mt-4 ml-4" navbar >
+            <NavItem className="mr-4">
+              <Button onClick={showListPlayer}>Show Connected Players</Button>
+            </NavItem>
+          </Nav>
           <Nav className="mt-4 ml-4" navbar>
             <NavItem className="mb-2">
               {canDrawMapZone ? <Button className="btn-expand" onClick={changeCanDrawMapZone}>X</Button> : <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
@@ -514,9 +529,12 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   }
                 </Nav>
               </Collapse>
-            </NavItem>
+          </NavItem>
           </Nav>
+          <ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen} instanceListPlayer={instanceListPlayer}/>
+        </Nav>
       </DrawManager>
+
 
       {selectedDrawed && ( // If an drawed component was select
         <InfoWindow className="body-info"// Show a new Info Window

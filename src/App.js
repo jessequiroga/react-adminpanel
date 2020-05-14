@@ -15,7 +15,6 @@ function App() {
   const [configNeeded,setConfigNeeded]  = useState(false); // MODIF false
   const [gameEnded,setGameEnded]  = useState(false);
   const [gameBegin,setGameBegin]  = useState(true);
-  const [listPlayerOpen,setListPlayerOpen] = useState(false);
   const [instanceListPlayer,setInstanceListPlayer] = useState(Game.getInstance());
   const [time,setTime] = useState(new Date().toLocaleTimeString());
   
@@ -56,11 +55,9 @@ function App() {
   return (
     <>  
         {configNeeded&&<MapConfigPannel setConfigNeeded={setConfigNeeded}/>}
-        {gameInstance&&<Header setListPlayerOpen={setListPlayerOpen}/>}
         {gameInstance&&<GoogleMap/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
-        {gameInstance&&<ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen} instanceListPlayer={instanceListPlayer}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configNeeded &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>
