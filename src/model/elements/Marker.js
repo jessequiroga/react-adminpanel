@@ -17,7 +17,7 @@ const visionCircleDragChange= (marker,withColision) =>
     });
 
     var listVisionMarkerWithoutCurrent= listVisionMarker.filter( (fmarker) => fmarker !== marker);
-    var conflict = withColision?DrawConflict.isConflict(marker.position,marker.visionCircle.radius,listVisionMarkerWithoutCurrent):false;
+    var conflict = withColision?DrawConflict.isConflict(marker.position,marker.actionCircle.radius,listVisionMarkerWithoutCurrent):false;
     var isInRegion = DrawConflict.isInRegion(listZone,marker);
     if(withColision && !conflict && isInRegion)
     {
@@ -32,9 +32,9 @@ const visionCircleDragChange= (marker,withColision) =>
   }
 
 const markerDragStop = (marker,map) => {
-    if(marker.position !== marker.visionCircle.center)
+    if(marker.position !== marker.actionCircle.center)
     {
-      marker.setPosition(marker.visionCircle.center);
+      marker.setPosition(marker.actionCircle.center);
     }
 }
 
@@ -55,8 +55,8 @@ export default class Marker extends Entity
           var conflict = false;
 
           let visionCircle = new window.google.maps.Circle({
-              strokeColor: '#01A9DB',
-              strokeOpacity: 0.8,
+              strokeColor: '#ccf3ff',
+              strokeOpacity: 0.5,
               strokeWeight: 2,
               fillColor: '#01A9DB',
               fillOpacity: 0.35,
@@ -84,7 +84,7 @@ export default class Marker extends Entity
           });
           
           if(withColision){
-              conflict = DrawConflict.isConflict(visionCircle.center,this.VisionDistance);    
+              conflict = DrawConflict.isConflict(actionCircle.center,this.ActionDistance);    
               if(!conflict)
               {
                 marker.setMap(map);

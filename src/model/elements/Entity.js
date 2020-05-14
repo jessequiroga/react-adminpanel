@@ -24,7 +24,7 @@ export default class Entity
         this.Position = Position;
         if(ActionDistance)this.ActionDistance = ActionDistance
         if(IsInActionRange)this.IsInActionRange = IsInActionRange;
-        this.VisionDistance = VisionDistance
+        if(VisionDistance)this.VisionDistance = VisionDistance
         if(Name)this.Name = Name; else this.Name = this.constructor.name;
     }
 

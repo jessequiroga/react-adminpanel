@@ -11,7 +11,7 @@ class Item extends Marker
     DeficiencyDuration=0;
     Quantity=1;
     Type;
-    constructor(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id)
+    constructor(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null)
     {
         if(!VisionDistance)VisionDistance = 120;
         if(!ActionDistance)ActionDistance = 50;

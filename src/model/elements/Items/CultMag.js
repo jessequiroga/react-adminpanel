@@ -12,7 +12,6 @@ class CultMag extends Item
     Type;
     constructor(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id)
     {
-        if(!VisionDistance)VisionDistance = 20;
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         if(AvailableDuration)this.AvailableDuration=AvailableDuration;
         if(CanChangeVisionDistance)this.CanChangeVisionDistance=CanChangeVisionDistance;
