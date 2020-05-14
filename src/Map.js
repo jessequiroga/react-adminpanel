@@ -22,6 +22,8 @@ import TextDisplay from "./components/TextDisplay";
 import SelectDisplay from "./components/SelectDisplay";
 import Time from "./helper/Time";
 
+import './Map.css';
+
 function Map() {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
   const [selectedMove, setSelectedMoved] = useState(null); // Triger if an Altar is selected
@@ -344,7 +346,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
   const typesItem = Object.keys(ItemManager.TypesItem).map(key => {
     return <NavItem key={key} className="mb-2">
-      <Button onClick={() => { setTypeItemDraw(key) }}>{ItemManager.TypesItem[key]}</Button>
+      <Button className="btn-item" onClick={() => { setTypeItemDraw(key) }}>{ItemManager.TypesItem[key]}</Button>
     </NavItem>
   });
 
@@ -479,31 +481,24 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} typeItemDraw={typeItemDraw}
         position={google.maps.ControlPosition.TOP_LEFT}>
         {/* Menu Show DrawingManager */}
-        <Card className="border-1">
-          <Navbar color="faded" className="border-1" light>
-            <NavbarToggler className="mb-2" onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-              <Nav navbar>
-                <NavItem className="mb-2">
-                  {canDrawMapZone ? <Button color="warning" onClick={changeCanDrawMapZone}>X</Button> : <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
-                </NavItem>
-                <NavItem className="mb-2">
-                  {(Game.getInstance().Regions.length > 0) ? canDrawAltar ? <Button color="warning" onClick={changeCanDrawAltar}>X</Button> : <Button onClick={changeCanDrawAltar}>Put Altar</Button> : null}
-                </NavItem>
-                <NavItem className="mb-2">
-                  {(Game.getInstance().Regions.length > 0) ? canDrawItem ? <Button color="warning" onClick={changeCanDrawItem}>X</Button> : <Button onClick={changeCanDrawItem}>Put Item</Button> : null}
-                  <Collapse className="mt-2" isOpen={canDrawItem} navbar>
-                    <Nav navbar>
-                      {
-                        typesItem
-                      }
-                    </Nav>
-                  </Collapse>
-                </NavItem>
-              </Nav>
-            </Collapse>
-          </Navbar>
-        </Card>
+          <Nav className="mt-4 ml-4" navbar>
+            <NavItem className="mb-2">
+              {canDrawMapZone ? <Button className="btn-expand" onClick={changeCanDrawMapZone}>X</Button> : <Button onClick={changeCanDrawMapZone}>Draw Map Zone</Button>}
+            </NavItem>
+            <NavItem className="mb-2">
+              {(Game.getInstance().Regions.length > 0) ? canDrawAltar ? <Button className="btn-expand" onClick={changeCanDrawAltar}>X</Button> : <Button onClick={changeCanDrawAltar}>Put Altar</Button> : null}
+            </NavItem>
+            <NavItem className="mb-2">
+              {(Game.getInstance().Regions.length > 0) ? canDrawItem ? <Button className="btn-expand" onClick={changeCanDrawItem}>X</Button> : <Button onClick={changeCanDrawItem}>Put Item</Button> : null}
+              <Collapse className="mt-2" isOpen={canDrawItem} navbar>
+                <Nav navbar>
+                  {
+                    typesItem
+                  }
+                </Nav>
+              </Collapse>
+            </NavItem>
+          </Nav>
       </DrawManager>
 
       {selectedDrawed && ( // If an drawed component was select
