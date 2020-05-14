@@ -21,6 +21,8 @@ import ItemManager from "./model/elements/ItemManager";
 
 import TextDisplay from "./components/TextDisplay";
 import SelectDisplay from "./components/SelectDisplay";
+import ItemsDisplay from "./components/ItemsDisplay";
+
 import Time from "./helper/Time";
 
 import ModalListPlayer from "./components/ModalListPlayer";
@@ -542,7 +544,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedDrawed(null); // unselect the drawed component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lat() : selectedDrawed.position.lat(), // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lat() : selectedDrawed.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lng() : selectedDrawed.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >
@@ -563,11 +565,16 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport?<div><span>This iteam can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div>:<div className="lib-res"><span>There item can not be teleported</span></div>}
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration?<div  className="lib-res"><span className="lib">This item will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration} after some one take an item</span></div>:<div className="lib-res"><span>There is no item left in this point</span></div>}
                   </div>:null}
-              <div className="group-btn">
+                {(selectedDrawed.type && selectedDrawed.type === "Player")?
+                <div>
+                  <div><span className="lib">Name: </span>{Game.getInstance() && Game.getInstance().getPlayerById(selectedDrawed.id).Name?Game.getInstance().getPlayerById(selectedDrawed.id).Name:"unknown"}</div>
+                  {Game.getInstance() ?<ItemsDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
+                </div>:null}
+              {(selectedDrawed.type && selectedDrawed.type !== "Player")?<div className="group-btn">
                 <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
                 <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
                 {(selectedDrawed.type && selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
-              </div>
+              </div>:null}
             </div>
         </InfoWindow>
       )}
@@ -578,7 +585,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedMoved(null); // unselect the edited component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lat() : selectedMove.position.lat(), // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lat() : selectedMove.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lng() : selectedMove.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >
@@ -598,7 +605,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedEdited(null); // unselect the edited component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lat() : selectedEdited.position.lat(), // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lat() : selectedEdited.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lng() : selectedEdited.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >

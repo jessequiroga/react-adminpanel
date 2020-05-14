@@ -88,11 +88,11 @@ export default class Marker extends Entity
               if(!conflict)
               {
                 marker.setMap(map);
+                window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
                 if(this.constructor.name != "Player")
                 {
                   visionCircle.setMap(map);
                   actionCircle.setMap(map);
-                  window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
                   window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
                 }
@@ -101,16 +101,16 @@ export default class Marker extends Entity
           else
           {
               marker.setMap(map);
+              window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
               if(this.constructor.name != "Player")
               {
-                  window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-                  if (withVisionCircle)
-                  {
-                      visionCircle.setMap(map);
-                      actionCircle.setMap(map);
-                      window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
-                      window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
-                  }
+                if (withVisionCircle)
+                {
+                    visionCircle.setMap(map);
+                    actionCircle.setMap(map);
+                    window.google.maps.event.addListener(marker, "position_changed",()=>visionCircleDragChange(marker,true));
+                    window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
+                }
               }
           }
           this.MapEntity = marker;

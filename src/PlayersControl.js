@@ -46,7 +46,7 @@ export default class PlayerControl extends Component {
             else
             {
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-              let mapelement  = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+              let mapelement  = newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
               /*if(player.IsAFK)
               {
                 newPlayer.toMapElement().setMap(null);
@@ -60,7 +60,7 @@ export default class PlayerControl extends Component {
           else
           {
             let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-            newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+            newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
             /*if(player.IsAFK)
             {
               newPlayer.toMapElement().setMap(null);
