@@ -570,7 +570,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               </div>
             </div>
         </InfoWindow>
-      )}5
+      )}
 
       {selectedMove && ( // If an edited component was select
         <InfoWindow // Show a new Info Window
