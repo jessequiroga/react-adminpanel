@@ -48,8 +48,7 @@ export default class Marker extends Entity
     toMapElement(map,setSelectedDrawed={},withVisionCircle=false,withColision=false){
         
         let marker = this.MapEntity;
-
-        if (marker == null)
+        if (marker === null)
         {
           var conflict = false;
 

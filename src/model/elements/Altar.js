@@ -6,13 +6,14 @@ class Altar extends Marker
     UnavailableTime;
     Team;
 
-    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id)
+    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team)
     {
         if(!VisionDistance)VisionDistance = 300;
         if(!ActionDistance)VisionDistance = 100;
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         if(UnavailableTime)this.UnavailableTime=UnavailableTime;
         if(CaptureDate)this.CaptureDate=CaptureDate;
+        if(Team)this.Team=Team;
     }
 
     getIcon()
@@ -27,7 +28,7 @@ class Altar extends Marker
         else
         {
             return {
-                url:`/altar_captured_`+this.Team.Color.toLowerCase()+`.png`,
+                url:`/autel_captured_`+this.Team.Color.toLowerCase()+`.png`,
                 scaledSize: new window.google.maps.Size(80, 80)
             }
         }
@@ -37,9 +38,9 @@ class Altar extends Marker
 
 class AltarManager
 {
-    static createAltar(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,UnavailableTime=null,CaptureDate=null,Id=null)
+    static createAltar(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,UnavailableTime=null,CaptureDate=null,Id=null,Team=null)
     {
-        var altar = new Altar(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id);
+        var altar = new Altar(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team);
         return altar;
     }
 

@@ -11,10 +11,16 @@ export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  initConfigMap = () => {
+  static _mapUpdate = null;
+
+  initConfigMap = (mapUpdate) => {
     if(Object.keys(Game.getInstance()).length >0)
     {
-      let game = Game.getInstance();
+      let game;
+      if(mapUpdate)
+        game = mapUpdate;
+      else
+        game = Game.getInstance();
       (Object.keys(game.Flags).length > 0) && game.Flags.map(altar => { // For each altar on the websocket message
         let exist =false;
         if(altar.Id != null)
@@ -22,15 +28,25 @@ export default class MapControl extends Component {
           var indexA = Game.getInstance().findAltarById(altar.Id);
           if(indexA !== -1)
           {
-            //Game.getInstance().Flags[indexA].toMapElement().setMap(null);
             if(Entity.IncrId<altar.Id)
               Entity.IncrId = altar.Id;
             exist = true;
           }
 
-          let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id);
+          let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
           var withVisionCircle=true;
-          newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+          if(exist && Game.getInstance().Flags[indexA].toMapElement)
+          {
+            let altar = Game.getInstance().Flags[indexA].toMapElement();
+            altar.setIcon(newAltar.getIcon());
+            altar.setPosition({lat:newAltar.Position[0],lng:newAltar.Position[1]});
+            if(altar.visionCircle)
+              altar.visionCircle.setCenter({lat:newAltar.Position[0],lng:newAltar.Position[1]});
+            newAltar.MapEntity=altar;
+          }
+          else{
+            newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+          }
           if(exist)
           {
             Game.getInstance().replaceAltar(indexA,newAltar);
@@ -47,14 +63,24 @@ export default class MapControl extends Component {
           var indexI = Game.getInstance().findItemById(item.Id);
           if(indexI !== -1)
           {
-            //Game.getInstance().Items[indexI].toMapElement().setMap(null);
             if(Entity.IncrId<item.Id)
               Entity.IncrId = item.Id;
             exist = true;
           }
           let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
           var withVisionCircle=true;
-          newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+          if(exist && Game.getInstance().Items[indexI].toMapElement)
+          {
+            let item = Game.getInstance().Items[indexI].toMapElement();
+            item.setIcon(newItem.getIcon());
+            item.setPosition({lat:newItem.Position[0],lng:newItem.Position[1]});
+            if(item.visionCircle)
+              item.visionCircle.setCenter({lat:newItem.Position[0],lng:newItem.Position[1]});
+            newItem.MapEntity=item;
+          }
+          else{
+            newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+          }
           if(exist)
             Game.getInstance().replaceItem(indexI,newItem);
         }
@@ -69,15 +95,27 @@ export default class MapControl extends Component {
           var indexZ = Game.getInstance().findZoneById(zone.Id);
           if(indexZ !== -1)
           {
-            //Game.getInstance().Regions[indexZ].toMapElement().setMap(null);
             if(Entity.IncrId<zone.Id)
               Entity.IncrId = zone.Id;
             exist=true;
           }
 
           let newZone = ManagerZones.createZone(zone.Coordinates,zone.Id);
-          let poly = newZone.toMapElement(this.map);
-          window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
+          let poly;
+          let coordinates=[];
+          if(exist && Game.getInstance().Regions[indexZ].toMapElement)
+          {
+            poly = Game.getInstance().Regions[indexZ].toMapElement();
+            newZone.Coordinates.forEach(coordinate => {
+              coordinates.push({lat:coordinate[0],lng:coordinate[1]});
+              });
+            poly.setPath(coordinates);
+            newZone.MapEntity=poly;
+          }
+          else{
+            poly = newZone.toMapElement(this.map);
+            window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
+          }
           if(exist)
             Game.getInstance().replaceRegion(indexZ,newZone);
         }
@@ -93,7 +131,7 @@ export default class MapControl extends Component {
   }
 
   componentDidUpdate() {
-    return null;
+      this.initConfigMap();
   }
 
   render()

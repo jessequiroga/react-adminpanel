@@ -72,7 +72,7 @@ export default class SocketMessage {
                     this.ContainedEntity = message.Player;
                     break;
                 case "GAMEUPDATE":
-                    this.ContainedEntity = message.Players;
+                    this.ContainedEntity = message.Game;
                     break;
                 case "OK":
                 this.ContainedEntity = null;
@@ -170,7 +170,7 @@ export default class SocketMessage {
                 result = JSON.stringify(jsonObject);
                 break;
             case "GAMEUPDATE":
-                jsonObject.Player = JSON.parse(this.ContainedEntity);
+                jsonObject.Game = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
             default:

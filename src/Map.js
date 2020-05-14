@@ -19,6 +19,7 @@ import SocketController from "./model/SocketController";
 import ItemManager from "./model/elements/ItemManager";
 
 import TextDisplay from "./components/TextDisplay";
+import SelectDisplay from "./components/SelectDisplay";
 
 function Map() {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
@@ -33,6 +34,7 @@ function Map() {
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
   const [listMarkerPlayer, setListMarkerPlayer] = useState([]);
   const [listPlayerPos, setListPlayerPos] = useState([]);
+  const [gameUpdate, setGameUpdate] =useState({});
 
 
   const [formularAttributeItem, setFormularAttributeItem] = useState({
@@ -61,7 +63,9 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           setListPlayer(listPlayer.concat(players));
           break;
         case SocketMessage.TypeMessage.GAMEUPDATE:
-          let playersPos = message.ContainedEntity;
+          let playersPos = message.ContainedEntity.Players;
+          setGameUpdate(message.ContainedEntity);
+          
           let _listPlayerPos = listPlayerPos.slice(0);
           playersPos.forEach(function (player) {
             _listPlayerPos[player.Id] = player;
@@ -441,7 +445,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         />
       )}
 
-      <MapControl listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} />
+      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} />
 
       <PlayersControl canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
 
@@ -546,16 +550,16 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             {(selectedEdited.type && selectedEdited.type === "Altar")?
               <form onSubmit={() => onSubmitEditAttributeAltar(selectedEdited.id)}>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).CaptureDate?
-                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} type="date" typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
-                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
+                  <TextDisplay name="captureDateChang" type="date" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}}  label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
                 </div>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime?
                   <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeHolder={new Date(Game.getInstance().getAltarById(selectedEdited.id).UnvailableTime)}/>:
                   <TextDisplay name="unvailableTimeChang" type="time" typeInput="time" label="Unvailable Time:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} placeHolder="This Altar is available"/>}
                 </div>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).Team?
-                  <TextDisplay name="teamChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={Game.getInstance().getAltarById(selectedEdited.id).Team.Name}/>:
-                  <TextDisplay name="teamChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="No Team had this Altar"/>}
+                  <TextDisplay name="teamChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}}  label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={Game.getInstance().getAltarById(selectedEdited.id).Team.Name}/>:
+                  <TextDisplay name="teamChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}}  label="Team:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="No Team had this Altar"/>}
                 </div>
                 <button>Validate</button> {/* add an button to validated the edited component */}
               </form>
@@ -565,8 +569,8 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               <form onSubmit={() => onSubmitEditAttributeItem(selectedEdited.id)}>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CaptureDate?
-                  <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}} type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
-                  <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}} label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value="This Item is free"/>}
+                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
+                  <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value="This Item is free"/>}
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).AvailableDuration?
@@ -579,9 +583,10 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="There is no item left in this point"/>}
                 </div>
                 <div>
+                  {Game.getInstance() && console.log(Game.getInstance().getItemById(selectedEdited.id).CanTeleport)}
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CanTeleport?
-                  <TextDisplay name="canTeleportChang" typeInput="boolean" label="This iteam can be teleported" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="true"/>:
-                  <TextDisplay name="canTeleportChang" typeInput="boolean" label="This iteam can be teleported" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="false"/>}
+                  <SelectDisplay name="canTeleportChang" label="This iteam can be teleported" options={[{value:true,label:"True",selected:true},{value:false,label:"False",selected:false}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/> :
+                  <SelectDisplay name="canTeleportChang" label="This iteam can be teleported" options={[{value:true,label:"True",selected:false},{value:false,label:"False",selected:true}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/>}
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration?
@@ -591,7 +596,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                 <button>Validate</button> {/* add an button to validated the edited component */}
               </form>
             :null}
-          </div>
+        </div>
         </InfoWindow>
       )}
     </GoogleMap>
