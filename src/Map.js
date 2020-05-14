@@ -455,7 +455,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
   return (
     <GoogleMap
-      defaultZoom={9} // Initiate the defalt zoom view on the map
+      defaultZoom={15} // Initiate the defalt zoom view on the map
       defaultCenter={{ lat: 48.529377, lng: 7.73689 }} // Initiate the begin coordonate on the Iut pos
       //defaultCenter={{ lat: 45.421532, lng: -75.967189 }} //Ottawa
       options= // Initiate all the option of the map

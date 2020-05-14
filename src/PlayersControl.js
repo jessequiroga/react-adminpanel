@@ -22,7 +22,6 @@ export default class PlayerControl extends Component {
             let _currentPlayer = Game.getInstance().Players[indexP];
             if( _currentPlayer.toMapElement &&  _currentPlayer.toMapElement() !== null)
             {
-              console.log("exist Map",player.Id);
               _currentPlayer.Position = player.Position;
               _currentPlayer.toMapElement().setPosition({lat:player.Position[0],lng:player.Position[1]});
               if(_currentPlayer.toMapElement().visionCircle)
@@ -46,11 +45,8 @@ export default class PlayerControl extends Component {
             }
             else
             {
-              console.log("pas de map id",player.Id);
-              console.log("pas de map curr",_currentPlayer)
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
               let mapelement  = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
-              console.log("pas de map el",mapelement);
               /*if(player.IsAFK)
               {
                 newPlayer.toMapElement().setMap(null);
@@ -63,7 +59,6 @@ export default class PlayerControl extends Component {
           }
           else
           {
-            console.log("player.id New",player.Id);
             let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
             newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
             /*if(player.IsAFK)
