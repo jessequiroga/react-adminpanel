@@ -87,7 +87,7 @@ export default class PlayerControl extends Component {
     players.forEach((player)=>{
       if(player !=null && player.Id != null && player.Team != null )
       {
-        if(player.Position === null || player.Position === "undefined")
+        if(player.Position === null || typeof player.Position === "undefined")
         {
           let exist = false;
           let indexP = Game.getInstance().findPlayerById(player.Id);
@@ -135,7 +135,7 @@ export default class PlayerControl extends Component {
     }
 
     if(gameBegin && !gameEnded){
-      //this.newPlayerInLobby(this.props.listPlayer);
+      this.newPlayerInLobby(this.props.listPlayer);
       this.newMarkerPlayers(this.props.listPlayerPos);
     }
     else if (!gameBegin)
