@@ -20,49 +20,59 @@ export default class PlayerControl extends Component {
           if( indexP != -1)
           {
             let _currentPlayer = Game.getInstance().Players[indexP];
-            if( _currentPlayer.MapEntity &&  _currentPlayer.MapEntity !== null)
+            if( _currentPlayer.toMapElement &&  _currentPlayer.toMapElement() !== null)
             {
+              console.log("exist Map",player.Id);
               _currentPlayer.Position = player.Position;
               _currentPlayer.toMapElement().setPosition({lat:player.Position[0],lng:player.Position[1]});
               if(_currentPlayer.toMapElement().visionCircle)
                 _currentPlayer.toMapElement().visionCircle.setCenter({lat:player.Position[0],lng:player.Position[1]});
 
-              if(player.IsAFK)
+              /*if(player.IsAFK)
               {
                 _currentPlayer.toMapElement().setMap(null);
                 if(_currentPlayer.toMapElement().visionCircle)
                   _currentPlayer.toMapElement().visionCircle.setMap(null);
               }
-              else{
+              else if(_currentPlayer.toMapElement().map ===null){
                 _currentPlayer.toMapElement().setMap(this.map);
                 if(_currentPlayer.toMapElement().visionCircle)
                   _currentPlayer.toMapElement().visionCircle.setMap(this.map);
-              }
+              }*/
+              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+              newPlayer.MapEntity = _currentPlayer.toMapElement();
+              Game.getInstance().replacePlayer(indexP,newPlayer);
             }
             else
             {
+              console.log("pas de map id",player.Id);
+              console.log("pas de map curr",_currentPlayer)
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
-              newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
-              if(player.IsAFK)
+              let mapelement  = newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
+              console.log("pas de map el",mapelement);
+              /*if(player.IsAFK)
               {
                 newPlayer.toMapElement().setMap(null);
                 if(newPlayer.toMapElement().visionCircle)
                   newPlayer.toMapElement().visionCircle.setMap(null);
-              }
+              }*/
               Game.getInstance().replacePlayer(indexP,newPlayer);
             }
           }
           else
           {
+            console.log("player.id New",player.Id);
             let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
             newPlayer.toMapElement(this.map,this.props.canDraw,this.props.setSelectedDrawed);
-            if(player.IsAFK)
+            /*if(player.IsAFK)
             {
               newPlayer.toMapElement().setMap(null);
               newPlayer.toMapElement().visionCircle.setMap(null);
-            }
+            }*/
             Game.getInstance().addPlayer(newPlayer);
-            Entity.IncrId++;
+            if(Entity.IncrId<player.Id)
+                Entity.IncrId = player.Id+1;
+
           } 
         }         
       }
@@ -125,7 +135,7 @@ export default class PlayerControl extends Component {
     }
 
     if(gameBegin && !gameEnded){
-      this.newPlayerInLobby(this.props.listPlayer);
+      //this.newPlayerInLobby(this.props.listPlayer);
       this.newMarkerPlayers(this.props.listPlayerPos);
     }
     else if (!gameBegin)

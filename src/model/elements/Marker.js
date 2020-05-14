@@ -47,10 +47,11 @@ export default class Marker extends Entity
       super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
     }
 
-    toMapElement(map,setSelectedDrawed={},withVisionCircle=false,withColision=false){
+    toMapElement(map=null,setSelectedDrawed={},withVisionCircle=false,withColision=false){
         
         let marker = this.MapEntity;
-        if (marker === null)
+        console.log(map);
+        if (marker === null && map !==null)
         {
           var conflict = false;
 
