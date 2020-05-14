@@ -355,8 +355,9 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     </NavItem>
   });
 
-  const onSubmitEditAttributeAltar = (event,altarId) =>
+  const onSubmitEditAttributeAltar = (event,selectedAltar) =>
   {
+    let altarId = selectedAltar.id;
     event.preventDefault();
     let value = formularAttributeAltar.unvailableTimeChang.value;
     let valid = formularAttributeAltar.unvailableTimeChang.isValid;
@@ -378,13 +379,19 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         teamChang: {value: '',errorMessage :'',isValid : true}
       });
       setSelectedEdited(null);
+      google.maps.event.clearListeners(selectedAltar, 'click'); // Unset the old event onClick of the Map component
+      google.maps.event.addListener(selectedAltar, 'click', function (event) { // Set the new event onClick of the Map component
+        !canDraw() && setSelectedDrawed(selectedAltar); // Select the drawed component
+
+      });
     }
   
     
   }
 
-  const onSubmitEditAttributeItem = (event,itemId) =>
+  const onSubmitEditAttributeItem = (event,itemSelected) =>
   {
+    let itemId = itemSelected.id;
     event.preventDefault();
     let formulaireValide = true;
     let content = {};
@@ -428,7 +435,12 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                                 canTeleportChang: {value: '',errorMessage :'',isValid : true},
                                 deficiencyDurationChang: {value: '',errorMessage :'',isValid : true}
                               });
-        setSelectedEdited(null);
+      setSelectedEdited(null);
+      google.maps.event.clearListeners(itemSelected, 'click'); // Unset the old event onClick of the Map component
+      google.maps.event.addListener(itemSelected, 'click', function (event) { // Set the new event onClick of the Map component
+        !canDraw() && setSelectedDrawed(itemSelected); // Select the drawed component
+
+      });
     }
   }
 
@@ -575,7 +587,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
           <div>
             {(selectedEdited.type && selectedEdited.type === "Altar")?
-              <form onSubmit={(event) => onSubmitEditAttributeAltar(event,selectedEdited.id)}>
+              <form onSubmit={(event) => onSubmitEditAttributeAltar(event,selectedEdited)}>
                 <div>{Game.getInstance() && Game.getInstance().getAltarById(selectedEdited.id).CaptureDate?
                   <TextDisplay name="captureDateChang" type="date" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value={new Date(Game.getInstance().getAltarById(selectedEdited.id).CaptureDate)}/>:
                   <TextDisplay name="captureDateChang" typeInput="" style={{backgroundColor:"#b7b6b0d9"}}  label="Capture Date:" formular={formularAttributeAltar} changeFormular={setFormularAttributeAltar} value="This Altar is free"/>}
@@ -593,7 +605,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             :null}
 
             {(selectedEdited.type && Object.keys(ItemManager.TypesItem).indexOf(selectedEdited.type) !== -1)?
-              <form onSubmit={(event) => onSubmitEditAttributeItem(event,selectedEdited.id)}>
+              <form onSubmit={(event) => onSubmitEditAttributeItem(event,selectedEdited)}>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CaptureDate?
                   <TextDisplay name="captureDateChang" style={{backgroundColor:"#b7b6b0d9"}} typeInput="" type="date" label="Capture Date:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} value={new Date(Game.getInstance().getItemById(selectedEdited.id).CaptureDate)}/>:
