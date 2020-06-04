@@ -35,7 +35,7 @@ function App() {
             if(this_game.IsFinal)
             {
               setGameInstance(true);
-              if((new Date()) > (new Date(this_game.EndDate) && this.game.Type == Game.GameType.TIME))
+              if((new Date()) > (new Date(this_game.EndDate) && this_game.Type == Game.GameType.TIME))
               {
                 setGameEnded(true);
               }
