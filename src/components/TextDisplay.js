@@ -14,9 +14,20 @@ const TextDisplay = (props) => {
             case "email":
                 if (formular[input].value !== "") {
                     if (validEmail(formular[input].value)) {
-                        formular[input].isValid = true;
-                        formular[input].errorMessage = "";
-                        formular[input].message ="";
+                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                        {
+                            formular[input].value ="";
+                            event.target.value="";
+                            formular[input].isValid = true;
+                            formular[input].errorMessage = "";
+                            formular[input].message ="";
+                        }
+                        else
+                        {
+                            formular[input].isValid = true;
+                            formular[input].errorMessage = "";
+                            formular[input].message ="";
+                        }
                     } else {
                         formular[input].isValid = false;
                         formular[input].errorMessage = "This Email isn't valid";
@@ -42,9 +53,20 @@ const TextDisplay = (props) => {
             case "password":
                 if (formular[input].value !== "") {
                     if (formular[input].value.length >= 8 && /\d/.test(formular[input].value)) {
-                        formular[input].isValid = true;
-                        formular[input].errorMessage = "";
-                        formular[input].message ="";
+                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                        {
+                            formular[input].value ="";
+                            event.target.value="";
+                            formular[input].isValid = true;
+                            formular[input].errorMessage = "";
+                            formular[input].message ="";
+                        }
+                        else
+                        {
+                            formular[input].isValid = true;
+                            formular[input].errorMessage = "";
+                            formular[input].message ="";
+                        }
                     } else {
                         formular[input].isValid = false;
                         formular[input].errorMessage = "The password need at least 8 char and one number";
@@ -89,9 +111,20 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    formular[input].isValid = true;
-                    formular[input].errorMessage = "";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    {
+                        formular[input].value ="";
+                        event.target.value="";
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
+                    else
+                    {
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
                 }
                 break;
             case "name":
@@ -117,9 +150,20 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    formular[input].isValid = true;
-                    formular[input].errorMessage = "";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    {
+                        formular[input].value ="";
+                        event.target.value="";
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
+                    else
+                    {
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
                 }
                 break;
 
@@ -132,9 +176,18 @@ const TextDisplay = (props) => {
             case "ip":
                 if(formular[input].value === '')
                 {
-                    formular[input].isValid = false;
-                    formular[input].errorMessage = "This is a needed field";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1)
+                    {
+                        formular[input].message = "This field will not be change";
+                        formular[input].errorMessage ="";
+                        formular[input].isValid = true;
+                    }
+                    else
+                    {
+                        formular[input].isValid = false;
+                        formular[input].errorMessage = "This is a needed field";
+                        formular[input].message ="";
+                    }
                 }
                 else if(!formular[input].value.match(/^[0-9]+[0-9]+[0-9]+.+$/))
                 {
@@ -144,18 +197,38 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    formular[input].isValid = true;
-                    formular[input].errorMessage = "";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    {
+                        formular[input].value ="";
+                        event.target.value="";
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
+                    else
+                    {
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
                 }
                 break;
 
             case "number":
                 if(formular[input].value === '')
                 {
-                    formular[input].isValid = false;
-                    formular[input].errorMessage = "This is a needed field";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1)
+                    {
+                        formular[input].message = "This field will not be change";
+                        formular[input].errorMessage ="";
+                        formular[input].isValid = true;
+                    }
+                    else
+                    {
+                        formular[input].isValid = false;
+                        formular[input].errorMessage = "This is a needed field";
+                        formular[input].message ="";
+                    }
                 }
                 else if(!formular[input].value.match(/^[0-9]+$/))
                 {
@@ -165,9 +238,20 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    formular[input].isValid = true;
-                    formular[input].errorMessage = "";
-                    formular[input].message ="";
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    {
+                        formular[input].value ="";
+                        event.target.value="";
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
+                    else
+                    {
+                        formular[input].isValid = true;
+                        formular[input].errorMessage = "";
+                        formular[input].message ="";
+                    }
                 }
                 break;
             

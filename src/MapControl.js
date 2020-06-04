@@ -146,6 +146,7 @@ export default class MapControl extends Component {
       });
 
       (Object.keys(game.Items).length > 0) && game.Items.map(item => { // For each item on the websocket message
+        console.log("length",game.Items.length);
         let exist =false;
         if(item.Id != null)
         {

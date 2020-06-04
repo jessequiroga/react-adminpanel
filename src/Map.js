@@ -277,6 +277,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       console.log("erreur lors de la modif");
     }
     else {
+      console.log("message",message.toJson());
       socket.send(message.toJson());
       /**
       * Replace the elemnt on click by the menu popup

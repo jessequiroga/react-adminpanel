@@ -1,8 +1,9 @@
 import React from "react";
-import SocketMessage from "./model/SocketMessage";
-import SocketController from "./model/SocketController";
 
-function MapConfigPannel({setConfigNeeded}) {
+import SocketController from './model/SocketController';
+import SocketMessage from './model/SocketMessage';
+
+function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
   
   let dragOverHandler = (event) => {  
     // Prevent default behavior (Prevent file from being opened)
@@ -17,20 +18,19 @@ function MapConfigPannel({setConfigNeeded}) {
       if(dropElement.kind ==="file" && dropElement.type === "application/json")
       {
         let configFile = dropElement.getAsFile();
-        if(configFile.name === "map.json")
-        {
-            let fr = new FileReader();
-            let jsonMessage; 
-            fr.onload = function() { //Read the fichier => this.result = file.text()
-                jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
-                var conn = SocketController.getSocket();
-                conn.send(jsonMessage.toJson());
-                setConfigNeeded(false);
-            };
-            
-            fr.readAsText(configFile); //Run fr.onload
-            
-        }
+        let fr = new FileReader();
+        let jsonMessage; 
+        fr.onload = function() { //Read the fichier => this.result = file.text()
+          setConfig(this.result);
+          setConfigJsonNeeded(false);
+          jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
+          var conn = SocketController.getSocket();
+          conn.send(jsonMessage.toJson());
+          console.log(jsonMessage.toJson());
+        };
+        
+        
+        fr.readAsText(configFile); //Run fr.onload     
       }
     }
   }
@@ -45,10 +45,12 @@ function MapConfigPannel({setConfigNeeded}) {
           let fr = new FileReader();
           let jsonMessage; 
           fr.onload = function() { //Read the fichier => this.result = file.text()
-              jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
-              var conn = SocketController.getSocket();
-              conn.send(jsonMessage.toJson());
-              setConfigNeeded(false);
+            setConfig(this.result);
+            setConfigJsonNeeded(false);
+            jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
+            var conn = SocketController.getSocket();
+            conn.send(jsonMessage.toJson());
+            console.log(jsonMessage.toJson());
           };
           
           fr.readAsText(configFile); //Run fr.onload
@@ -75,5 +77,5 @@ function MapConfigPannel({setConfigNeeded}) {
   );
 
 }
-export default MapConfigPannel;
+export default MapImportConfigPannel;
 

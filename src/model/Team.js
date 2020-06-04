@@ -1,20 +1,29 @@
-export default class Team 
+class Team 
 {
     Id;
     Color;
-    Players;
-    Markers;
     Name;
 
-    constructor(position)
+    constructor(Color,Name,Id=null)
     {
-        this.Position = position;
+
+        this.Id =  Id;
+        this.Color = Color;
+        this.Name = Name;
     }
 
 
     toMapElement(){};
+}
 
-    addPlayer(player){
-        this.Players.push(player);
-    }
+export default class TeamManager
+{
+   static IncrId=0;
+   static create(Color,Name,Id=null)
+   {
+
+       Id = Id?Id:this.IncrId;
+       this.IncrId++;
+       return new Team(Color,Name,Id);
+   }
 }

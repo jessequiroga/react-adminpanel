@@ -1,7 +1,7 @@
  class Game
 {
     
-    GameType;
+    Type;
     Name;
     Duration;
     BeginDate;
@@ -13,9 +13,10 @@
     Items = [];
     Flags = [];
     Teams=[];
+    IsFinal= false;
 
     constructor(
-        gameType,
+        type,
         name,
         duration,
         beginDate,
@@ -26,9 +27,11 @@
         zones = [],
         items = [],
         flags = [],
-        teams=[])
+        teams=[],
+        isFinal = false
+        )
     {   
-        this.GameType = gameType;
+        this.Type = type;
         this.Name = name;
         this.Duration = duration;
         this.BeginDate = beginDate;
@@ -40,6 +43,7 @@
         this.Items = items;
         this.Flags = flags;
         this.Teams = teams;
+        this.IsFinal = isFinal;
     }
 
     addZone(region){
@@ -248,15 +252,15 @@
 class SingletonGame { // Object Game to sigleton
     static instance;
     static GameType = {
-        FLAG:"FLAG",
-        TIME:"TIME",
-        SUPREMACY:"SUPREMACY"
+        FLAG:0,
+        TIME:1,
+        SUPREMACY:2
     }   
 
     static getInstance(game=null){
         if(game!=null)
         {
-            this.instance = new Game(game.GameType,
+            this.instance = new Game(game.Type,
                                     game.Name,
                                     game.Duration,
                                     game.BeginDate,
@@ -267,7 +271,9 @@ class SingletonGame { // Object Game to sigleton
                                     game.Regions,
                                     game.Items,
                                     game.Flags,
-                                    game.Teams);
+                                    game.Teams,
+                                    game.IsFinal
+                                    );
         }
         
         return this.instance;
