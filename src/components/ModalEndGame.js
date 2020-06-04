@@ -5,16 +5,8 @@ import Game from '../model/Game';
 import SocketMessage from '../model/SocketMessage';
 import SocketController from '../model/SocketController';
 
-function ModalEndGame({gameEnded}) {
+function ModalEndGame({gameEnded,openConfig}) {
     
-  const openConfig =() =>{
-    let game = Game.getInstance();
-    game.IsFinal = false;
-    let jsonMessage = new SocketMessage(game,SocketMessage.TypeMessage.GAMESETUP);
-    var conn = SocketController.getSocket();
-    conn.send(jsonMessage.toJson());
-  }
-
   return (
     <>  
         <Modal isOpen={gameEnded}>

@@ -16,8 +16,13 @@ function App() {
   const [instanceListPlayer,setInstanceListPlayer] = useState(Game.getInstance());
   const [time,setTime] = useState(new Date().toLocaleTimeString());
   const [config,setConfig]= useState(false);
-  
-  useEffect(() => { // On Open Admin 
+  const [configOpen,changeConfigOpen] = useState(false);
+
+  const openConfig = () =>{
+    changeConfigOpen(true);
+  }
+
+  const initWebsocket= () => {
     let conn = SocketController.getSocket();
     conn.onmessage = function(event){
       var message = new SocketMessage(event.data);
@@ -27,7 +32,6 @@ function App() {
           setConfigJsonNeeded(true);
           break;
         case SocketMessage.TypeMessage.GAMESETUP:
-          console.log(message.ContainedEntity);
           if(!config)
           {
             let game = message.ContainedEntity;
@@ -35,7 +39,8 @@ function App() {
             if(this_game.IsFinal)
             {
               setGameInstance(true);
-              if((new Date()) > (new Date(this_game.EndDate) && this_game.Type == Game.GameType.TIME))
+              console.log((new Date()) >(new Date(this_game.EndDate)));
+              if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type == Game.GameType.TIME))
               {
                 setGameEnded(true);
               }
@@ -52,6 +57,24 @@ function App() {
           break;
       }
     }
+  }
+
+  useEffect(() => {
+    let game = Game.getInstance();
+    console.log("1");
+    if(game){
+      initWebsocket();
+      game.IsFinal = false;
+      let jsonMessage = new SocketMessage(game,SocketMessage.TypeMessage.GAMESETUP);
+      var conn = SocketController.getSocket();
+      conn.send(jsonMessage.toJson());
+      setGameEnded(false);
+      setGameInstance(false);
+    }
+  },[configOpen]);
+  
+  useEffect(() => { // On Open Admin
+    initWebsocket();
     const id = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
       Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);
@@ -62,12 +85,12 @@ function App() {
   return (
     <>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
-        {config&&<MapConfigPannel Config={config}/>}
+        {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
         {gameInstance&&<GoogleMap/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer}/>}
-        {gameInstance&&<ModalEndGame gameEnded={gameEnded}/>}
+        {gameInstance&&<ModalEndGame gameEnded={gameEnded} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
-          {!gameInstance&& !configJsonNeeded &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
+          {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>
     </>
   );

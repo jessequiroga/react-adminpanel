@@ -11,7 +11,7 @@ import Game from '../model/Game';
 import TextDisplay from '../components/TextDisplay';
 import CreateTeam from './CreateTeam';
 
-function MapConfigPannel({Config}) {
+function MapConfigPannel({Config,setConfig}) {
 
   const [currTeams,changeCurrTeams]    = useState(Config?Config.Teams:null); 
   const [error,changeError] = useState(''); // On stocke les erreur eventuelles
@@ -73,63 +73,64 @@ function MapConfigPannel({Config}) {
   {
     e.preventDefault(); // On bloque l'envoi par défault du formulaire
 
-        let formulaireValide = true; // Le formulaire est valide
+    let formulaireValide = true; // Le formulaire est valide
 
-        let Teams =[];
-        let content = {};
-        Object.keys(formular).map(x =>{
-            if(x.indexOf("teamname")!==-1 ){
-                if ((formular[x].color !== "" && formular[x].color !== null) || (formular[x].value !== null && formular[x].value !== "") )  {
-                    if(formular[x].Id!==null && typeof formular[x].Id!=="undefined")
-                    { 
-                        let team  = findTeam(parseInt(formular[x].Id));
-                        console.log("team",team);
-                        if(formular[x].color!==null && typeof formular[x].color!=="undefined" && formular[x].color!=="")team.Color = formular[x].color;
-                        if(formular[x].value!==null && typeof formular[x].value!=="undefined" && formular[x].value!=="")team.Name = formular[x].value;                       
-                        Teams = replaceTeam(parseInt(formular[x].Id),team);
-                    }
-                    else
-                    {
-                        Teams.push(TeamManager.create(formular[x].color,formular[x].value));
-                    }
+    let Teams =[];
+    let content = {};
+    Object.keys(formular).map(x =>{
+        if(x.indexOf("teamname")!==-1 ){
+            if ((formular[x].color !== "" && formular[x].color !== null) || (formular[x].value !== null && formular[x].value !== "") )  {
+                if(formular[x].Id!==null && typeof formular[x].Id!=="undefined")
+                { 
+                    let team  = findTeam(parseInt(formular[x].Id));
+                    console.log("team",team);
+                    if(formular[x].color!==null && typeof formular[x].color!=="undefined" && formular[x].color!=="")team.Color = formular[x].color;
+                    if(formular[x].value!==null && typeof formular[x].value!=="undefined" && formular[x].value!=="")team.Name = formular[x].value;                       
+                    Teams = replaceTeam(parseInt(formular[x].Id),team);
+                }
+                else
+                {
+                    Teams.push(TeamManager.create(formular[x].color,formular[x].value));
                 }
             }
-            else if(formular[x].value !== null && formular[x].value !== "")
-            {
-                content[x] = formular[x].value;
-                if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
-                    formulaireValide = false; // Le formulaire n'est pas valide
-            }
-            else if(x.indexOf("Chang")==-1)
-            {
-                if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
-                    formulaireValide = false; // Le formulaire n'est pas valide
-            }
-        });
-
-        
-        if(!formulaireValide)// Si le formulaie n'est pas valid on previent l'uttilisateur
-        {
-            changeError("The formular isn't valide !"); // On stocke l'erreur
         }
-        else
+        else if(formular[x].value !== null && formular[x].value !== "")
         {
-
-          if(content.typeGameChang){Config.GameType = content.typeGameChang;}
-          if(content.nameChang){Config.Name =content.nameChang;}
-          if(content.numberChang){Config.MinPlayer = content.numberChang;}
-          if(Teams.length>0){Config.Teams = Teams;}
-        
-          Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
-          Config.EndDate = Time.addTime(content.endDate,content.endTime);
-
-          Config.IsFinal = true;
-
-
-          let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
-          var conn = SocketController.getSocket();
-          conn.send(jsonMessage.toJson());
+            content[x] = formular[x].value;
+            if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
+                formulaireValide = false; // Le formulaire n'est pas valide
         }
+        else if(x.indexOf("Chang")==-1)
+        {
+            if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
+                formulaireValide = false; // Le formulaire n'est pas valide
+        }
+    });
+
+    
+    if(!formulaireValide)// Si le formulaie n'est pas valid on previent l'uttilisateur
+    {
+        changeError("The formular isn't valide !"); // On stocke l'erreur
+    }
+    else
+    {
+
+        if(content.typeGameChang){Config.GameType = content.typeGameChang;}
+        if(content.nameChang){Config.Name =content.nameChang;}
+        if(content.numberChang){Config.MinPlayer = content.numberChang;}
+        if(Teams.length>0){Config.Teams = Teams;}
+    
+        Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
+        Config.EndDate = Time.addTime(content.endDate,content.endTime);
+
+        Config.IsFinal = true;
+
+        let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
+        var conn = SocketController.getSocket();
+        setConfig(null);
+        console.log("update",jsonMessage.toJson())
+        conn.send(jsonMessage.toJson());
+    }
   }
 
   return (
