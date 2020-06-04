@@ -1,8 +1,20 @@
 import React from "react";
 import {Modal,ModalHeader,ModalBody,ModalFooter,Button} from 'reactstrap';
 
+import Game from '../model/Game';
+import SocketMessage from '../model/SocketMessage';
+import SocketController from '../model/SocketController';
+
 function ModalEndGame({gameEnded}) {
     
+  const openConfig =() =>{
+    let game = Game.getInstance();
+    game.IsFinal = false;
+    let jsonMessage = new SocketMessage(game,SocketMessage.TypeMessage.GAMESETUP);
+    var conn = SocketController.getSocket();
+    conn.send(jsonMessage.toJson());
+  }
+
   return (
     <>  
         <Modal isOpen={gameEnded}>
@@ -12,8 +24,7 @@ function ModalEndGame({gameEnded}) {
                     Do you want to open a new game ?
             </ModalBody>
             <ModalFooter>
-                <Button  color="dark">YES</Button>
-                <Button  color="dark">NO</Button>
+                <Button onClick={openConfig} color="dark">YES</Button>
             </ModalFooter>
         </Modal>
     </>
