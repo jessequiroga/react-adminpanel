@@ -123,7 +123,7 @@ function MapConfigPannel({Config}) {
           Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
           Config.EndDate = Time.addTime(content.endDate,content.endTime);
 
-          content.IsFinal = true;
+          Config.IsFinal = true;
 
 
           let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
