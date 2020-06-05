@@ -114,12 +114,20 @@ export default class MapControl extends Component {
         (Object.keys(Game.getInstance().Flags).length > 0) && Game.getInstance().Flags.map(altar => {
           if(altar.Id == null)
           {
+            if(altar.MapEntity !==null)
+            {
+              altar.toMapElement().setMap(null);
+            }
             Game.getInstance().removeAltar(altar);
           }
           else if (Object.keys(game.Flags).length > 0)
           {
             if(this.findById(game.Flags,altar.Id)===-1)
             {
+              if(altar.MapEntity !==null)
+              {
+                altar.toMapElement().setMap(null);
+              }
               Game.getInstance().removeAltar(altar);
             }
           }
@@ -137,7 +145,7 @@ export default class MapControl extends Component {
               Entity.IncrId = altar.Id+1;
             exist = true;
           }
-
+          console.log("altars",game.Flags);
           let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
           var withVisionCircle=true;
           if(exist && Game.getInstance().Flags[indexA].toMapElement)
@@ -173,12 +181,20 @@ export default class MapControl extends Component {
         (Object.keys(Game.getInstance().Items).length > 0) && Game.getInstance().Items.map(item => {
           if(item.Id == null)
           {
+            if(item.MapEntity !==null)
+            {
+              item.toMapElement().setMap(null);
+            }
             Game.getInstance().removeItem(item);
           }
           else if (Object.keys(game.Items).length > 0)
           {
             if(this.findById(game.Items,item.Id)===-1)
             {
+              if(item.MapEntity !==null)
+              {
+                item.toMapElement().setMap(null);
+              }
               Game.getInstance().removeItem(item);
             }
           }
@@ -232,12 +248,20 @@ export default class MapControl extends Component {
         (Object.keys(Game.getInstance().Regions).length > 0) && Game.getInstance().Regions.map(zone => {
           if(zone.Id == null)
           {
+            if(zone.MapEntity !==null)
+            {
+              zone.toMapElement().setMap(null);
+            }
             Game.getInstance().removeZone(zone);
           }
           else if (Object.keys(game.Regions).length > 0)
           {
             if(this.findById(game.Regions,zone.Id)===-1)
             {
+              if(zone.MapEntity !==null)
+              {
+                zone.toMapElement().setMap(null);
+              }
               Game.getInstance().removeZone(zone);
             }
           }

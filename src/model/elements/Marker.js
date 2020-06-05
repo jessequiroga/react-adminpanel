@@ -49,9 +49,13 @@ export default class Marker extends Entity
 
     toMapElement(map=null,setSelectedDrawed={},withVisionCircle=false,withColision=false){
         
+
         let marker = this.MapEntity;
         if (marker === null && map !==null)
         {
+          if(!this.Position)
+            console.log(this.Id);
+            
           var conflict = false;
 
           let visionCircle = new window.google.maps.Circle({
