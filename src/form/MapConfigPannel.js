@@ -111,6 +111,7 @@ function MapConfigPannel({Config,setConfig}) {
         }
         else if(x.indexOf("Chang")==-1)
         {
+            content[x] = formular[x].value;
             if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
                 formulaireValide = false; // Le formulaire n'est pas valide
         }
@@ -133,6 +134,7 @@ function MapConfigPannel({Config,setConfig}) {
         Config.EndDate = Time.addTime(content.endDate,content.endTime);
 
         Config.IsFinal = true;
+        Config.isPublic = content.isPublic;
 
         let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
         var conn = SocketController.getSocket();
