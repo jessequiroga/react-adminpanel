@@ -109,18 +109,18 @@ export default class MapControl extends Component {
       else
         game = Game.getInstance();
 
-      if(gameUpdate)
+      if(mapUpdate)
       {
         (Object.keys(Game.getInstance().Flags).length > 0) && Game.getInstance().Flags.map(altar => {
           if(altar.Id == null)
           {
-            delete altar;
+            Game.getInstance().removeAltar(altar);
           }
           else if (Object.keys(game.Flags).length > 0)
           {
             if(this.findById(game.Flags,altar.Id)===-1)
             {
-              delete altar;
+              Game.getInstance().removeAltar(altar);
             }
           }
         });
@@ -168,18 +168,18 @@ export default class MapControl extends Component {
           console.log("erreur pas d'id pour l'altar:",altar);
       });
 
-      if(gameUpdate)
+      if(mapUpdate)
       {
         (Object.keys(Game.getInstance().Items).length > 0) && Game.getInstance().Items.map(item => {
           if(item.Id == null)
           {
-            delete item;
+            Game.getInstance().removeItem(item);
           }
           else if (Object.keys(game.Items).length > 0)
           {
             if(this.findById(game.Items,item.Id)===-1)
             {
-              delete item;
+              Game.getInstance().removeItem(item);
             }
           }
         });
@@ -227,18 +227,18 @@ export default class MapControl extends Component {
           console.log("erreur pas d'id pour l'item:",item);
       });
 
-      if(gameUpdate)
+      if(mapUpdate)
       {
         (Object.keys(Game.getInstance().Regions).length > 0) && Game.getInstance().Regions.map(zone => {
           if(zone.Id == null)
           {
-            delete zone;
+            Game.getInstance().removeZone(zone);
           }
           else if (Object.keys(game.Regions).length > 0)
           {
             if(this.findById(game.Regions,zone.Id)===-1)
             {
-              delete zone;
+              Game.getInstance().removeZone(zone);
             }
           }
         });

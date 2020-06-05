@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Card,CardBody,CardHeader,Table,Col,Alert,Form,Row,Button} from 'reactstrap';
+import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button} from 'reactstrap';
 
 import Time from '../helper/Time';
 
@@ -23,7 +23,8 @@ function MapConfigPannel({Config,setConfig}) {
           beginDate : {value:'', errorMessage: '',message:'',isValid: false},
           beginTime : {value:'', errorMessage: '',message:'',isValid: false},
           endDate : {value:'', errorMessage: '',message:'',isValid: Config?!(Config.Type == Game.GameType.TIME):true},
-          endTime : {value:'', errorMessage: '',message:'',isValid: Config?!(Config.Type == Game.GameType.TIME):true}
+          endTime : {value:'', errorMessage: '',message:'',isValid: Config?!(Config.Type == Game.GameType.TIME):true},
+          isPublic: {value:false, isValid:true}
       }
   );
 
@@ -42,6 +43,14 @@ function MapConfigPannel({Config,setConfig}) {
         }
         formular.typeGameChang.value= val;
         formular.typeGameChang.isValid= true;
+        changeFormular(formular);
+    }
+
+    const changPublic = (event) =>
+    {
+        let val = event.target.value;
+        formular.isPublic.value= val;
+        formular.isPublic.isValid= true;
         changeFormular(formular);
     }
 
@@ -197,6 +206,7 @@ function MapConfigPannel({Config,setConfig}) {
                     </Row>
                 </div>
                 <div className="pt-4 float-right">
+                    <checkbox onChange={changPublic} color="dark">Is Public</checkbox>
                     <Button color="dark">update</Button>
                 </div>
             </Form>
