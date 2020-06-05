@@ -93,6 +93,11 @@ export default class MapControl extends Component {
     return result;
   }
 
+  findById(array, id){
+    var index = array.findIndex( ({ Id }) => Id === id);
+    return index;
+}
+
   configMap = (mapUpdate =null) => {
     if(Object.keys(Game.getInstance()).length >0)
     {
@@ -103,6 +108,24 @@ export default class MapControl extends Component {
       }
       else
         game = Game.getInstance();
+
+      if(gameUpdate)
+      {
+        (Object.keys(Game.getInstance().Flags).length > 0) && Game.getInstance().Flags.map(altar => {
+          if(altar.Id == null)
+          {
+            delete altar;
+          }
+          else if (Object.keys(game.Flags).length > 0)
+          {
+            if(this.findById(game.Flags,altar.Id)===-1)
+            {
+              delete altar;
+            }
+          }
+        });
+      }
+
       (Object.keys(game.Flags).length > 0) && game.Flags.map(altar => { // For each altar on the websocket message
         let exist =false;
         if(altar.Id != null)
@@ -145,6 +168,23 @@ export default class MapControl extends Component {
           console.log("erreur pas d'id pour l'altar:",altar);
       });
 
+      if(gameUpdate)
+      {
+        (Object.keys(Game.getInstance().Items).length > 0) && Game.getInstance().Items.map(item => {
+          if(item.Id == null)
+          {
+            delete item;
+          }
+          else if (Object.keys(game.Items).length > 0)
+          {
+            if(this.findById(game.Items,item.Id)===-1)
+            {
+              delete item;
+            }
+          }
+        });
+      }
+
       (Object.keys(game.Items).length > 0) && game.Items.map(item => { // For each item on the websocket message
         let exist =false;
         if(item.Id != null)
@@ -186,6 +226,23 @@ export default class MapControl extends Component {
         else
           console.log("erreur pas d'id pour l'item:",item);
       });
+
+      if(gameUpdate)
+      {
+        (Object.keys(Game.getInstance().Regions).length > 0) && Game.getInstance().Regions.map(zone => {
+          if(zone.Id == null)
+          {
+            delete zone;
+          }
+          else if (Object.keys(game.Regions).length > 0)
+          {
+            if(this.findById(game.Regions,zone.Id)===-1)
+            {
+              delete zone;
+            }
+          }
+        });
+      }
 
       (Object.keys(game.Regions).length > 0) && game.Regions.map(zone => { // For each zone on the websocket message
         let exist =false;
