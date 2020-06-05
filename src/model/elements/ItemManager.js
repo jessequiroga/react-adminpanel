@@ -8,7 +8,9 @@ class ItemManager
 {
     static TypesItem = {
         CultMag:"Magazine de cult",
-        PocheInterdimensionnelle:"La poche interdimensionnelle"
+        PocheInterdimensionnelle:"La poche interdimensionnelle",
+        VisionOrb:"Vision Orb",
+        DunwichAnnals:"Annals de Dunwich"
     };
     static createItem(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null)
     {
@@ -18,7 +20,7 @@ class ItemManager
             case "CultMag":
                 item = new CultMag(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
                 break;
-                
+
             case "PocheInterdimensionnelle":
                 item = new PocheInterdimensionnelle(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
                 break;
