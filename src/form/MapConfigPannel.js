@@ -131,7 +131,14 @@ function MapConfigPannel({Config,setConfig}) {
         if(Teams.length>0){Config.Teams = Teams;}
     
         Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
-        Config.EndDate = Time.addTime(content.endDate,content.endTime);
+        if(Config.GameType == Game.GameType.TIME)
+        {
+            Config.EndDate = Time.addTime(content.endDate,content.endTime);
+        }
+        else
+        {
+            Config.EndDate = new Date("01/17/2038");
+        }
 
         Config.IsFinal = true;
         Config.isPublic = content.isPublic;
