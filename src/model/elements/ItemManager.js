@@ -1,6 +1,8 @@
 import IconItem from './IconItem';
 import CultMag from './Items/CultMag';
 import PocheInterdimensionnelle from './Items/PocheInterdimensionnelle';
+import VisionOrb from './Items/VisionOrb';
+import DunwichAnnals from './Items/DunwichAnnals';
 
 class ItemManager
 {
@@ -16,9 +18,19 @@ class ItemManager
             case "CultMag":
                 item = new CultMag(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
                 break;
+                
             case "PocheInterdimensionnelle":
                 item = new PocheInterdimensionnelle(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
                 break;
+
+            case "VisionOrb":
+                item = new VisionOrb(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id); 
+                break;
+
+            case "DunwichAnnals":
+                item = new DunwichAnnals(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id);
+                break;
+
             default:
                     throw new Error("this item type is not in the switch iteam Manager type: "+Type);
                 break;
