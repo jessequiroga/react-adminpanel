@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button} from 'reactstrap';
 
 import Time from '../helper/Time';
@@ -13,7 +13,7 @@ import CreateTeam from './CreateTeam';
 
 function MapConfigPannel({Config,setConfig}) {
 
-  const [currTeams,changeCurrTeams]    = useState(Config?Config.Teams:null); 
+  const [currTeams,changeCurrTeams]    = useState(null); 
   const [error,changeError] = useState(''); // On stocke les erreur eventuelles
   const [formular,changeFormular] = useState( // Definition du formulaire
       {
@@ -22,13 +22,22 @@ function MapConfigPannel({Config,setConfig}) {
           numberChang : {value:'', errorMessage: '',message:'',isValid: true},
           beginDate : {value:'', errorMessage: '',message:'',isValid: false},
           beginTime : {value:'', errorMessage: '',message:'',isValid: false},
-          endDate : {value:'', errorMessage: '',message:'',isValid: Config?!(Config.Type == Game.GameType.TIME):true},
-          endTime : {value:'', errorMessage: '',message:'',isValid: Config?!(Config.Type == Game.GameType.TIME):true},
+          endDate : {value:'', errorMessage: '',message:'',isValid: true},
+          endTime : {value:'', errorMessage: '',message:'',isValid: true},
           isPublic: {value:false, isValid:true}
       }
   );
 
-  const onChangeTyGame = (event) =>
+  const [refresh,changeRefresh] = useState(null);
+
+  useEffect(()=>{
+    changeCurrTeams(Config?Config.Teams:null);
+    formular.endTime.isValid = Config?!(Config.Type == Game.GameType.TIME):true;
+    formular.endDate.isValid = Config?!(Config.Type == Game.GameType.TIME):true;
+    changeFormular(formular);
+  },[Config]);
+
+  const onChangeTypeGame = (event) =>
     {
         let val = event.target.value;
         if(event.target.value == Game.GameType.TIME)
@@ -43,7 +52,8 @@ function MapConfigPannel({Config,setConfig}) {
         }
         formular.typeGameChang.value= val;
         formular.typeGameChang.isValid= true;
-        changeFormular(formular);
+        changeFormular(formular); //Isn't enought to refresh the display
+        changeRefresh(val); // Refresh the display
     }
 
     const changPublic = (event) =>
@@ -52,6 +62,7 @@ function MapConfigPannel({Config,setConfig}) {
         formular.isPublic.value= val;
         formular.isPublic.isValid= true;
         changeFormular(formular);
+        changeRefresh(val);
     }
 
     const findTeam = (id) =>
@@ -125,13 +136,13 @@ function MapConfigPannel({Config,setConfig}) {
     else
     {
 
-        if(content.typeGameChang){Config.GameType = content.typeGameChang;}
+        if(content.typeGameChang){Config.Type = content.typeGameChang;}
         if(content.nameChang){Config.Name =content.nameChang;}
         if(content.numberChang){Config.MinPlayer = content.numberChang;}
         if(Teams.length>0){Config.Teams = Teams;}
     
         Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
-        if(Config.GameType == Game.GameType.TIME)
+        if(Config.Type == Game.GameType.TIME)
         {
             Config.EndDate = Time.addTime(content.endDate,content.endTime);
         }
@@ -141,7 +152,7 @@ function MapConfigPannel({Config,setConfig}) {
         }
 
         Config.IsFinal = true;
-        Config.isPublic = content.isPublic;
+        Config.IsPublic = content.isPublic;
 
         let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
         var conn = SocketController.getSocket();
@@ -171,7 +182,7 @@ function MapConfigPannel({Config,setConfig}) {
                             <TextDisplay name="nameChang" typeInput="tag" placeHolder={Config?Config.Name:""} label="Game Name" formular={formular} changeFormular={changeFormular}/>
                         </Col>
                         <Col md={6}>
-                            <select style={{height:"38px", minWidth:"20px"}} onChange={onChangeTyGame}>
+                            <select style={{height:"38px", minWidth:"20px"}} onChange={(e)=>{onChangeTypeGame(e);}}>
                                 <option></option>
                                 {
                                     Object.keys(Game.GameType).map(type=>{
@@ -191,7 +202,7 @@ function MapConfigPannel({Config,setConfig}) {
                                 <TextDisplay type="time" typeInput="time" name="beginTime" label="Begin Time" formular={formular} changeFormular={changeFormular}/>                                
                             </Col>
                     </Row>
-                    {((Config && formular.typeGameChang.value == "" && Config.Type == Game.GameType.TIME) || (formular.typeGameChang.value == Game.GameType.TIME))?
+                    {((Config && formular.typeGameChang.value == "" && parseInt(Config.Type) == Game.GameType.TIME) || (formular.typeGameChang.value !== "" && parseInt(formular.typeGameChang.value) == Game.GameType.TIME))?
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
                                 <TextDisplay className="mb-1" type="date" typeInput="date" name="endDate" label="End Date" formular={formular} changeFormular={changeFormular}/>
@@ -200,6 +211,10 @@ function MapConfigPannel({Config,setConfig}) {
                                 <TextDisplay type="time" typeInput="time" name="endTime" label="End Time" formular={formular} changeFormular={changeFormular}/>
                             </Col>
                     </Row>:null}
+                    <Row form className="ml-1 pb-2">
+                        <span style={{marginLeft:"3%"}}>Is Public ?</span>
+                        <input style={{marginLeft:"10px"}} type="checkbox" onChange={changPublic} color="dark"/>
+                    </Row>
                 </div>
                 <div style={{backgroundColor:"rgba(217, 218, 221, 0.48)",borderRadius: "0.25rem"}}>
                     <Row className="ml-2">
@@ -215,7 +230,6 @@ function MapConfigPannel({Config,setConfig}) {
                     </Row>
                 </div>
                 <div className="pt-4 float-right">
-                    <checkbox onChange={changPublic} color="dark">Is Public</checkbox>
                     <Button color="dark">update</Button>
                 </div>
             </Form>

@@ -498,7 +498,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         />
       )}
 
-      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} />
+      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} position={google.maps.ControlPosition.TOP_CENTER}/>
 
       <PlayersControl setInstanceListPlayer={setInstanceListPlayer} canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
 

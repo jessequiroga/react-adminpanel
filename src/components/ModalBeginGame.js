@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Container, Row } fr
 import PlayersListDisplay from "./PlayersListDisplay";
 import Game from "../model/Game";
 
-function ModalBeginGame({ gameBegin,instanceListPlayer }) {
+function ModalBeginGame({gameBegin,instanceListPlayer,tick}) {
 
     let [modalOpen, setModalOpen] = useState(!gameBegin);
     let [listPlayer, setListPlayer] = useState(null);
@@ -13,6 +13,7 @@ function ModalBeginGame({ gameBegin,instanceListPlayer }) {
     }, [gameBegin]);
 
     let closeModal = () => {
+        clearInterval(tick);
         setModalOpen(false);
     }
 

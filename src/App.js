@@ -14,7 +14,7 @@ function App() {
   const [gameEnded,setGameEnded]  = useState(false);
   const [gameBegin,setGameBegin]  = useState(true);
   const [instanceListPlayer,setInstanceListPlayer] = useState(Game.getInstance());
-  const [time,setTime] = useState(new Date().toLocaleTimeString());
+  const [tick,setTick] = useState(null);
   const [config,setConfig]= useState(false);
   const [configOpen,changeConfigOpen] = useState(false);
 
@@ -39,7 +39,6 @@ function App() {
             if(this_game.IsFinal)
             {
               setGameInstance(true);
-              console.log((new Date()) >(new Date(this_game.EndDate)));
               if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type == Game.GameType.TIME))
               {
                 setGameEnded(true);
@@ -61,7 +60,6 @@ function App() {
 
   useEffect(() => {
     let game = Game.getInstance();
-    console.log("1");
     if(game){
       initWebsocket();
       game.IsFinal = false;
@@ -76,9 +74,9 @@ function App() {
   useEffect(() => { // On Open Admin
     initWebsocket();
     const id = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
       Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);
     }, 1000);
+    setTick(id);
     return () => clearInterval(id); // this "clean" function is executed here on component unmount
   }, []);
   
@@ -87,7 +85,7 @@ function App() {
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
         {gameInstance&&<GoogleMap/>}
-        {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer}/>}
+        {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer} tick={tick}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}

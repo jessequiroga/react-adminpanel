@@ -1,4 +1,6 @@
 import React,{ Component } from 'react';
+import { createPortal } from 'react-dom';
+import { Card, Nav, NavItem } from 'reactstrap';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
 import ManagerItems from './model/elements/ItemManager';
@@ -6,11 +8,14 @@ import ManagerAltars from './model/elements/Altar';
 import ManagerZones from './model/Zone';
 import Game from './model/Game.js';
 import Entity from './model/elements/Entity';
+import Time from './helper/Time';
+
+
 
 export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
-
+  
   findById= (table,id)=>
   {
     let result = null;
@@ -145,7 +150,6 @@ export default class MapControl extends Component {
               Entity.IncrId = altar.Id+1;
             exist = true;
           }
-          console.log("altars",game.Flags);
           let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
           var withVisionCircle=true;
           if(exist && Game.getInstance().Flags[indexA].toMapElement)
@@ -308,8 +312,16 @@ export default class MapControl extends Component {
 
   componentWillMount() {
     this.map = this.context[MAP];
+    this.divMapControl = window.document.createElement('div'); // create a body div
+    this.map.controls[this.props.position].push(this.divMapControl); // put the body div on the map
     this._mapUpdate = null;
     this.configMap();
+    if(Game.getInstance() && Game.getInstance().Type == Game.GameType.TIME)
+    {
+      this.tick = setInterval(() => {
+        this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
+      }, 1000);
+    }
   }
 
   componentDidUpdate() {
@@ -322,7 +334,20 @@ export default class MapControl extends Component {
 
   render()
   {
-    return <div></div>
+    let timer  = <Card style={{backgroundColor: "#6c757d"}} className="timer">
+                    <Nav navbar>
+                        <NavItem className="text-center" style={{color:"#fff",fontSize:"1rem",height:"55px",width:"250px"}}>
+                          <span>Time Left:</span>
+                          <div>{this.time}</div>
+                        </NavItem>
+                    </Nav>
+                  </Card>;
+    return createPortal(timer,this.divMapControl);
+  }
+
+  componentWillUnmount() {
+    if(this.tick !== null && typeof this.tick !=="undefined")
+    clearInterval(this.tick);
   }
 
 }
