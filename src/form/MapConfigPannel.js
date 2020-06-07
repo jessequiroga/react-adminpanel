@@ -58,7 +58,7 @@ function MapConfigPannel({Config,setConfig}) {
 
     const changPublic = (event) =>
     {
-        let val = event.target.value;
+        let val = event.target.checked;
         formular.isPublic.value= val;
         formular.isPublic.isValid= true;
         changeFormular(formular);
