@@ -20,7 +20,7 @@ function ModalBeginGame({gameBegin,instanceListPlayer,tick}) {
     return (
         <>
             <Modal isOpen={modalOpen}>
-                <ModalHeader className="text-center text-light bg-dark" >The Game wasn't begin</ModalHeader>
+                <ModalHeader className="text-center text-light bg-dark" >The Game didn't start yet</ModalHeader>
                 <ModalBody className="text-center font-weight-bold">
 
                     <PlayersListDisplay instanceListPlayer={instanceListPlayer} />

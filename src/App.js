@@ -3,10 +3,22 @@ import GoogleMap from "./GoogleMap.js";
 import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import MapImportConfigPannel from "./MapImportConfigPannel";
+import styled from "styled-components";
 import MapConfigPannel from "./form/MapConfigPannel";
 import Game from "./model/Game";
 import ModalEndGame from "./components/ModalEndGame";
 import ModalBeginGame from "./components/ModalBeginGame";
+
+const MapContainer = styled.div`
+position: fixed;
+width: 100%;
+height: 100%;
+left: 0;
+top: 0;
+background: rgba(51,51,51,0.7);
+z-index: 10;
+`
+
 
 function App() {
   const [gameInstance,setGameInstance] = useState(false);
@@ -80,8 +92,11 @@ function App() {
     return () => clearInterval(id); // this "clean" function is executed here on component unmount
   }, []);
   
+
+
+
   return (
-    <>  
+    <MapContainer>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
         {gameInstance&&<GoogleMap/>}
@@ -90,7 +105,7 @@ function App() {
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>
-    </>
+    </MapContainer>
   );
 
 }
