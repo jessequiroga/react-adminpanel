@@ -16,9 +16,12 @@ function PlayersListDisplay({instanceListPlayer}) {
             let listPlayersInTeam = Object.keys(_listPlayers).map(function (keyP, index) // List Players in current Team
             {
                 let player = _listPlayers[keyP];
-                let afk = player.IsAfk;
-                if (player.Team.Id == team.Id)
-                    return <span key={player.Id} style={afk?{textDecorationColor:"#848484",marginTop: "7px"}:{marginTop: "7px"}} className="text-center">{player.Name}{afk?"(AFK)":""}</span>; 
+                if(player.Team !== null && typeof player.Team !== "undefined")
+                {                
+                    let afk = player.IsAfk;
+                    if (player.Team.Id == team.Id)
+                        return <span key={player.Id} style={afk?{textDecorationColor:"#848484",marginTop: "7px"}:{marginTop: "7px"}} className="text-center">{player.Name}{afk?"(AFK)":""}</span>;
+                }
 
 
             });

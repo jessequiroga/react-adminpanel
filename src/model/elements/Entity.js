@@ -26,15 +26,6 @@ export default class Entity
         if(IsInActionRange)this.IsInActionRange = IsInActionRange;
         if(VisionDistance)this.VisionDistance = VisionDistance
         if(Name)this.Name = Name; else this.Name = this.constructor.name;
-        
-        if(this.constructor.name == "Item")
-        {
-            console.log("Item Id: ", this.Id)
-        }
-        else if(this.constructor.name == "Player")
-        {
-            console.log("Player Id: ", this.Id)
-        }
     }
 
 

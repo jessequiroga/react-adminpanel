@@ -12,7 +12,7 @@ export default class PlayerControl extends Component {
   newMarkerPlayers = (players) =>
   {
     players.forEach((player)=>{
-      if(player != null &&  player.Id != null && player.Team != null)
+      if(player != null &&  player.Id != null && (player.Team != null && typeof player.Team != "undefined"))
       {
         if(player.Position != null)
         {
@@ -83,7 +83,7 @@ export default class PlayerControl extends Component {
   newPlayerInLobby = (players) =>
   {
     players.forEach((player)=>{
-      if(player !=null && player.Id != null && player.Team != null )
+      if(player !=null && player.Id != null && (player.Team != null && typeof player.Team != "undefined") )
       {
         if(player.Position === null || typeof player.Position === "undefined")
         {
