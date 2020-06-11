@@ -217,7 +217,7 @@ export default class MapControl extends Component {
               Entity.IncrId = item.Id+1;
             exist = true;
           }
-          let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id);
+          let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id,item.IsActive,item.Team);
           var withVisionCircle=true;
           if(exist && Game.getInstance().Items[indexI].toMapElement)
           {

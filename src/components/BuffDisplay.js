@@ -2,7 +2,7 @@ import React from "react";
 import Game from "../model/Game";
 import { Col, Container, Row } from "reactstrap";
 
-import ItemManager from "../model/elements/ItemManager";
+import IconBuff from "../model/elements/IconBuff";
 
 function BuffDisplay({items}) {
 
@@ -15,7 +15,7 @@ function BuffDisplay({items}) {
             listItems = Object.keys(_listItems).map(function (keyI, index) // List Teams
             {
                 let item = _listItems[keyI];
-                let icon = ItemManager.getIcon(item.Type).url;
+                let icon = IconBuff[item.Type].url;
                 return <Col key={keyI}>
                             <img style={{width: "60px"}} src={icon}></img>
                         </Col>
