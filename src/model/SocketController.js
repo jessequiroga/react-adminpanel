@@ -14,6 +14,7 @@ const createWebsocket = () => {
             console.log('Connection lost.'); // for example if server processes is killed
         }
         console.log('Code: ' + event.code + '. Reason: ' + event.reason);
+        socket = new WebSocket("ws://cultwars.net:5000/ws");
     };
 
     socket.onerror = function (error) {

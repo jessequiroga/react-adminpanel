@@ -48,6 +48,7 @@ function Map() {
   const [gameUpdate, setGameUpdate] =useState({});
   const [listPlayerOpen, setListPlayerOpen] =useState(false);
   const [instanceListPlayer, setInstanceListPlayer] =useState({});
+  const [zoom,setZoom] = useState(0);
 
   const showListPlayer = () =>
   {
@@ -68,6 +69,31 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                                                                       teamChang: {value: '',errorMessage :'',isValid : true}
                                                                     }); // Formular to change all the selected entity attributes for an Altar
 
+/*const onZoom = (currZoom) =>
+{
+  setSelectedDrawed(null);
+  setSelectedEdited(null);
+  setSelectedMoved(null);
+  console.log("zoom",currZoom);
+  if (currZoom<15 && currZoom>10)
+  {
+    currZoom =((50*(16-currZoom))/10000)-((20*(16-currZoom))/10000);
+  }
+  else if(currZoom<=10)
+  {
+    currZoom =((50*(16-currZoom))/10000)*2;
+  }
+  else
+  {
+    currZoom = currZoom/10000;
+  }
+  
+  console.log(currZoom)
+  setZoom(currZoom);
+  setSelectedDrawed(selectedDrawed);
+  setSelectedEdited(selectedEdited);
+  setSelectedMoved(selectedMove);
+}*/
 
   const connectWebsocket = () => {
     var socket = SocketController.getSocket();
@@ -157,19 +183,24 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
   const suppressComponent = (component) => { // Remove the Map component (Map component: component)
     let err = false;
+    let message;
+    var socket = SocketController.getSocket();
     if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
     {
       err = Game.getInstance().removeItem(component);
+      message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMDELETE);
     }
     else{
       switch(component.type)
       {
-        case 'Zone':
+        /*case 'Zone':
           err = Game.getInstance().removeZone(component);
-          break;
+          message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
+          break;*/
 
         case 'Altar':
           err = Game.getInstance().removeAltar(component);
+          message = new SocketMessage(Game.getInstance().getAltarById(component.id), SocketMessage.TypeMessage.FLAGDELETE);
           break;
 
         default:
@@ -179,6 +210,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       }
     }
     if(!err){
+      socket.send(message.toJson());
       component.setMap(null); // Unset the map attribut of the component for remove it
       if(component.type != "Zone")
       {
@@ -543,7 +575,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedDrawed(null); // unselect the drawed component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lat() : selectedDrawed.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lat() : selectedDrawed.position.lat()+zoom, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lng() : selectedDrawed.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >
@@ -570,6 +602,10 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   {Game.getInstance() ?<BuffDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
                   {Game.getInstance() ?<ItemsDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
                 </div>:null}
+                {(selectedDrawed.type && selectedDrawed.type === "Zone")?
+                <div>
+                  <span className="lib" >Zone</span>
+                </div>:null}
               {(selectedDrawed.type && selectedDrawed.type !== "Player")?<div className="group-btn">
                 <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
                 <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
@@ -585,7 +621,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedMoved(null); // unselect the edited component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lat() : selectedMove.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lat() : selectedMove.position.lat()+zoom, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedMove.getPath ? selectedMove.getPath().getArray()[0].lng() : selectedMove.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >
@@ -605,7 +641,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             setSelectedEdited(null); // unselect the edited component: close the Info Window
           }}
           position={{ // Initiate the Info Windows coordinates with the altar coordinates
-            lat: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lat() : selectedEdited.position.lat()+0.0015, // lat: Marker and polygon don't have the same coordinates: array for polygon
+            lat: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lat() : selectedEdited.position.lat()+zoom, // lat: Marker and polygon don't have the same coordinates: array for polygon
             lng: selectedEdited.getPath ? selectedEdited.getPath().getArray()[0].lng() : selectedEdited.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >

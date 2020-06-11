@@ -15,7 +15,6 @@ width: 100%;
 height: 100%;
 left: 0;
 top: 0;
-background: rgba(51,51,51,0.7);
 z-index: 10;
 `
 
@@ -71,6 +70,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("+1");
     let game = Game.getInstance();
     if(game){
       initWebsocket();

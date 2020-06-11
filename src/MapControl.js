@@ -119,6 +119,7 @@ export default class MapControl extends Component {
         (Object.keys(Game.getInstance().Flags).length > 0) && Game.getInstance().Flags.map(altar => {
           if(altar.Id == null)
           {
+            console.log("altar",altar)
             if(altar.MapEntity !==null)
             {
               altar.toMapElement().setMap(null);
@@ -312,6 +313,7 @@ export default class MapControl extends Component {
 
   componentWillMount() {
     this.map = this.context[MAP];
+    //window.google.maps.event.addListener(this.map,'zoom_changed',()=>this.props.onZoom(this.map.zoom));
     this.divMapControl = window.document.createElement('div'); // create a body div
     this.map.controls[this.props.position].push(this.divMapControl); // put the body div on the map
     this._mapUpdate = null;

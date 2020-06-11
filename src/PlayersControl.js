@@ -76,8 +76,6 @@ export default class PlayerControl extends Component {
           } 
         }         
       }
-      else
-        console.error("Un id ou une equipe n'est pas indiqué pour le player: ", player);
     });
   }
 
@@ -113,8 +111,6 @@ export default class PlayerControl extends Component {
           }
         }
       }
-      else
-        console.log("Un id ou equipe n'est pas indiqué pour le player: ", player);
     });
   }
 
