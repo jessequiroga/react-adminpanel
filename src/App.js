@@ -24,8 +24,7 @@ function App() {
   const [configJsonNeeded,setConfigJsonNeeded]  = useState(false); // MODIF false
   const [gameEnded,setGameEnded]  = useState(false);
   const [gameBegin,setGameBegin]  = useState(true);
-  const [instanceListPlayer,setInstanceListPlayer] = useState(Game.getInstance());
-  const [tick,setTick] = useState(null);
+  const [beginDate,setBeginDate] = useState(new Date());
   const [config,setConfig]= useState(false);
   const [configOpen,changeConfigOpen] = useState(false);
 
@@ -49,6 +48,7 @@ function App() {
             let this_game = Game.getInstance(game);
             if(this_game.IsFinal)
             {
+              setBeginDate(this_game.BeginDate);
               setGameInstance(true);
               if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type == Game.GameType.TIME))
               {
@@ -84,22 +84,14 @@ function App() {
   
   useEffect(() => { // On Open Admin
     initWebsocket();
-    const id = setInterval(() => {
-      Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);
-    }, 1000);
-    setTick(id);
-    return () => clearInterval(id); // this "clean" function is executed here on component unmount
   }, []);
   
-
-
-
   return (
     <MapContainer>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
         {gameInstance&&<GoogleMap/>}
-        {gameInstance&&<ModalBeginGame gameBegin={gameBegin} instanceListPlayer={instanceListPlayer} tick={tick}/>}
+        {gameInstance&&<ModalBeginGame gameBegin={gameBegin} beginDate={beginDate}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
