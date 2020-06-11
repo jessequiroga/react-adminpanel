@@ -187,20 +187,20 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     var socket = SocketController.getSocket();
     if(Object.keys(ItemManager.TypesItem).indexOf(component.type)!==-1)
     {
+      message = new SocketMessage((Game.getInstance().getItemById(component.id)), SocketMessage.TypeMessage.ITEMDELETE);
       err = Game.getInstance().removeItem(component);
-      message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMDELETE);
     }
     else{
       switch(component.type)
       {
         /*case 'Zone':
-          err = Game.getInstance().removeZone(component);
           message = new SocketMessage(Game.getInstance().getItemById(component.id), SocketMessage.TypeMessage.ITEMUPDATE);
+          err = Game.getInstance().removeZone(component);
           break;*/
 
         case 'Altar':
-          err = Game.getInstance().removeAltar(component);
           message = new SocketMessage(Game.getInstance().getAltarById(component.id), SocketMessage.TypeMessage.FLAGDELETE);
+          err = Game.getInstance().removeAltar(component);
           break;
 
         default:
@@ -210,6 +210,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       }
     }
     if(!err){
+      console.log(message.toJson());
       socket.send(message.toJson());
       component.setMap(null); // Unset the map attribut of the component for remove it
       if(component.type != "Zone")
@@ -581,6 +582,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         >
 
               <div className="grp-info"> {/* Info Window body */}
+                <div className="lib-res"><span className="lib">Id: </span><span>{selectedDrawed.id}</span></div>
                 {(selectedDrawed.type && selectedDrawed.type === "Altar")?
                   <div>
                     {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span>

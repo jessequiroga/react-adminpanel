@@ -87,8 +87,9 @@ export default class SocketMessage {
             }
             
         }
-        if(type!=null && typeof(Json) =="object") //Write with object
+        else if(type!=null && typeof(Json) =="object") //Write with object
         {
+
             if(Object.keys(SocketMessage.TypeMessage).indexOf(type) != -1)
             {
                 this.ContainedEntity = JSON.stringify(_objectWithoutProperties(Json,["MapEntity"])); // Jsonised the map
@@ -96,7 +97,7 @@ export default class SocketMessage {
             }
             
         }
-        if(type!=null && typeof(Json) =="string") //Write with string
+        else if(type!=null && typeof(Json) =="string") //Write with string
         {
             let findType = true;
             switch(type)
