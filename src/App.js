@@ -70,7 +70,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("+1");
     let game = Game.getInstance();
     if(game){
       initWebsocket();

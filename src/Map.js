@@ -599,7 +599,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                 {(selectedDrawed.type && selectedDrawed.type === "Player")?
                 <div>
                   <div><span className="lib">Name: </span>{Game.getInstance() && Game.getInstance().getPlayerById(selectedDrawed.id).Name?Game.getInstance().getPlayerById(selectedDrawed.id).Name:"unknown"}</div>
-                  {Game.getInstance() ?<BuffDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
+                  {Game.getInstance() ?<BuffDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).AffectedByItems}/>:null}
                   {Game.getInstance() ?<ItemsDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
                 </div>:null}
                 {(selectedDrawed.type && selectedDrawed.type === "Zone")?

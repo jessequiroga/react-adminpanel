@@ -23,16 +23,14 @@ function ItemsDisplay({items}) {
     }
 
     return (
-        <>
-            {listItems ?
-                <Container style={{borderStyle:"outset",borderWidth: "2px"}}>
-                    <span>BackPack</span>
-                    <Row style={{borderStyle:"outset",borderWidth: "2px",backgroundColor:"#9d9b97a6"}}>
-                        {listItems}
-                    </Row>                    
-                </Container>
-                : <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Items</span>}
-        </>
+        <div style={{marginBottom: "5px"}}>
+            <Container style={{borderStyle:"outset",borderWidth: "2px"}}>
+                <span>BackPack</span>
+                <Row style={{borderStyle:"outset",borderWidth: "2px",backgroundColor:"#9d9b97a6"}}>
+                    {listItems ?listItems: <span style={{ fontSize:"18px", fontWeight:"bold" }}>No Items</span>}
+                </Row>                    
+            </Container>    
+        </div>
     );
 
 }

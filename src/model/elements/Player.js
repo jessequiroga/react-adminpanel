@@ -7,7 +7,8 @@ class Player extends Marker
     InventorySize;
     Team;
     VisibleEntities;
-    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id)
+    AffectedByItems;
+    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,affectedByItems,Id)
     {
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         this.Team = team;
@@ -15,6 +16,7 @@ class Player extends Marker
         this.InventorySize = inventorySize;
         this.IsAFK = isAFK;
         this.Items = items;
+        this.AffectedByItems = affectedByItems;
     }
 
     getIcon()
@@ -40,10 +42,10 @@ class Player extends Marker
 
 class PlayerManager
 {
-    static createPlayer(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id)
+    static createPlayer(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Team,VisibleEntities,InventorySize,IsAFK,Items,AffectedByItems,Id)
     {
-        var item = new Player(Position,ActionDistance,IsInActionRange,Name,VisionDistance,team,visibleEntities,inventorySize,isAFK,items,Id);
-        return item;
+        var player = new Player(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Team,VisibleEntities,InventorySize,IsAFK,Items,AffectedByItems,Id);
+        return player;
     }
 
     static getIcon()

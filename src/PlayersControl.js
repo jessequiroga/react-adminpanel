@@ -38,14 +38,14 @@ export default class PlayerControl extends Component {
                 if(_currentPlayer.toMapElement().visionCircle)
                   _currentPlayer.toMapElement().visionCircle.setMap(this.map);
               }*/
-              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
               newPlayer.MapEntity = _currentPlayer.toMapElement();
               Game.getInstance().replacePlayer(indexP,newPlayer);
               this.props.setInstanceListPlayer(Game.getInstance().Players);
             }
             else
             {
-              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+              let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
               let mapelement  = newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
               /*if(player.IsAFK)
               {
@@ -59,7 +59,7 @@ export default class PlayerControl extends Component {
           }
           else
           {
-            let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+            let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
             newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
             /*if(player.IsAFK)
             {
@@ -94,7 +94,7 @@ export default class PlayerControl extends Component {
             exist = true;
           }
 
-          let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.Id);
+          let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
           if(exist)
           {
             Game.getInstance().replacePlayer(indexP,newPlayer);
