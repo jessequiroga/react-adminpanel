@@ -593,7 +593,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getItemById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).CaptureDate}</span></div>:<div className="lib-res"><span className="lib-res">This Item is free</span></div>}
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration?<div className="lib-res"><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration}</span></div>:<div><span className="lib-res">This Item is not available anymore</span></div>}
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).Quantity?<div ><span className="lib">Quantity: </span><span className="lib-res">{Game.getInstance().getItemById(selectedDrawed.id).Quantity}</span></div>:<div><span>There is no item left in this point</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport?<div><span>This iteam can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div>:<div className="lib-res"><span>There item can not be teleported</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport?<div><span>This item can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div>:<div className="lib-res"><span>There item can not be teleported</span></div>}
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration?<div  className="lib-res"><span className="lib">This item will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration} after some one take an item</span></div>:<div className="lib-res"><span>There is no item left in this point</span></div>}
                   </div>:null}
                 {(selectedDrawed.type && selectedDrawed.type === "Player")?
@@ -684,13 +684,13 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).CanTeleport?
-                  <SelectDisplay name="canTeleportChang" label="This iteam can be teleported" options={[{value:true,label:"True",selected:true},{value:false,label:"False",selected:false}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/> :
-                  <SelectDisplay name="canTeleportChang" label="This iteam can be teleported" options={[{value:true,label:"True",selected:false},{value:false,label:"False",selected:true}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/>}
+                  <SelectDisplay name="canTeleportChang" label="This item can be teleported" options={[{value:true,label:"True",selected:true},{value:false,label:"False",selected:false}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/> :
+                  <SelectDisplay name="canTeleportChang" label="This item can be teleported" options={[{value:true,label:"True",selected:false},{value:false,label:"False",selected:true}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/>}
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration?
-                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This iteam will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder={new Date(Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration)}/>:
-                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This iteam will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="There is no item left in this point"/>}
+                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This item will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder={new Date(Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration)}/>:
+                  <TextDisplay name="deficiencyDurationChang" typeInput="time" type="time" label="This item will be vailable in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="There is no item left in this point"/>}
                 </div>
                 <button>Validate</button> {/* add an button to validated the edited component */}
               </form>
