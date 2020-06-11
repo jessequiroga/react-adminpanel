@@ -2,6 +2,7 @@ import React from "react";
 
 import SocketController from './model/SocketController';
 import SocketMessage from './model/SocketMessage';
+import Game from './model/Game';
 
 function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
   
@@ -21,7 +22,7 @@ function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
         let fr = new FileReader();
         let jsonMessage; 
         fr.onload = function() { //Read the fichier => this.result = file.text()
-          setConfig(this.result);
+          setConfig(Game.getInstance(JSON.parse(this.result)));
           setConfigJsonNeeded(false);
           jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
           var conn = SocketController.getSocket();
@@ -45,7 +46,7 @@ function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
           let fr = new FileReader();
           let jsonMessage; 
           fr.onload = function() { //Read the fichier => this.result = file.text()
-            setConfig(this.result);
+            setConfig(Game.getInstance(JSON.parse(this.result)));
             setConfigJsonNeeded(false);
             jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
             var conn = SocketController.getSocket();
