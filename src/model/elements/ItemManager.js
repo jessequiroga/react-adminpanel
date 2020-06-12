@@ -9,7 +9,7 @@ import DunwichAnnals from './Items/DunwichAnnals';
 class ItemManager
 {
     static TypesItem = {
-        CultMag:"Magazine de cult",
+        CultMag:"Cult Magazine",
         PocheInterdimensionnelle:"Interdimensional Pocket",
         VisionOrb:"Vision Orb",
         DunwichAnnals:"Dunwich’s Annals"
@@ -19,7 +19,7 @@ class ItemManager
         var item;
         switch(Type)
         {   
-            case "Cult Magazine":
+            case "CultMag":
                 item = new CultMag(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,IsActive,Team);
                 break;
 
@@ -73,7 +73,7 @@ class ItemManager
                 break;
 
             default:
-                    throw new Error("this item type is not in the switch iteam Manager type: "+type);
+                    throw new Error("this item type is not in the switch item Manager type: "+type);
 
         }
         return desc;
