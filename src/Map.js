@@ -210,7 +210,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       }
     }
     if(!err){
-      console.log(message.toJson());
       socket.send(message.toJson());
       component.setMap(null); // Unset the map attribut of the component for remove it
       if(component.type != "Zone")

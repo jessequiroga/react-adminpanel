@@ -16,6 +16,14 @@ export default class MapControl extends Component {
 
   static contextTypes = { [MAP]: PropTypes.object }
   
+  removeElement = (element) => {
+    element.toMapElement().setMap(null);
+    if(element.toMapElement().visionCircle)
+      element.toMapElement().visionCircle.setMap(null);
+    if(element.toMapElement().actionCircle)
+      element.toMapElement().actionCircle.setMap(null);
+  }
+
   findById= (table,id)=>
   {
     let result = null;
@@ -27,7 +35,7 @@ export default class MapControl extends Component {
 
   isDiff = (mapUpdate) =>
   {
-    let log = true; //Show what is the diff in the game
+    let log = false; //Show what is the diff in the game
     let result = false;
     let _mapUpdate =this._mapUpdate;
 
@@ -189,11 +197,11 @@ export default class MapControl extends Component {
             }
             else if (Object.keys(game.Flags).length > 0)
             {
-              if(this.findById(game.Flags,altar.Id)===-1)
+              if(this.findById(game.Flags,altar.Id)==null)
               {
                 if(altar.MapEntity !==null)
                 {
-                  altar.toMapElement().setMap(null);
+                  this.removeElement(altar);
                 }
                 Game.getInstance().removeAltar(altar);
               }
@@ -251,7 +259,6 @@ export default class MapControl extends Component {
         if(Game.getInstance().Items && (Object.keys((Game.getInstance().Items)).length) > 0)
         {
          Game.getInstance().Items.map(item => {
-          console.log("know delete",item.Id);
             if(item.Id == null)
             {
               if(item.MapEntity !==null)
@@ -262,14 +269,11 @@ export default class MapControl extends Component {
             }
             else if (Object.keys(game.Items).length > 0)
             {
-              console.log("is delete ?",item.Id);
-              console.log("games.Items",game.Items);
-              if(this.findById(game.Items,item.Id)===-1)
+              if(this.findById(game.Items,item.Id)==null)
               {
-                console.log("delete",item.Id);
                 if(item.MapEntity !==null)
                 {
-                  item.toMapElement().setMap(null);
+                  this.removeElement(item);
                 }
                 Game.getInstance().removeItem(item);
               }
@@ -339,11 +343,11 @@ export default class MapControl extends Component {
             }
             else if (Object.keys(game.Regions).length > 0)
             {
-              if(this.findById(game.Regions,zone.Id)===-1)
+              if(this.findById(game.Regions,zone.Id)==null)
               {
                 if(zone.MapEntity !==null)
                 {
-                  zone.toMapElement().setMap(null);
+                  this.removeElement(zone);
                 }
                 Game.getInstance().removeZone(zone);
               }
