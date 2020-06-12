@@ -189,7 +189,7 @@ function MapConfigPannel({Config,setConfig}) {
                                     Object.keys(Game.GameType).map(type=>{
                                         let nameType = type.toString();
                                         let Camel = nameType[0].toUpperCase() + nameType.slice(1,50).toLowerCase();
-                                        return  <option key={type} selected={(Config)?Game.GameType[type]===Config.Type:false} value={Game.GameType[type]}>{Camel}</option>
+                                        return  <option key={type} selected={(Config)?Game.GameType[type]===parseInt(Config.Type):false} value={Game.GameType[type]}>{Camel}</option>
                                     })
                                 }
                             </select>
