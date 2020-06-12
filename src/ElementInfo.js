@@ -12,7 +12,7 @@ export default class ElementInfo extends Component {
   componentWillMount() {
     this.map = this.context[MAP];
     this.divElementInfo = window.document.createElement('div'); // create a body div
-    this.divElementInfo.style = "width: 30%;height:40%;";
+    this.divElementInfo.style = "width: 30%;height:40%;margin-right:1.25%;margin-top:1.25%";
     this.map.controls[this.props.position].push(this.divElementInfo); // put the body div on the map
   }
 
