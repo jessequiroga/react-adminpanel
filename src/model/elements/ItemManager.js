@@ -10,16 +10,16 @@ class ItemManager
 {
     static TypesItem = {
         CultMag:"Magazine de cult",
-        PocheInterdimensionnelle:"La poche interdimensionnelle",
+        PocheInterdimensionnelle:"Interdimensional Pocket",
         VisionOrb:"Vision Orb",
-        DunwichAnnals:"Annals de Dunwich"
+        DunwichAnnals:"Dunwich’s Annals"
     };
     static createItem(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null,IsActive=null,Team=null)
     {
         var item;
         switch(Type)
         {   
-            case "CultMag":
+            case "Cult Magazine":
                 item = new CultMag(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,IsActive,Team);
                 break;
 
