@@ -44,9 +44,6 @@ export default [
             },
             {
                 "visibility": "on"
-            },
-            {
-                "weight": 4.1
             }
         ]
     },
@@ -249,6 +246,18 @@ export default [
         ]
     },
     {
+      "featureType": "landscape",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#40f0e8"
+        },
+        {
+          "weight": 1.5
+        }
+      ]
+    },
+    {
         "featureType": "road.arterial",
         "elementType": "geometry",
         "stylers": [
@@ -274,6 +283,24 @@ export default [
                 "visibility": "simplified"
             }
         ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
     },
     {
         "featureType": "transit",
