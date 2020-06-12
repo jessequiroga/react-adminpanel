@@ -18,6 +18,7 @@ import PlayersControl from "./PlayersControl";
 import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import ItemManager from "./model/elements/ItemManager";
+import AltarManager from "./model/elements/Altar";
 
 import TextDisplay from "./components/TextDisplay";
 import SelectDisplay from "./components/SelectDisplay";
@@ -572,9 +573,20 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         </Nav>
       </DrawManager>
 
-      {canDraw() ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
+      {(canDraw() &&  !canDrawMapZone) ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
           <Card style={{height:"100%"}}>
-            <div>Hello</div>
+              {canDrawItem && <div>Item
+                  <div>
+                    {ItemManager.description(typeItemDraw)}
+                  </div>
+                </div>
+              }
+              {canDrawAltar && <div>Altar
+                  <div>
+                    {AltarManager.description()}
+                  </div>
+                </div>
+              }
           </Card>
       </ElementInfo>:null}
 

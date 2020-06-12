@@ -1,4 +1,5 @@
 import Marker from "./Marker";
+import React from "react";
 
 class Altar extends Marker
 {
@@ -51,6 +52,11 @@ class AltarManager
             url:`/altar_unreached.png`,
             scaledSize: new window.google.maps.Size(80, 80)
         };
+    }
+
+    static description()
+    {
+        return<></>;
     }
 }
 

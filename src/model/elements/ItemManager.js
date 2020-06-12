@@ -1,3 +1,5 @@
+import React from "react";
+
 import IconItem from './IconItem';
 import CultMag from './Items/CultMag';
 import PocheInterdimensionnelle from './Items/PocheInterdimensionnelle';
@@ -47,6 +49,35 @@ class ItemManager
         var icon = IconItem[type];
         return {url:icon.url,
             scaledSize: new window.google.maps.Size(icon.scaledSize[0], icon.scaledSize[1])};
+    }
+
+    static description(type)
+    {
+        let desc = <></>;
+        switch(type)
+        {   
+            case "CultMag":
+                desc = CultMag.description();
+                break;
+
+            case "PocheInterdimensionnelle":
+                desc = PocheInterdimensionnelle.description();
+                break;
+
+            case "VisionOrb":
+                desc = VisionOrb.description(); 
+                break;
+
+            case "DunwichAnnals":
+                desc = DunwichAnnals.description();
+                break;
+
+            default:
+                    throw new Error("this item type is not in the switch iteam Manager type: "+type);
+                break;
+
+        }
+        return desc;
     }
 }
 

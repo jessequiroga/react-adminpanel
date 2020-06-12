@@ -1,4 +1,5 @@
 import Item from "./Item";
+import React from "react";
 
 class CultMag extends Item
 {
@@ -21,6 +22,11 @@ class CultMag extends Item
         }
         else
             return super.getIcon();
+    }
+
+    static description()
+    {
+        return<></>;
     }
 }
 
