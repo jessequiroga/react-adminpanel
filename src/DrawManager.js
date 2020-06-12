@@ -8,6 +8,7 @@ import Game from './model/Game.js';
 import $ from 'jquery';
 import SocketController from './model/SocketController.js';
 import SocketMessage from './model/SocketMessage.js';
+import Entity from './model/elements/Entity.js';
 
 export default class DrawManager extends Component {
 
@@ -18,10 +19,17 @@ export default class DrawManager extends Component {
     let newAltar = AltarManager.createAltar(mousePos);
     var withColision = true;
     var withVisionCircle = true;
-    newAltar.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
-    Game.getInstance().addAltar(newAltar);
-    let message = (new SocketMessage(newAltar, SocketMessage.TypeMessage.FLAGADD)).toJson();
-    SocketController.getSocket().send(message);
+    let response = newAltar.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
+    if(response !== null)
+    {
+      Game.getInstance().addAltar(newAltar);
+      let message = (new SocketMessage(newAltar, SocketMessage.TypeMessage.FLAGADD)).toJson();
+      SocketController.getSocket().send(message);
+    }
+    else
+    {
+      Entity.IncrId--;
+    }
   }
 
   addItem = (mousePos,type ="CultMag") => // event add Item marker
@@ -29,10 +37,17 @@ export default class DrawManager extends Component {
     let newItem = ItemManager.createItem(mousePos, type);
     var withColision = true;
     var withVisionCircle = true;
-    newItem.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
-    Game.getInstance().addItem(newItem);
-    let message = (new SocketMessage(newItem, SocketMessage.TypeMessage.ITEMADD)).toJson();
-    SocketController.getSocket().send(message);
+    let response = newItem.toMapElement(this.map, this.props.setSelectedDrawed, withVisionCircle, withColision);
+    if(response !== null)
+    {
+      Game.getInstance().addItem(newItem);
+      let message = (new SocketMessage(newItem, SocketMessage.TypeMessage.ITEMADD)).toJson();
+      SocketController.getSocket().send(message);
+    }
+    else
+    {
+      Entity.IncrId--;
+    }
   }
 
   componentWillMount() { // MapControll creation
@@ -69,6 +84,16 @@ export default class DrawManager extends Component {
         Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
           window.google.maps.event.addListener(zone.toMapElement(), 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
         });
+
+        Game.getInstance().Flags.forEach(altar =>{
+          if(altar.totoMapElement && altar.toMapElement().visionCircle)
+            window.google.maps.event.addListener(altar.toMapElement().visionCircle, 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
+        })
+  
+        Game.getInstance().Items.forEach(item =>{
+          if(item.totoMapElement && item.toMapElement().visionCircle)
+            window.google.maps.event.addListener(item.toMapElement().visionCircle, 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
+        })
       }
     }
     else if (this.props.canDrawAltar) {
@@ -78,6 +103,17 @@ export default class DrawManager extends Component {
       Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
         window.google.maps.event.addListener(zone.toMapElement(), 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
       });
+
+      Game.getInstance().Flags.forEach(altar =>{
+        if(altar.totoMapElement && altar.toMapElement().visionCircle)
+          window.google.maps.event.addListener(altar.toMapElement().visionCircle, 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
+      })
+
+      Game.getInstance().Items.forEach(item =>{
+        if(item.totoMapElement && item.toMapElement().visionCircle)
+          window.google.maps.event.addListener(item.toMapElement().visionCircle, 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
+      })
+
     }
   }
 

@@ -9,23 +9,24 @@ export default class Entity
     MapEntity=null;
     IsInActionRange = false;
 
-    constructor(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,Id=null)
-    {
-        
-        if(Id!==null)
+    constructor(position,actionDistance=null,isInActionRange=null,name=null,visionDistance=null,id=null)
+    {   
+        if(id!==null)
         {
-            this.Id = Id;
+            this.Id = id;
         }
         else
         {
+            console.log(Entity.IncrId);
+            console.log("new",id)
             this.Id = Entity.IncrId;
             Entity.IncrId++;
         }
-        this.Position = Position;
-        if(ActionDistance)this.ActionDistance = ActionDistance
-        if(IsInActionRange)this.IsInActionRange = IsInActionRange;
-        if(VisionDistance)this.VisionDistance = VisionDistance
-        if(Name)this.Name = Name; else this.Name = this.constructor.name;
+        this.Position = position;
+        if(actionDistance)this.ActionDistance = actionDistance
+        if(isInActionRange)this.IsInActionRange = isInActionRange;
+        if(visionDistance)this.VisionDistance = visionDistance
+        if(name)this.Name = name; else this.Name = this.constructor.name;
     }
 
 

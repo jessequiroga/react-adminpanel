@@ -101,6 +101,10 @@ export default class Marker extends Entity
                   window.google.maps.event.addListener(marker, "dragend",()=>markerDragStop(marker,map));
                 }
               }
+              else
+              {
+                marker = null; //Pas possible de crée le marker;
+              }
           }
           else
           {

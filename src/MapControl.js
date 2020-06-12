@@ -219,9 +219,13 @@ export default class MapControl extends Component {
             var indexA = Game.getInstance().findAltarById(altar.Id);
             if(indexA !== -1)
             {
+              exist = true;
               if(Entity.IncrId<altar.Id)
                 Entity.IncrId = altar.Id+1;
-              exist = true;
+            }
+            else
+            {
+              Entity.IncrId++;
             }
             let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
             var withVisionCircle=true;
@@ -296,6 +300,11 @@ export default class MapControl extends Component {
                 Entity.IncrId = item.Id+1;
               exist = true;
             }
+            else
+            {
+              Entity.IncrId++;
+            }
+      
             let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id,item.IsActive,item.Team);
             var withVisionCircle=true;
             if(exist && Game.getInstance().Items[indexI].toMapElement)
@@ -365,9 +374,13 @@ export default class MapControl extends Component {
             var indexZ = Game.getInstance().findZoneById(zone.Id);
             if(indexZ !== -1)
             {
-              if(Entity.IncrId<zone.Id)
-                Entity.IncrId = zone.Id+1;
+              if(ManagerZones.IncrId<zone.Id)
+                ManagerZones.IncrId = zone.Id+1;
               exist=true;
+            }
+            else
+            {
+              ManagerZones.IncrId++;
             }
 
             let newZone = ManagerZones.createZone(zone.Coordinates,zone.Id);
