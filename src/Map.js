@@ -31,6 +31,7 @@ import ModalListPlayer from "./components/ModalListPlayer";
 import $ from "jquery";
 
 import './Map.css';
+import ElementInfo from "./ElementInfo";
 
 function Map(props) {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
@@ -570,6 +571,12 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           <ModalListPlayer listPlayerOpen={listPlayerOpen} setListPlayerOpen={setListPlayerOpen} instanceListPlayer={instanceListPlayer}/>
         </Nav>
       </DrawManager>
+
+      {canDraw() ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
+          <Card style={{height:"100%"}}>
+            <div>Hello</div>
+          </Card>
+      </ElementInfo>:null}
 
 
       {selectedDrawed && ( // If an drawed component was select
