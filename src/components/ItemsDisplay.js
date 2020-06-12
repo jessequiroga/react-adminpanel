@@ -15,7 +15,7 @@ function ItemsDisplay({items}) {
             let item = _listItems[keyI];
             let icon = ItemManager.getIcon(item.Type).url;
             return <Col key={keyI}>
-                        <img style={{width: "60px"}} src={icon}></img>
+                        <img style={{width: "60px"}} alt={item.Type} src={icon}></img>
                     </Col>
 
         });

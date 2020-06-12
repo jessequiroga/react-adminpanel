@@ -50,7 +50,7 @@ function App() {
             {
               setBeginDate(this_game.BeginDate);
               setGameInstance(true);
-              if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type == Game.GameType.TIME))
+              if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type === Game.GameType.TIME))
               {
                 setGameEnded(true);
               }
@@ -64,6 +64,8 @@ function App() {
               setConfig(this_game);
             }
           }
+          break;
+        default:
           break;
       }
     }

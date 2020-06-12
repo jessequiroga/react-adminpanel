@@ -28,19 +28,19 @@ function MapConfigPannel({Config,setConfig}) {
       }
   );
 
-  const [refresh,changeRefresh] = useState(null);
+  const changeRefresh = useState(null);
 
   useEffect(()=>{
     changeCurrTeams(Config?Config.Teams:null);
-    formular.endTime.isValid = Config?!(Config.Type == Game.GameType.TIME):true;
-    formular.endDate.isValid = Config?!(Config.Type == Game.GameType.TIME):true;
+    formular.endTime.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
+    formular.endDate.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
     changeFormular(formular);
   },[Config]);
 
   const onChangeTypeGame = (event) =>
     {
         let val = event.target.value;
-        if(event.target.value == Game.GameType.TIME)
+        if(event.target.value === Game.GameType.TIME)
         {
             formular.endDate.isValid = false;
             formular.endTime.isValid = false;
@@ -53,7 +53,7 @@ function MapConfigPannel({Config,setConfig}) {
         formular.typeGameChang.value= val;
         formular.typeGameChang.isValid= true;
         changeFormular(formular); //Isn't enought to refresh the display
-        changeRefresh(val); // Refresh the display
+        changeRefresh[1](val); // Refresh the display
     }
 
     const changPublic = (event) =>
@@ -62,7 +62,7 @@ function MapConfigPannel({Config,setConfig}) {
         formular.isPublic.value= val;
         formular.isPublic.isValid= true;
         changeFormular(formular);
-        changeRefresh(val);
+        changeRefresh[1](val);
     }
 
     const findTeam = (id) =>
@@ -120,12 +120,13 @@ function MapConfigPannel({Config,setConfig}) {
             if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
                 formulaireValide = false; // Le formulaire n'est pas valide
         }
-        else if(x.indexOf("Chang")==-1)
+        else if(x.indexOf("Chang")===-1)
         {
             content[x] = formular[x].value;
             if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
                 formulaireValide = false; // Le formulaire n'est pas valide
         }
+        return true;
     });
 
     
@@ -142,7 +143,7 @@ function MapConfigPannel({Config,setConfig}) {
         if(Teams.length>0){Config.Teams = Teams;}
     
         Config.BeginDate = Time.addTime(content.beginDate,content.beginTime);
-        if(Config.Type == Game.GameType.TIME)
+        if(Config.Type === Game.GameType.TIME)
         {
             Config.EndDate = Time.addTime(content.endDate,content.endTime);
         }
@@ -202,7 +203,7 @@ function MapConfigPannel({Config,setConfig}) {
                                 <TextDisplay type="time" typeInput="time" name="beginTime" label="Begin Time" formular={formular} changeFormular={changeFormular}/>                                
                             </Col>
                     </Row>
-                    {((Config && formular.typeGameChang.value == "" && parseInt(Config.Type) == Game.GameType.TIME) || (formular.typeGameChang.value !== "" && parseInt(formular.typeGameChang.value) == Game.GameType.TIME))?
+                    {((Config && formular.typeGameChang.value === "" && parseInt(Config.Type) === Game.GameType.TIME) || (formular.typeGameChang.value !== "" && parseInt(formular.typeGameChang.value) === Game.GameType.TIME))?
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
                                 <TextDisplay className="mb-1" type="date" typeInput="date" name="endDate" label="End Date" formular={formular} changeFormular={changeFormular}/>
@@ -222,7 +223,7 @@ function MapConfigPannel({Config,setConfig}) {
                     </Row>
                     <Row form className="ml-1 pb-2">
                         <Col md={6}>
-                            <TextDisplay name="numberChang" typeInput="number" placeHolder="Min Player" label="Min Player" placeHolder={Config?Config.MinPlayer:""} formular={formular} changeFormular={changeFormular}/>
+                            <TextDisplay name="numberChang" typeInput="number" label="Min Player" placeHolder={Config?Config.MinPlayer:""} formular={formular} changeFormular={changeFormular}/>
                         </Col>
                     </Row>
                     <Row form className="ml-1 pb-2">

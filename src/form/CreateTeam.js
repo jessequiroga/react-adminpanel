@@ -81,6 +81,7 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
             {
                 let currTeam = currTeams[index];
                 Addteam(currTeam);
+                return true;
             });
         }
         else

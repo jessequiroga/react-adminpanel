@@ -29,13 +29,13 @@ export default class DrawConflict {
     static isInRegion(regions, marker) {
         var point = new Point(marker.position);
         var result =false;
-        for (const [index, regionCoordinates] of regions.entries()) {
-            var Coordinates = regionCoordinates.getPath().getArray();
+        for (const regionCoordinates of regions.entries()) {
+            var Coordinates = regionCoordinates[1].getPath().getArray();
             result = false;
             var j = Coordinates.length - 1;
             for (var i = 0; i < Coordinates.length; i++)
             {
-                if ((new Point(Coordinates[i])).y < point.y && (new Point(Coordinates[j])).y >= point.y || (new Point(Coordinates[j])).y < point.y && (new Point(Coordinates[i])).y >= point.y)
+                if ((new Point(Coordinates[i])).y < point.y && ((new Point(Coordinates[j])).y >= point.y || (new Point(Coordinates[j])).y < point.y )&& (new Point(Coordinates[i])).y >= point.y)
                 {
                     if ((new Point(Coordinates[i])).x+ (point.y - (new Point(Coordinates[i])).y) / ((new Point(Coordinates[j])).y - (new Point(Coordinates[i])).y) * ((new Point(Coordinates[j])).x - (new Point(Coordinates[i])).x) < point.x)
                     {
@@ -44,7 +44,7 @@ export default class DrawConflict {
                 }
                 j = i;
             }
-            if(result == true)
+            if(result === true)
             {
                 break;
             }

@@ -79,7 +79,7 @@ export default class Marker extends Entity
 
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
-              title: (this.constructor.name == "Player")?this.Name:this.constructor.name,
+              title: (this.constructor.name === "Player")?this.Name:this.constructor.name,
               type: this.constructor.name,
               icon: this.getIcon(),
               visionCircle:visionCircle,
@@ -93,7 +93,7 @@ export default class Marker extends Entity
               {
                 marker.setMap(map);
                 window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-                if(this.constructor.name != "Player")
+                if(this.constructor.name !== "Player")
                 {
                   visionCircle.setMap(map);
                   actionCircle.setMap(map);
@@ -110,7 +110,7 @@ export default class Marker extends Entity
           {
               marker.setMap(map);
               window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
-              if(this.constructor.name != "Player")
+              if(this.constructor.name !== "Player")
               {
                 if (withVisionCircle)
                 {

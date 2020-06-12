@@ -17,7 +17,7 @@ export default class PlayerControl extends Component {
         if(player.Position != null)
         {
           let indexP = Game.getInstance().findPlayerById(player.Id);
-          if( indexP != -1)
+          if( indexP !== -1)
           {
             let _currentPlayer = Game.getInstance().Players[indexP];
             if( _currentPlayer.toMapElement &&  _currentPlayer.toMapElement() !== null)
@@ -46,7 +46,7 @@ export default class PlayerControl extends Component {
             else
             {
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
-              let mapelement  = newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
+              newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
               /*if(player.IsAFK)
               {
                 newPlayer.toMapElement().setMap(null);
@@ -89,7 +89,7 @@ export default class PlayerControl extends Component {
         {
           let exist = false;
           let indexP = Game.getInstance().findPlayerById(player.Id);
-          if( indexP != -1)
+          if( indexP !== -1)
           {
             exist = true;
           }

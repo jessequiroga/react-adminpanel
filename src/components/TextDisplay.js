@@ -14,7 +14,7 @@ const TextDisplay = (props) => {
             case "email":
                 if (formular[input].value !== "") {
                     if (validEmail(formular[input].value)) {
-                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                        if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                         {
                             formular[input].value ="";
                             event.target.value="";
@@ -34,7 +34,7 @@ const TextDisplay = (props) => {
                         formular[input].message ="";
                     }
                 } else {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -53,7 +53,7 @@ const TextDisplay = (props) => {
             case "password":
                 if (formular[input].value !== "") {
                     if (formular[input].value.length >= 8 && /\d/.test(formular[input].value)) {
-                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                        if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                         {
                             formular[input].value ="";
                             event.target.value="";
@@ -73,7 +73,7 @@ const TextDisplay = (props) => {
                         formular[input].message ="";
                     }
                 } else {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -90,7 +90,7 @@ const TextDisplay = (props) => {
 
             case "tag":
                 if (formular[input].value === '') {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -111,7 +111,7 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
@@ -129,7 +129,7 @@ const TextDisplay = (props) => {
                 break;
             case "name":
                 if (formular[input].value === '') {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -150,7 +150,7 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
@@ -176,7 +176,7 @@ const TextDisplay = (props) => {
             case "ip":
                 if(formular[input].value === '')
                 {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -197,7 +197,7 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
@@ -217,7 +217,7 @@ const TextDisplay = (props) => {
             case "number":
                 if(formular[input].value === '')
                 {
-                    if (input.indexOf("Chang")!=-1)
+                    if (input.indexOf("Chang")!==-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -238,7 +238,7 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
+                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
@@ -316,7 +316,7 @@ const TextDisplay = (props) => {
                 input.message ="";
             }
         } else {
-            if(key.indexOf("Chang")!=-1 && (!formular[key] || (formular[key] && formular[key].value == "")))
+            if(key.indexOf("Chang")!==-1 && (!formular[key] || (formular[key] && formular[key].value === "")))
             {
                 input.message = "This field will not be change";
                 input.errorMessage = "";

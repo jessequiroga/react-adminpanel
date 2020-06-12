@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';

@@ -1,4 +1,4 @@
-import Game from "./Game";
+
 function _objectWithoutProperties(obj, keys) {
     var target = {};
     for (var i in obj) {
@@ -101,7 +101,7 @@ export default class SocketMessage {
         else if(type!=null && typeof(Json) =="object") //Write with object
         {
 
-            if(Object.keys(SocketMessage.TypeMessage).indexOf(type) != -1)
+            if(Object.keys(SocketMessage.TypeMessage).indexOf(type) !== -1)
             {
                 this.ContainedEntity = JSON.stringify(_objectWithoutProperties(Json,["MapEntity"])); // Jsonised the map
                 this.MessageType = type;

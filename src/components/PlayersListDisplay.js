@@ -19,11 +19,13 @@ function PlayersListDisplay({instanceListPlayer}) {
                 if(player.Team !== null && typeof player.Team !== "undefined")
                 {                
                     let afk = player.IsAfk;
-                    if (player.Team.Id == team.Id)
+                    if (player.Team.Id === team.Id)
                         return <span key={player.Id} style={afk?{textDecorationColor:"#848484",marginTop: "7px"}:{marginTop: "7px"}} className="text-center">{player.Name}{afk?"(AFK)":""}</span>;
+                    else
+                        return <></>;
                 }
-
-
+                else
+                        return <></>;
             });
 
             return <Col key={index} sm={Game.getInstance().Teams.length > 3 ? '4' : '6'}>

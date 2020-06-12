@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PlayersListDisplay from "./PlayersListDisplay";
-import Game from "../model/Game";
 
 function ModalListPlayer( {listPlayerOpen, setListPlayerOpen, instanceListPlayer} ) {
 

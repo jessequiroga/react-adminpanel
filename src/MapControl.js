@@ -64,8 +64,9 @@ export default class MapControl extends Component {
             if(log)
               console.log("This Flag is Different: ",newFlag);
             result = true;
-            return;
+            return true;
           }
+          return true;
       });
 
       Object.keys(_mapUpdate.Flags).map(x=>{
@@ -76,8 +77,9 @@ export default class MapControl extends Component {
             if(log)
               console.log("This Flag is Different: ",_newFlag);
             result = true;
-            return;
+            return true;
           }
+          return true;
       });
     }
 
@@ -105,8 +107,9 @@ export default class MapControl extends Component {
               throw new Error();*/
           }
           result = true;
-          return;
+          return true;
         }
+        return true;
       });
 
       Object.keys(_mapUpdate.Items).map(x=>{
@@ -122,8 +125,9 @@ export default class MapControl extends Component {
               throw new Error();*/
           }
           result = true;
-          return;
+          return true;
         }
+        return true;
       });
     }
 
@@ -147,8 +151,9 @@ export default class MapControl extends Component {
           if(log)
               console.log("This Zone is Different: ",newZone);
           result = true;
-          return;
+          return true;
         }
+        return true;
       });
 
       Object.keys(_mapUpdate.Zones).map(x=>{
@@ -159,8 +164,9 @@ export default class MapControl extends Component {
           if(log)
               console.log("This Zone is Different: ",_newZone);
           result = true;
-          return;
+          return true;
         }
+        return true;
       });
     }
     return result;
@@ -206,6 +212,7 @@ export default class MapControl extends Component {
                 Game.getInstance().removeAltar(altar);
               }
             }
+            return true;
           });
         }
       }
@@ -255,6 +262,8 @@ export default class MapControl extends Component {
           }
           else
             console.log("erreur pas d'id pour l'altar:",altar);
+
+            return true;
         });
       }
 
@@ -282,6 +291,7 @@ export default class MapControl extends Component {
                 Game.getInstance().removeItem(item);
               }
             }
+            return true;
           });
         }
       }
@@ -334,6 +344,8 @@ export default class MapControl extends Component {
           }
           else
             console.log("erreur pas d'id pour l'item:",item);
+
+          return true;
         });
       }
 
@@ -361,6 +373,7 @@ export default class MapControl extends Component {
                 Game.getInstance().removeZone(zone);
               }
             }
+            return true;
           });
         }
       }
@@ -405,6 +418,8 @@ export default class MapControl extends Component {
           }
           else
             console.log("erreur pas d'id pour la zone:",zone);
+
+          return true;
         });
       }
     }
@@ -425,7 +440,7 @@ export default class MapControl extends Component {
       this._mapUpdate = this.props.gameUpdate;
       this.configMap(this.props.gameUpdate);
     }
-    if(Game.getInstance() && Game.getInstance().Type == Game.GameType.TIME && (this.tick == null || typeof this.tick == "undefined") && !this.props.endGame)
+    if(Game.getInstance() && Game.getInstance().Type === Game.GameType.TIME && (this.tick == null || typeof this.tick == "undefined") && !this.props.endGame)
     {
       this.tick = setInterval(() => {
         this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
@@ -441,7 +456,9 @@ export default class MapControl extends Component {
 
   render()
   {
-    let timer  = <Card style={{backgroundColor: "#6c757d"}} className="timer">
+    if(this.tick !== null && typeof this.tick !== "undefined")
+    {
+      let timer  = <Card style={{backgroundColor: "#6c757d"}} className="timer">
                     <Nav navbar>
                         <NavItem className="text-center" style={{color:"#fff",fontSize:"1rem",height:"55px",width:"250px"}}>
                           <span>Time Left:</span>
@@ -449,7 +466,10 @@ export default class MapControl extends Component {
                         </NavItem>
                     </Nav>
                   </Card>;
-    return createPortal(timer,this.divMapControl);
+      return createPortal(timer,this.divMapControl);
+    }
+    else
+     return <></>;
   }
 
   componentWillUnmount() {

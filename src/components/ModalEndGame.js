@@ -1,10 +1,6 @@
 import React from "react";
 import {Modal,ModalHeader,ModalBody,ModalFooter,Button} from 'reactstrap';
 
-import Game from '../model/Game';
-import SocketMessage from '../model/SocketMessage';
-import SocketController from '../model/SocketController';
-
 function ModalEndGame({gameEnded,openConfig}) {
     
   return (

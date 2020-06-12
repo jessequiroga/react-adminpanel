@@ -37,7 +37,6 @@ class ItemManager
 
             default:
                     throw new Error("this item type is not in the switch iteam Manager type: "+Type);
-                break;
 
         }
         
@@ -75,7 +74,6 @@ class ItemManager
 
             default:
                     throw new Error("this item type is not in the switch iteam Manager type: "+type);
-                break;
 
         }
         return desc;

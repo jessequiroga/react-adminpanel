@@ -1,5 +1,5 @@
 import React from 'react';
-import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback, Input} from 'reactstrap';
+import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback} from 'reactstrap';
 
 const SelectDisplay = (props) => {
     const inputName = props.name;

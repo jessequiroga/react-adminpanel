@@ -3,7 +3,7 @@ import {
   GoogleMap,
   InfoWindow
 } from "react-google-maps";
-import { Card, Navbar, NavbarToggler, Button, Nav, Collapse, NavItem } from 'reactstrap';
+import { Card, Button, Nav, Collapse, NavItem } from 'reactstrap';
 import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
@@ -11,7 +11,6 @@ import myStyle from "./style";
 import Game from "./model/Game.js";
 import ZoneManager from "./model/Zone.js";
 
-import HtmlMap from "./HtmlMap";
 import DrawManager from "./DrawManager.js";
 import MapControl from "./MapControl.js"
 import PlayersControl from "./PlayersControl";
@@ -42,7 +41,7 @@ function Map(props) {
   const [canDrawAltar, setCanDrawAltar] = useState(false); // Triger if the DrawingManger Altar is active
   const [canDrawItem, setCanDrawItem] = useState(false); // Triger if the DrawingManger Item is active
   const [typeItemDraw, setTypeItemDraw] = useState(null); // Triger if the DrawingManger Item is active
-  const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu
+  /*const [isOpen, changeIsOpen] = useState(false); // Trigger toogle menu*/
   const [listVisionMarker, setListVisionMarker] = useState([]); // Listing of all the VisionMarker
   const [listPlayer, setListPlayer] = useState([]); // Listing of all the VisionMarker
   const [listMarkerPlayer, setListMarkerPlayer] = useState([]);
@@ -133,9 +132,9 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     }
   }
 
-  const toggle = () => { // Open/Close the menu
+  /*const toggle = () => { // Open/Close the menu
     changeIsOpen(!isOpen); // set true/false isOpen
-  }
+  }*/
 
   const canDraw = () => {
     return (canDrawMapZone || canDrawAltar || (canDrawItem && typeItemDraw));
@@ -217,7 +216,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     if(!err){
       socket.send(message.toJson());
       component.setMap(null); // Unset the map attribut of the component for remove it
-      if(component.type != "Zone")
+      if(component.type !== "Zone")
       {
         component.visionCircle.setMap(null); // Unset the map attribut of the component for remove it
         component.actionCircle.setMap(null);
@@ -329,47 +328,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
   }
 
-  const confirmeEditing = (component) => { // End the Map component edition (Map Component component)
-    let err = false;
-    /*switch(component.type) // if it's an editing Map component we set the editing on true else we set the component draggable // if it's an editing Map component we set the editing on false else we set the component undraggable
-    {
-      case 'Zone':
-        err = Game.getInstance().editZone(component);
-        component.setEditable(false);
-        break;
-
-      case 'Item':
-        err = Game.getInstance().editItem(component);
-        component.setDraggable(false);
-        break;
-
-      case 'Altar':
-        err = Game.getInstance().editAltar(component);
-        component.setDraggable(false);
-        break;
-
-      default:
-        err = true;
-        console.log("pas de type");
-        break;
-    }
-
-    if(err)
-    {
-      console.log("erreur lors de la modif");
-    }
-    else
-    { *//**
-      * Replace the elemnt on click by the menu popup
-      **/
-    google.maps.event.clearListeners(component, 'click'); // Unset the old event onClick of the Map component
-    google.maps.event.addListener(component, 'click', function (event) { // Set the new event onClick of the Map component
-      !canDraw() && setSelectedDrawed(component); // Select the drawed component
-    });
-    //}
-
-  }
-
   const onPolygonComplete = React.useCallback(function onPolygonComplete(poly) { // Event when a polygon is created
     const polyArray = poly.getPath().getArray(); // Get all the coordinates of the polygone
     if (polyArray.length >= 3) // If the polygone have more/or 3 coordinates it's a polygone
@@ -413,7 +371,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
     value = Time.getTime(value);
     
-    if(valid && value != "")
+    if(valid && value !== "")
     {
       let altar = Game.getInstance().getAltarById(altarId);
       let indexA = Game.getInstance().findAltarById(altarId);
@@ -444,23 +402,24 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
     let formulaireValide = true;
     let content = {};
     Object.keys(formularAttributeItem).map(x =>{
-        if(x!=="captureDateChang")
+      if(x!=="captureDateChang")
+      {
+        if(formularAttributeItem[x].value !== "" )
         {
-          if(formularAttributeItem[x].value !== "" )
+          if( x === "quantityChang")
           {
-            if( x =="quantityChang")
-            {
-              content[x] = parseInt(formularAttributeItem[x].value);
-            }
-            else if (x=="availableDurationChang" || x=="deficiencyDurationChang")
-              content[x] = Time.getTime(formularAttributeItem[x].value);
-            else
-              content[x] = formularAttributeItem[x].value;
+            content[x] = parseInt(formularAttributeItem[x].value);
           }
-
-          if(!formularAttributeItem[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
-              formulaireValide = false; // Le formulaire n'est pas valide
+          else if (x === "availableDurationChang" || x === "deficiencyDurationChang")
+            content[x] = Time.getTime(formularAttributeItem[x].value);
+          else
+            content[x] = formularAttributeItem[x].value;
         }
+
+        if(!formularAttributeItem[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
+            formulaireValide = false; // Le formulaire n'est pas valide
+      }
+      return true;
     });
 
     if(formulaireValide)
@@ -471,6 +430,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           let chang = x.indexOf("Chang");
           let key = x.slice(0,chang)[0].toUpperCase() + x.slice(1,chang);
           item[key] = content[x];
+          return true;
       });
       Game.getInstance().replaceItem(indexI,item);
       let message = new SocketMessage(item, SocketMessage.TypeMessage.ITEMUPDATE);
@@ -630,7 +590,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               {(selectedDrawed.type && selectedDrawed.type !== "Player")?<div className="group-btn">
                 <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
                 <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
-                {(selectedDrawed.type && selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
+                {(selectedDrawed.type && (selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1)) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
               </div>:null}
             </div>
         </InfoWindow>
