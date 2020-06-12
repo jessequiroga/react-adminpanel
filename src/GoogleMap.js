@@ -22,6 +22,7 @@ class GoogleMap extends Component {
                 mapElement={<div style={{ height: `100%` }} />}
                 gameEnded={this.props.gameEnded} 
                 setGameEnded={this.props.setGameEnded}
+                setWiner={this.props.setWiner}
               />
           </div>
         );

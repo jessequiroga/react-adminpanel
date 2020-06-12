@@ -15,6 +15,7 @@
     Teams=[];
     IsFinal= false;
     IsPublic= false;
+    HasEnded = false;
 
     constructor(
         type,
@@ -30,7 +31,8 @@
         flags = [],
         teams=[],
         isFinal = false,
-        isPublic = false
+        isPublic = false,
+        hasEnded = false,
         )
     {   
         this.Type = type;
@@ -47,6 +49,7 @@
         this.Teams = teams;
         this.IsFinal = isFinal;
         this.IsPublic = isPublic;
+        this.HasEnded = hasEnded;
     }
 
     addZone(region){
@@ -276,7 +279,8 @@ class SingletonGame { // Object Game to sigleton
                                     game.Flags,
                                     game.Teams,
                                     game.IsFinal,
-                                    game.IsPublic
+                                    game.IsPublic,
+                                    game.HasEnded
                                     );
         }
         

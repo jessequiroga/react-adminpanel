@@ -27,6 +27,7 @@ function App() {
   const [beginDate,setBeginDate] = useState(new Date());
   const [config,setConfig]= useState(false);
   const [configOpen,changeConfigOpen] = useState(false);
+  const [winer,setWiner] = useState(null);
 
   const openConfig = () =>{
     changeConfigOpen(true);
@@ -65,6 +66,36 @@ function App() {
             }
           }
           break;
+        case SocketMessage.TypeMessage.GAMEENDED:
+          if(!config)
+          {
+            console.log(message.ContainedEntity);
+            console.log(message.ContainedEntity.Team);
+            setWiner(message.ContainedEntity.Team);
+            let game = message.ContainedEntity.Game;
+            Game.getInstance(game);
+            setGameEnded(true);
+            /*let game = message.ContainedEntity;
+            let this_game = Game.getInstance(game);
+            if(this_game.IsFinal)
+            {
+              setBeginDate(this_game.BeginDate);
+              setGameInstance(true);
+              if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type === Game.GameType.TIME))
+              {
+                setGameEnded(true);
+              }
+              else if((new Date(this_game.BeginDate)) > (new Date()))
+              {
+                setGameBegin(false);
+              }
+            }
+            else
+            {
+              setConfig(this_game);
+            }*/
+          }
+          break;
         default:
           break;
       }
@@ -92,9 +123,9 @@ function App() {
     <MapContainer>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
-        {gameInstance&&<GoogleMap gameEnded={gameEnded} setGameEnded={setGameEnded}/>}
+        {gameInstance&&<GoogleMap gameEnded={gameEnded} setWiner={setWiner} setGameEnded={setGameEnded}/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} beginDate={beginDate}/>}
-        {gameInstance&&<ModalEndGame gameEnded={gameEnded} openConfig={openConfig}/>}
+        {gameInstance&&<ModalEndGame gameEnded={gameEnded} winer={winer} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>

@@ -29,32 +29,32 @@ function _objectWithoutProperties(obj, keys) {
 export default class SocketMessage {
     static TypeMessage =
         {
-            ADMINCONNECT : "ADMINCONNECT",
-            POS          : "POS",
-            ACTION       : "ACTION",
-            USEITEM      : "USEITEM",
-            GAMESETUP    : "GAMESETUP",
-            NOMAP        : "NOMAP",
-            PLAYERCONNECT: "PLAYERCONNECT",
-            FLAGUPDATE   :"FLAGUPDATE",
-            FLAGDELETE   :"FLAGDELETE",
-            FLAGADD      :"FLAGADD",
-            OK           :"OK",
-            REGIONADD    :"REGIONADD",
-            ITEMADD      :"ITEMADD",
-            ITEMUPDATE   :"ITEMUPDATE",
-            ITEMDELETE   :"ITEMDELETE",
-            GAMEUPDATE   :"GAMEUPDATE",
-            TEAMCHANGE   :"TEAMCHANGE",
-            BADMESSAGE   :"BADMESSAGE",
-            BADFORMAT    :"BADFORMAT",
-            GAMESTART    :"GAMESTART",
-            CAPTUREFLAG  :"CAPTUREFLAG",
-            PICKUPITEM   :"PICKUPITEM",
-            PLACEITEM    :"PLACEITEM",
-            GAMEENDED    :"GAMEENDED",
-            ACTIVATEITEM :"ACTIVATEITEM",
-            INVENTORYFULL:"INVENTORYFULL"
+            ADMINCONNECT : "ADMINCONNECT",  // 0
+            POS          : "POS",           // 1
+            ACTION       : "ACTION",        // 2
+            USEITEM      : "USEITEM",       // 3
+            GAMESETUP    : "GAMESETUP",     // 4
+            NOMAP        : "NOMAP",         // 5
+            PLAYERCONNECT: "PLAYERCONNECT", // 6
+            FLAGUPDATE   :"FLAGUPDATE",     // 7
+            FLAGDELETE   :"FLAGDELETE",     // 8
+            FLAGADD      :"FLAGADD",        // 9
+            OK           :"OK",             // 10
+            REGIONADD    :"REGIONADD",      // 11
+            ITEMADD      :"ITEMADD",        // 12
+            ITEMUPDATE   :"ITEMUPDATE",     // 13
+            ITEMDELETE   :"ITEMDELETE",     // 14
+            GAMEUPDATE   :"GAMEUPDATE",     // 15
+            TEAMCHANGE   :"TEAMCHANGE",     // 16
+            BADMESSAGE   :"BADMESSAGE",     // 17
+            BADFORMAT    :"BADFORMAT",      // 18
+            GAMESTART    :"GAMESTART",      // 19
+            CAPTUREFLAG  :"CAPTUREFLAG",    // 20
+            PICKUPITEM   :"PICKUPITEM",     // 21
+            PLACEITEM    :"PLACEITEM",      // 22
+            GAMEENDED    :"GAMEENDED",      // 23
+            ACTIVATEITEM :"ACTIVATEITEM",   // 24
+            INVENTORYFULL:"INVENTORYFULL"   // 25
 
         }
 
@@ -84,6 +84,9 @@ export default class SocketMessage {
                     break;
                 case "GAMEUPDATE":
                     this.ContainedEntity = message.Game;
+                    break;
+                case "GAMEENDED":
+                    this.ContainedEntity = message;
                     break;
                 case "OK":
                 this.ContainedEntity = null;
@@ -183,6 +186,9 @@ export default class SocketMessage {
                 break;
             case "GAMEUPDATE":
                 jsonObject.Game = JSON.parse(this.ContainedEntity);
+                result = JSON.stringify(jsonObject);
+                break;
+            case "GAMEUPDATE":
                 result = JSON.stringify(jsonObject);
                 break;
             default:
