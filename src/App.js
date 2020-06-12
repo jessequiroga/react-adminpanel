@@ -90,7 +90,7 @@ function App() {
     <MapContainer>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
-        {gameInstance&&<GoogleMap/>}
+        {gameInstance&&<GoogleMap gameEnded={gameEnded} setGameEnded={setGameEnded}/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} beginDate={beginDate}/>}
         {gameInstance&&<ModalEndGame gameEnded={gameEnded} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>

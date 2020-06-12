@@ -29,22 +29,33 @@ function _objectWithoutProperties(obj, keys) {
 export default class SocketMessage {
     static TypeMessage =
         {
-            ADMINCONNECT: "ADMINCONNECT",
-            POS: "POS",
-            ACTION: "ACTION",
-            USEITEM: "USEITEM",
-            GAMESETUP: "GAMESETUP",
-            NOMAP: "NOMAP",
+            ADMINCONNECT : "ADMINCONNECT",
+            POS          : "POS",
+            ACTION       : "ACTION",
+            USEITEM      : "USEITEM",
+            GAMESETUP    : "GAMESETUP",
+            NOMAP        : "NOMAP",
             PLAYERCONNECT: "PLAYERCONNECT",
-            FLAGUPDATE:"FLAGUPDATE",
-            FLAGDELETE:"FLAGDELETE",
-            FLAGADD:"FLAGADD",
-            OK:"OK",
-            REGIONADD:"REGIONADD",
-            ITEMADD:"ITEMADD",
-            ITEMUPDATE:"ITEMUPDATE",
-            ITEMDELETE:"ITEMDELETE",
-            GAMEUPDATE:"GAMEUPDATE"
+            FLAGUPDATE   :"FLAGUPDATE",
+            FLAGDELETE   :"FLAGDELETE",
+            FLAGADD      :"FLAGADD",
+            OK           :"OK",
+            REGIONADD    :"REGIONADD",
+            ITEMADD      :"ITEMADD",
+            ITEMUPDATE   :"ITEMUPDATE",
+            ITEMDELETE   :"ITEMDELETE",
+            GAMEUPDATE   :"GAMEUPDATE",
+            TEAMCHANGE   :"TEAMCHANGE",
+            BADMESSAGE   :"BADMESSAGE",
+            BADFORMAT    :"BADFORMAT",
+            GAMESTART    :"GAMESTART",
+            CAPTUREFLAG  :"CAPTUREFLAG",
+            PICKUPITEM   :"PICKUPITEM",
+            PLACEITEM    :"PLACEITEM",
+            GAMEENDED    :"GAMEENDED",
+            ACTIVATEITEM :"ACTIVATEITEM",
+            INVENTORYFULL:"INVENTORYFULL"
+
         }
 
     MessageType;

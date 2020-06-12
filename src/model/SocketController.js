@@ -1,6 +1,6 @@
 import SocketMessage from "./SocketMessage";
 const createWebsocket = () => {
-    var socket = new WebSocket("ws://cultwars.net:5000/ws");
+    var socket = new WebSocket("ws://cultwars.net:5000/ws");//localhost:5000
 
     socket.onopen = function () {
        console.log("Connected.");

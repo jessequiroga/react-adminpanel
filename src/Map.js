@@ -32,7 +32,7 @@ import $ from "jquery";
 
 import './Map.css';
 
-function Map() {
+function Map(props) {
   const [selectedDrawed, setSelectedDrawed] = useState(null); // Triger if an Altar is selected
   const [selectedMove, setSelectedMoved] = useState(null); // Triger if an Altar is selected
   const [selectedEdited, setSelectedEdited] = useState(null); // Triger if an Altar is selected
@@ -117,6 +117,9 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
           setListPlayerPos(_listPlayerPos);
           break;
         case SocketMessage.TypeMessage.OK:
+          break;
+        case SocketMessage.TypeMessage.GAMEENDED:
+          props.setGameEnded(true);
           break;
         default:
           if (message.MessageType != null)
@@ -531,7 +534,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         />
       )}
 
-      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} setSelectedDrawed={setSelectedDrawed} position={google.maps.ControlPosition.TOP_CENTER}/>
+      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} endGame={props.gameEnded} setEndGame={props.setGameEnded} setSelectedDrawed={setSelectedDrawed} position={google.maps.ControlPosition.TOP_CENTER}/>
 
       <PlayersControl setInstanceListPlayer={setInstanceListPlayer} canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
 

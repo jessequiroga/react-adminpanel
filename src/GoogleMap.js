@@ -20,6 +20,8 @@ class GoogleMap extends Component {
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `100%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
+                gameEnded={this.props.gameEnded} 
+                setGameEnded={this.props.setGameEnded}
               />
           </div>
         );

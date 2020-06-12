@@ -412,10 +412,16 @@ export default class MapControl extends Component {
       this._mapUpdate = this.props.gameUpdate;
       this.configMap(this.props.gameUpdate);
     }
-    if(Game.getInstance() && Game.getInstance().Type == Game.GameType.TIME && (this.tick == null || typeof this.tick == "undefined" ))
+    if(Game.getInstance() && Game.getInstance().Type == Game.GameType.TIME && (this.tick == null || typeof this.tick == "undefined") && !this.props.endGame)
     {
       this.tick = setInterval(() => {
         this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
+        if(parseInt(this.time.split(":")[2])<0)
+        {
+           this.props.setEndGame(true);
+           this.time = "The game is finish";
+           clearInterval(this.tick);
+        }
       }, 2000);
     }
   }
