@@ -54,22 +54,23 @@ class ItemManager
     static description(type)
     {
         let desc = <></>;
+        let imageUrl = ItemManager.getIcon(type);
         switch(type)
         {   
             case "CultMag":
-                desc = CultMag.description();
+                desc = CultMag.description(imageUrl);
                 break;
 
             case "PocheInterdimensionnelle":
-                desc = PocheInterdimensionnelle.description();
+                desc = PocheInterdimensionnelle.description(imageUrl);
                 break;
 
             case "VisionOrb":
-                desc = VisionOrb.description(); 
+                desc = VisionOrb.description(imageUrl); 
                 break;
 
             case "DunwichAnnals":
-                desc = DunwichAnnals.description();
+                desc = DunwichAnnals.description(imageUrl);
                 break;
 
             default:

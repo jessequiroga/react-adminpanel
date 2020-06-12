@@ -575,17 +575,15 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
       {(canDraw() &&  !canDrawMapZone) ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
           <Card style={{height:"100%"}}>
-              {canDrawItem && <div>Item
+              {canDrawItem && 
                   <div>
                     {ItemManager.description(typeItemDraw)}
                   </div>
-                </div>
               }
-              {canDrawAltar && <div>Altar
+              {canDrawAltar &&
                   <div>
                     {AltarManager.description()}
                   </div>
-                </div>
               }
           </Card>
       </ElementInfo>:null}

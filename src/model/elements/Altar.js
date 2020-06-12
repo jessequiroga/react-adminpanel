@@ -56,7 +56,27 @@ class AltarManager
 
     static description()
     {
-        return<></>;
+        return  <div style={{fontSize:"1.2rem"}}>
+                    <img style={{width: "60px",position: "absolute",right:"2%",top:"5%"}} alt="Altars" src={AltarManager.getIcon().url}></img>
+                    <div style={{fontWeight:"bolder",position: "absolute",right:"52%",top:"12%"}}>
+                        Altars
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"0.6%",top:"20%"}}>
+                        Description: 
+                    </span>
+                    <div style={{position: "absolute",left:"1.6%",top:"28%"}}>
+                        They contain good old fashion magic.<br/>
+                        Although it’s so advanced tech we think this is magic.<br/>
+                        Who knows ?
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"0.6%",top:"60%"}}>
+                        Effects: 
+                    </span>
+                    <div style={{position: "absolute",left:"1.6%",top:"68%"}}>
+                        This is the main goal of a Cultwars game. <br/>
+                        Gotta capture them all !
+                    </div>
+                </div>;
     }
 }
 

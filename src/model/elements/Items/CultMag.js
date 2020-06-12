@@ -24,9 +24,26 @@ class CultMag extends Item
             return super.getIcon();
     }
 
-    static description()
+    static description(imageUrl)
     {
-        return<></>;
+        return  <div style={{fontSize:"1.2rem"}}>
+                    <img style={{width: "60px",position: "absolute",right:"2%",top:"5%"}} alt="Cult Magazine" src={imageUrl.url}></img>
+                    <div style={{fontWeight:"bolder",position: "absolute",right:"40%",top:"12%"}}>
+                        Cult Magazine
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"0.6%",top:"20%"}}>
+                        Description: 
+                    </span>
+                    <div style={{position: "absolute",left:"1.6%",top:"28%"}}>
+                        This viscous magazine will present your great old one in a suggestive way that will bring doubt in your foe’s faith and confuse him.
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"0.6%",top:"60%"}}>
+                        Effects: 
+                    </span>
+                    <div style={{position: "absolute",left:"1.6%",top:"68%"}}>
+                        You can drop off this item somewhere. When a foe enter in the effect area, he will lose his map vision for 10 minutes.
+                    </div>
+                </div>;
     }
 }
 
