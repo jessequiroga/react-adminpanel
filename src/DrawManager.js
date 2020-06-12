@@ -73,6 +73,16 @@ export default class DrawManager extends Component {
       Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
         window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
       });
+
+      Game.getInstance().Flags.forEach(altar =>{
+        if(altar.totoMapElement && altar.toMapElement().visionCircle)
+          window.google.maps.event.clearListeners(altar.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
+      })
+
+      Game.getInstance().Flags.forEach(altar =>{
+        if(altar.totoMapElement && altar.toMapElement().visionCircle)
+          window.google.maps.event.clearListeners(altar.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
+      })
     }
 
     if (this.props.canDrawItem) {
