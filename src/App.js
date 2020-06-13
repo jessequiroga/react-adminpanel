@@ -51,7 +51,7 @@ function App() {
             {
               setBeginDate(this_game.BeginDate);
               setGameInstance(true);
-              if(((new Date()) > (new Date(this_game.EndDate) )&& this_game.Type === Game.GameType.TIME))
+              if(((new Date()) > (new Date(this_game.EndDate) ))&& (this_game.Type === Game.GameType.TIME || this_game.Type === Game.GameType.FLAG))
               {
                 setGameEnded(true);
               }
