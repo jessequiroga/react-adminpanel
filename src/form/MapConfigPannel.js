@@ -203,7 +203,7 @@ function MapConfigPannel({Config,setConfig}) {
                                 <TextDisplay type="time" typeInput="time" name="beginTime" label="Begin Time" formular={formular} changeFormular={changeFormular}/>                                
                             </Col>
                     </Row>
-                    {(((Config && formular.typeGameChang.value === "" && (parseInt(Config.Type) === Game.GameType.TIME || parseInt(Config.Type) === Game.GameType.FLAG )) || (formular.typeGameChang.value !== "" && (parseInt(formular.typeGameChang.value) === Game.GameType.TIME || parseInt(formular.typeGameChang.value) === Game.GameType.FLAG)))?
+                    {((Config && formular.typeGameChang.value === "" && (parseInt(Config.Type) === Game.GameType.TIME || parseInt(Config.Type) === Game.GameType.FLAG )) || (formular.typeGameChang.value !== "" && (parseInt(formular.typeGameChang.value) === Game.GameType.TIME || parseInt(formular.typeGameChang.value) === Game.GameType.FLAG)))?
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
                                 <TextDisplay className="mb-1" type="date" typeInput="date" name="endDate" label="End Date" formular={formular} changeFormular={changeFormular}/>
