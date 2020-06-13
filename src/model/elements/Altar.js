@@ -4,10 +4,11 @@ import React from "react";
 class Altar extends Marker
 {
     CaptureDate;
-    UnavailableTime;
+    UnavailableTime = 300;
+    Available = true;
     Team;
 
-    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team)
+    constructor(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team,Available)
     {
         if(!VisionDistance)VisionDistance = 300;
         if(!ActionDistance)ActionDistance = 100;
@@ -16,6 +17,7 @@ class Altar extends Marker
         if(UnavailableTime)this.UnavailableTime=UnavailableTime;
         if(CaptureDate)this.CaptureDate=CaptureDate;
         if(Team)this.Team=Team;
+        if(Available!=null)this.Available = Available;
     }
 
     getIcon()
@@ -40,9 +42,9 @@ class Altar extends Marker
 
 class AltarManager
 {
-    static createAltar(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,UnavailableTime=null,CaptureDate=null,Id=null,Team=null)
+    static createAltar(Position,ActionDistance=null,IsInActionRange=null,Name=null,VisionDistance=null,UnavailableTime=null,CaptureDate=null,Id=null,Team=null,Available=null)
     {
-        var altar = new Altar(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team);
+        var altar = new Altar(Position,ActionDistance,IsInActionRange,Name,VisionDistance,UnavailableTime,CaptureDate,Id,Team,Available);
         return altar;
     }
 

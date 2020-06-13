@@ -234,7 +234,7 @@ export default class MapControl extends Component {
             {
               Entity.IncrId++;
             }
-            let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team);
+            let newAltar = ManagerAltars.createAltar(altar.Position,altar.ActionDistance,altar.IsInActionRange,altar.Name,altar.VisionDistance,altar.UnavailableTime,altar.CaptureDate,altar.Id,altar.Team,altar.Available);
             var withVisionCircle=true;
             if(exist && Game.getInstance().Flags[indexA].toMapElement)
             {
@@ -315,7 +315,7 @@ export default class MapControl extends Component {
               Entity.IncrId++;
             }
       
-            let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id,item.IsActive,item.Team);
+            let newItem = ManagerItems.createItem(item.Position,item.Type,item.ActionDistance,item.AvailableDuration,item.CanChangeVisionDistance,item.CanTeleport,item.DeficiencyDuration,item.IsInActionRange,item.Name,item.Quantity,item.VisionDistance,item.Id,item.IsActive,item.Team,item.CanPickUp,item.EndEffectTime);
             var withVisionCircle=true;
             if(exist && Game.getInstance().Items[indexI].toMapElement)
             {

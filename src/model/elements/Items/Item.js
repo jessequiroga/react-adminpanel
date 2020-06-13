@@ -5,13 +5,14 @@ class Item extends Marker
 {
     CaptureDate;
     AvailableDuration=0;
-    UnavailableTime;
+    CanPickUp = true;
     CanTeleport=false;
     CanChangeVisionDistance = false;
-    DeficiencyDuration=0;
+    DeficiencyDuration=60;
+    EndEffectTime=0;
     Quantity=1;
     Type;
-    constructor(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null)
+    constructor(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null,CanPickUp=null,EndEffectTime=null)
     {
         if(!VisionDistance)VisionDistance = 120;
         if(!ActionDistance)ActionDistance = 50;
@@ -21,6 +22,8 @@ class Item extends Marker
         if(DeficiencyDuration)this.DeficiencyDuration=DeficiencyDuration;
         if(CanTeleport)this.CanTeleport=CanTeleport;
         if(Quantity)this.Quantity=Quantity;
+        if(CanPickUp!=null)this.CanPickUp=CanPickUp;
+        if(EndEffectTime!=null)this.EndEffectTime=EndEffectTime;
         super.Type = Type;
     }
 

@@ -660,7 +660,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   <TextDisplay name="availableDurationChang" typeInput="time" type="time" label="This item is available again in:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder=""/>}
                 </div>
                 <div>
-                  {Game.getInstance()  Game.getInstance().getItemById(selectedEdited.id) && Game.getInstance().getItemById(selectedEdited.id).Quantity?
+                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id) && Game.getInstance().getItemById(selectedEdited.id).Quantity?
                   <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder={Game.getInstance().getItemById(selectedEdited.id).Quantity}/>:
                   <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="There is no item left in this point"/>}
                 </div>
