@@ -31,7 +31,7 @@ function PlayersListDisplay({instanceListPlayer}) {
             return <Col key={index} sm={Game.getInstance().Teams.length > 3 ? '4' : '6'}>
                 <div key={team.id}>
                     <div>
-                        <span style={{ fontSize:"18px", fontWeight:"bold" }}>Team: <br/>{team.Name}</span>
+                        <span style={{ fontSize:"18px", fontWeight:"bold" }}>{team.Name}</span>
                         <span style={{ backgroundColor: team.Color.toLowerCase(), display: "flex", width: "auto", height: "4px", marginTop: "7px" }} />
                     </div>
                     <div style={{ display: "grid" }}>

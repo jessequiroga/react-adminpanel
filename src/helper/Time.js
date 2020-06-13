@@ -31,26 +31,26 @@ export default class Time {
         {
           if(time>31556925.216)
           {
-            years = Math.round(time/31556925.216);
-            res = years +" years left";
+            years = Math.floor(time/31556925.216);
+            res = ((years<9)?"0":"")+ years +" years left";
           }
           else
           {
-            month = Math.round(time/2630016);
+            month = Math.floor(time/2630016);
             if(month>0)
             {
-                res = month + " month and ";
+                res = ((month<9)?"0":"")+ month + " month and ";
             }
-            day = Math.round((time%2630016)/86400);
-            res += day + " days left";
+            day = Math.floor((time%2630016)/86400);
+            res += ((day<9)?"0":"")+ day + " days left";
           }
         }
         else
         {
-            hour = Math.round(time/3600);
-            min = Math.round((time%3600)/60);
-            sec =  Math.round((time%3600)%60);
-            res =hour+":"+min+":"+sec;
+            hour = Math.floor(time/3600);
+            min = Math.floor((time%3600)/60);
+            sec =  Math.floor((time%3600)%60);
+            res = ((hour<9)?"0":"")+ hour+":"+ ((min<9)?"0":"")+ min +":"+ ((sec<9)?"0":"")+ sec;
         }
         
         return res;
