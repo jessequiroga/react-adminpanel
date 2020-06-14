@@ -1,23 +1,27 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {Modal,ModalHeader,ModalBody,ModalFooter,Button,Container,Row,Col} from 'reactstrap';
 
 function ModalEndGame({gameEnded,openConfig,winners}) {
 
   const listWinners = null;
-  if(winners != null)
-  {
-      listWinners = Object.keys(winners).map((team,index) => {
-      return <Row>
-                <Col>
-                  {team.Name}
-                </Col>
-                <Col>
-                  {index}
-                </Col>
-             </Row>
-    });
+  console.log("winners",winners);
+  useEffect(() => { 
+    if(winners != null)
+    {
+      console.log("winners");
+        listWinners = Object.keys(winners).map((team,index) => {
+        return <Row>
+                  <Col>
+                    {team.Name}
+                  </Col>
+                  <Col>
+                    {index}
+                  </Col>
+              </Row>
+      });
 
-  }
+    }
+  },[winners]);
     
   return (
     <>  

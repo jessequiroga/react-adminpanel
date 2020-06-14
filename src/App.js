@@ -27,7 +27,7 @@ function App() {
   const [beginDate,setBeginDate] = useState(new Date());
   const [config,setConfig]= useState(false);
   const [configOpen,changeConfigOpen] = useState(false);
-  const [winer,setWiner] = useState(null);
+  const [winners,setWinners] = useState(null);
 
   const openConfig = () =>{
     changeConfigOpen(true);
@@ -67,14 +67,16 @@ function App() {
           }
           break;
         case SocketMessage.TypeMessage.GAMEENDED:
+          console.log("oui");
           if(!config)
           {
             console.log(message.ContainedEntity);
-            console.log(message.ContainedEntity.Team);
-            setWiner(message.ContainedEntity.Team);
+            console.log(message.ContainedEntity.Teams);
+            setWinners(message.ContainedEntity.Teams);
             let game = message.ContainedEntity.Game;
             Game.getInstance(game);
             setGameEnded(true);
+            setGameInstance(true);
             /*let game = message.ContainedEntity;
             let this_game = Game.getInstance(game);
             if(this_game.IsFinal)
@@ -123,9 +125,9 @@ function App() {
     <MapContainer>  
         {configJsonNeeded&&<MapImportConfigPannel setConfigJsonNeeded={setConfigJsonNeeded} setConfig= {setConfig}/>}
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
-        {gameInstance&&<GoogleMap gameEnded={gameEnded} setWiner={setWiner} setGameEnded={setGameEnded}/>}
+        {gameInstance&&<GoogleMap gameEnded={gameEnded} setWiner={setWinners} setGameEnded={setGameEnded}/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} beginDate={beginDate}/>}
-        {gameInstance&&<ModalEndGame gameEnded={gameEnded} winer={winer} openConfig={openConfig}/>}
+        {gameInstance&&<ModalEndGame gameEnded={gameEnded} winer={winners} openConfig={openConfig}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>
