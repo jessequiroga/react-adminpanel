@@ -20,18 +20,22 @@ class ItemManager
         switch(Type)
         {   
             case "CultMag":
+                Name = ItemManager.TypesItem[Type];
                 item = new CultMag(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,IsActive,Team,CanPickUp,EndEffectTime);
                 break;
 
             case "PocheInterdimensionnelle":
+                Name = ItemManager.TypesItem[Type];
                 item = new PocheInterdimensionnelle(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,CanPickUp,EndEffectTime);
                 break;
 
             case "VisionOrb":
+                Name = ItemManager.TypesItem[Type];
                 item = new VisionOrb(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,CanPickUp,EndEffectTime); 
                 break;
 
             case "DunwichAnnals":
+                Name = ItemManager.TypesItem[Type];
                 item = new DunwichAnnals(Position,Type,ActionDistance,AvailableDuration,CanChangeVisionDistance,CanTeleport,DeficiencyDuration,IsInActionRange,Name,Quantity,VisionDistance,Id,CanPickUp,EndEffectTime);
                 break;
 

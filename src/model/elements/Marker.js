@@ -79,7 +79,7 @@ export default class Marker extends Entity
 
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
-              title: (this.constructor.name === "Player")?this.Name:this.constructor.name,
+              title: this.Name,
               type: this.constructor.name,
               icon: this.getIcon(),
               visionCircle:visionCircle,
