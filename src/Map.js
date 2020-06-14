@@ -124,10 +124,10 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             props.setWiner(message.ContainedEntity.Team);
           break;
         default:
-          if (message.MessageType != null)
+          /*if (message.MessageType != null)
             console.log("pas d'action pour ce type de message:", message.MessageType);
           else
-            console.log("message non traitable: ", event.data);
+            console.log("message non traitable: ", event.data);*/
           break;
       }
     }
@@ -563,20 +563,22 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
 
               <div className="grp-info"> {/* Info Window body */}
                 <div className="lib-res"><span className="lib">Id: </span><span>{selectedDrawed.id}</span></div>
+                <div className="lib-res"><span className="lib">{selectedDrawed.title}</span></div>
                 {(selectedDrawed.type && selectedDrawed.type === "Altar")?
                   <div>
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span>
-                    <span>{Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate}</span></div>:<div className="lib-res"><span>This Altar is free</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime?<div className="lib-res"><span className="lib">Unvailable Time: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime}</span></div>:<div className="lib-res"><span>This Altar is available</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).Team?<div className="lib"><span>Team: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).Team.Name}</span></div>:<div><span className="lib-res">No Team had this Altar</span></div>}
+                    <span className="lib">Available: </span>{Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).Available!=null?<span>{Game.getInstance().getAltarById(selectedDrawed.id).Available?"True":"False"}</span>:<span className="lib-res">True</span>}
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span>
+                    <span>{Game.getInstance().getAltarById(selectedDrawed.id).CaptureDate}</span></div>:<></>}
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime?<div className="lib-res"><span className="lib">Unvailable Time: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).UnvailableTime}</span></div>:<></>}
+                    {Game.getInstance() && Game.getInstance().getAltarById(selectedDrawed.id) && Game.getInstance().getAltarById(selectedDrawed.id).Team?<div className="lib"><span>Team: </span><span>{Game.getInstance().getAltarById(selectedDrawed.id).Team.Name}</span></div>:<></>}
                   </div>:null}
                 {(selectedDrawed.type && Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1)?
                   <div>
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getItemById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).CaptureDate}</span></div>:<div className="lib-res"><span className="lib-res">This Item is free</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration?<div className="lib-res"><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration}</span></div>:<div><span className="lib-res">This Item is not available anymore</span></div>}
+                    <span className="lib">Available:</span>{Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).CanPickUp!=null?<span>{Game.getInstance().getItemById(selectedDrawed.id).CanPickUp?"True":"False"}</span>:<span className="lib-res">True</span>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).CaptureDate&& (new Date(Game.getInstance().getItemById(selectedDrawed.id).CaptureDate+"Z")).getTime() !== (new Date('0001-01-01T00:00:00Z')).getTime()?<div className="lib-res"><span className="lib">Capture Date: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).CaptureDate}</span></div>:<></>}
+                    {/*Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration?<div className="lib-res"><span>This item is available again: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).AvailableDuration}</span></div>:<></>*/}
                     {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).Quantity?<div ><span className="lib">Quantity: </span><span className="lib-res">{Game.getInstance().getItemById(selectedDrawed.id).Quantity}</span></div>:<div><span>There is no item left in this point</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).CanTeleport?<div><span>This item can be teleported</span><span>{Game.getInstance().getItemById(selectedDrawed.id).CanTeleport}</span></div>:<div className="lib-res"><span>There item can not be teleported</span></div>}
-                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration?<div  className="lib-res"><span className="lib">This item will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration} after some one take an item</span></div>:<div className="lib-res"><span>There is no item left in this point</span></div>}
+                    {Game.getInstance() && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration?<div  className="lib-res"><span className="lib">This item will be vailable in: </span><span>{Game.getInstance().getItemById(selectedDrawed.id).DeficiencyDuration}sec. after some one take an item</span></div>:<></>}
                   </div>:null}
                 {(selectedDrawed.type && selectedDrawed.type === "Player")?
                 <div>
@@ -584,11 +586,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   {Game.getInstance() && Game.getInstance().getPlayerById(selectedDrawed.id) ?<BuffDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).AffectedByItems}/>:null}
                   {Game.getInstance() && Game.getInstance().getPlayerById(selectedDrawed.id) ?<ItemsDisplay items={Game.getInstance().getPlayerById(selectedDrawed.id).Items}/>:null}
                 </div>:null}
-                {(selectedDrawed.type && selectedDrawed.type === "Zone")?
-                <div>
-                  <span className="lib" >Zone</span>
-                </div>:null}
-              {(selectedDrawed.type && selectedDrawed.type !== "Player")?<div className="group-btn">
+              {(selectedDrawed.type && selectedDrawed.type !== "Player" && selectedDrawed.type !== "Zone")?<div className="group-btn">
                 <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
                 <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
                 {(selectedDrawed.type && (selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1)) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
@@ -663,11 +661,6 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id) && Game.getInstance().getItemById(selectedEdited.id).Quantity?
                   <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder={Game.getInstance().getItemById(selectedEdited.id).Quantity}/>:
                   <TextDisplay name="quantityChang" typeInput="number" label="Quantity:" formular={formularAttributeItem} changeFormular={setFormularAttributeItem} placeHolder="There is no item left in this point"/>}
-                </div>
-                <div>
-                  {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id) && Game.getInstance().getItemById(selectedEdited.id).CanTeleport?
-                  <SelectDisplay name="canTeleportChang" label="This item can be teleported" options={[{value:true,label:"True",selected:true},{value:false,label:"False",selected:false}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/> :
-                  <SelectDisplay name="canTeleportChang" label="This item can be teleported" options={[{value:true,label:"True",selected:false},{value:false,label:"False",selected:true}]} formular={formularAttributeItem} changeFormular={setFormularAttributeItem}/>}
                 </div>
                 <div>
                   {Game.getInstance() && Game.getInstance().getItemById(selectedEdited.id) && Game.getInstance().getItemById(selectedEdited.id).DeficiencyDuration?
