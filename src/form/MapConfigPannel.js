@@ -143,7 +143,7 @@ function MapConfigPannel({Config,setConfig}) {
         if(Teams.length>0){Config.Teams = Teams;}
     
         Config.BeginDate = Time.addTime(content.beginDate,content.beginTime).toUTCString();
-        if(Config.Type === Game.GameType.TIME)
+        if(Config.Type === Game.GameType.TIME || Config.Type === Game.GameType.FLAG)
         {
             Config.EndDate = (Time.addTime(content.endDate,content.endTime)).toUTCString();
         }
