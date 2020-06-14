@@ -432,6 +432,18 @@ export default class MapControl extends Component {
     this.map.controls[this.props.position].push(this.divMapControl); // put the body div on the map
     this._mapUpdate = null;
     this.configMap();
+    if(Game.getInstance() && (Game.getInstance().Type === Game.GameType.TIME || Game.getInstance().Type === Game.GameType.FLAG ) && (this.tick == null || typeof this.tick == "undefined") && !this.props.endGame)
+    {
+      this.tick = setInterval(() => {
+        this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
+        if(parseInt(this.time.split(":")[2])<0)
+        {
+           this.props.setEndGame(true);
+           this.time = "The game is finish";
+           clearInterval(this.tick);
+        }
+      }, 2000);
+    }
   }
 
   componentDidUpdate() {

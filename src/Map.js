@@ -506,7 +506,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         canDrawAltar={canDrawAltar} canDrawItem={canDrawItem} typeItemDraw={typeItemDraw}
         position={google.maps.ControlPosition.TOP_LEFT}>
         {/* Menu Show DrawingManager */}
-          <Nav navbar>
+          <Nav style={{marginTop:"14%"}} navbar>
           <Nav className="mt-4 ml-4" navbar >
             <NavItem className="mr-4">
               <Button onClick={showListPlayer}>Show Connected Players</Button>
@@ -535,7 +535,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       </DrawManager>
 
       {(canDraw() &&  !canDrawMapZone) ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
-          <Card style={{height:"100%"}}>
+          <Card style={{marginTop:"10.7%",height:"100%"}}>
               {canDrawItem && 
                   <div>
                     {ItemManager.description(typeItemDraw)}
