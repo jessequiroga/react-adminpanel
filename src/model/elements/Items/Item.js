@@ -9,7 +9,7 @@ class Item extends Marker
     CanTeleport=false;
     CanChangeVisionDistance = false;
     DeficiencyDuration=60;
-    EndEffectTime=0;
+    EndEffectTime;
     Quantity=1;
     Type;
     constructor(Position,Type,ActionDistance=null,AvailableDuration=null,CanChangeVisionDistance=null,CanTeleport=null,DeficiencyDuration=null,IsInActionRange=null,Name=null,Quantity=null,VisionDistance=null,Id=null,CanPickUp=null,EndEffectTime=null)
