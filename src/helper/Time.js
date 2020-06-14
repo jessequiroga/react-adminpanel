@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 export default class Time {
     static addDays(date, days) {
         var result = new Date(date);
