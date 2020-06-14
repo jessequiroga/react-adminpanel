@@ -23,31 +23,29 @@ function ModalEndGame({gameEnded,openConfig,winners}) {
     }
   },[winners]);
     
-  return (
-    <>  
-        <Modal isOpen={gameEnded}>
-            <ModalHeader className="text-center text-light bg-dark">The Game is closed</ModalHeader>
-            <ModalBody className="text-center font-weight-bold">
-                    <div>{listWinners?
-                    <Container>
-                        <Row>
-                            <Col>
-                              Team Name
-                            </Col>
-                            <Col>
-                              Rank
-                            </Col>
-                        </Row>
-                        {listWinners}
-                    </Container>
-                    :"Sorry but the game is end."}</div>
-                    Do you want to open a new game ?
-            </ModalBody>
-            <ModalFooter>
-                <Button onClick={openConfig} color="dark">YES</Button>
-            </ModalFooter>
-        </Modal>
-    </>
+return (
+    <Modal isOpen={gameEnded}>
+        <ModalHeader className="text-center text-light bg-dark">The Game is closed</ModalHeader>
+        <ModalBody className="text-center font-weight-bold">
+                <div>{listWinners?
+                <Container>
+                    <Row>
+                        <Col>
+                          Team Name
+                        </Col>
+                        <Col>
+                          Rank
+                        </Col>
+                    </Row>
+                    {listWinners}
+                </Container>
+                :"Sorry but the game is end."}</div>
+                Do you want to open a new game ?
+        </ModalBody>
+        <ModalFooter>
+            <Button onClick={openConfig} color="dark">YES</Button>
+        </ModalFooter>
+    </Modal>
   );
 
 }

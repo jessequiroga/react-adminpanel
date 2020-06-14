@@ -9,17 +9,15 @@ function ModalListPlayer( {listPlayerOpen, setListPlayerOpen, instanceListPlayer
     }
 
     return (
-        <>
-            <Modal isOpen={listPlayerOpen}>
-                <ModalHeader className="text-center text-light bg-dark">Connected Players</ModalHeader>
-                <ModalBody className="text-center">
-                    <PlayersListDisplay instanceListPlayer={instanceListPlayer}/>
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={closeModal} color="dark">Close</Button>
-                </ModalFooter>
-            </Modal>
-        </>
+        <Modal isOpen={listPlayerOpen}>
+            <ModalHeader className="text-center text-light bg-dark">Connected Players</ModalHeader>
+            <ModalBody className="text-center">
+                <PlayersListDisplay instanceListPlayer={instanceListPlayer}/>
+            </ModalBody>
+            <ModalFooter>
+                <Button onClick={closeModal} color="dark">Close</Button>
+            </ModalFooter>
+        </Modal>
     );
 
 }

@@ -331,23 +331,21 @@ const TextDisplay = (props) => {
         }
     };
     return (
-        <>
-            <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                    <InputGroupText>{props.label}</InputGroupText>
-                </InputGroupAddon>
-                <Input
-                    style={props.style}
-                    id="input-form"
-                    value={props.value}
-                    invalid={!formular[inputName].isValid}
-                    type={props.type} name={inputName} placeholder={props.placeHolder}
-                    onBlur={(e) => checkValue(e, inputName, type)}
-                    onChange={onChange.bind(this, inputName,(typeof x !== "undefined" && props.value !==null))}
-                />
-                <FormFeedback>{formular[inputName].errorMessage}</FormFeedback>
-            </InputGroup>
-        </>
+        <InputGroup>
+            <InputGroupAddon addonType="prepend">
+                <InputGroupText>{props.label}</InputGroupText>
+            </InputGroupAddon>
+            <Input
+                style={props.style}
+                id="input-form"
+                value={props.value}
+                invalid={!formular[inputName].isValid}
+                type={props.type} name={inputName} placeholder={props.placeHolder}
+                onBlur={(e) => checkValue(e, inputName, type)}
+                onChange={onChange.bind(this, inputName,(typeof x !== "undefined" && props.value !==null))}
+            />
+            <FormFeedback>{formular[inputName].errorMessage}</FormFeedback>
+        </InputGroup>
     );
 };
 

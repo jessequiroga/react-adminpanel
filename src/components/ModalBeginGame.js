@@ -40,24 +40,22 @@ function ModalBeginGame({gameBegin,beginDate}) {
     }
 
     return (
-        <>
-            <Modal isOpen={modalOpen}>
-                <ModalHeader  className="bg-dark" >
-                    <Row className="text-center text-light">
-                        <div>The Game didn't start yet</div>
-                        <div>It will start the: {(new Date(beginDate)).toDateString()}</div>
-                    </Row>
-                </ModalHeader>
-                <ModalBody className="text-center font-weight-bold">
-                    <div>The game begin in: {untilBegin}</div>
-                    <PlayersListDisplay instanceListPlayer={instanceListPlayer} />
+        <Modal isOpen={modalOpen}>
+            <ModalHeader  className="bg-dark" >
+                <Row className="text-center text-light">
+                    <div>The Game didn't start yet</div>
+                    <div>It will start the: {(new Date(beginDate)).toDateString()}</div>
+                </Row>
+            </ModalHeader>
+            <ModalBody className="text-center font-weight-bold">
+                <div>The game begin in: {untilBegin}</div>
+                <PlayersListDisplay instanceListPlayer={instanceListPlayer} />
 
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={closeModal} color="dark">Edit Map</Button>
-                </ModalFooter>
-            </Modal>
-        </>
+            </ModalBody>
+            <ModalFooter>
+                <Button onClick={closeModal} color="dark">Edit Map</Button>
+            </ModalFooter>
+        </Modal>
     );
 
 }
