@@ -13,7 +13,6 @@ class Altar extends Marker
         if(!VisionDistance)VisionDistance = 300;
         if(!ActionDistance)ActionDistance = 100;
         //console.log(VisionDistance);
-        Name = "Altar";
         super(Position,ActionDistance,IsInActionRange,Name,VisionDistance,Id);
         if(UnavailableTime)this.UnavailableTime=UnavailableTime;
         if(CaptureDate)this.CaptureDate=CaptureDate;
