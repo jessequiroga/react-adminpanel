@@ -1,4 +1,4 @@
-import {moment} from 'moment-timezone';
+import moment from 'moment-timezone';
 export default class Time {
     static addDays(date, days) {
         var result = new Date(date);
@@ -55,11 +55,6 @@ export default class Time {
         }
         
         return res;
-    }
-
-    static toUtc(date)
-    {
-        return moment.utc(date).format('ha z');
     }
 
 }

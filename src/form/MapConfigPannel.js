@@ -142,14 +142,14 @@ function MapConfigPannel({Config,setConfig}) {
         if(content.numberChang){Config.MinPlayer = content.numberChang;}
         if(Teams.length>0){Config.Teams = Teams;}
     
-        Config.BeginDate = Time.toUtc(Time.addTime(content.beginDate,content.beginTime));
+        Config.BeginDate = Time.addTime(content.beginDate,content.beginTime).toUTCString();
         if(Config.Type === Game.GameType.TIME)
         {
-            Config.EndDate = Time.toUtc(Time.addTime(content.endDate,content.endTime));
+            Config.EndDate = (Time.addTime(content.endDate,content.endTime)).toUTCString();
         }
         else
         {
-            Config.EndDate = Time.toUtc(new Date("01/17/2038"));
+            Config.EndDate = (new Date("01/17/2038")).toUTCString();
         }
         
         Config.IsFinal = true;
