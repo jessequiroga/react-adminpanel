@@ -1,3 +1,5 @@
+import React from 'react';
+
 class Zone 
 {
     Id;
@@ -50,6 +52,38 @@ class ZoneManager
             this.IncrId++;
         }
         return zone;
+    }
+
+    static getIcon()
+    {
+        return {   
+            url:`/zone.png`,
+            scaledSize: new window.google.maps.Size(80, 80)
+        };
+    }
+
+    static description()
+    {
+        return  <div style={{fontSize:"1.2rem"}}>
+                    <img style={{width: "60px",position: "absolute",right:"2%",top:"5%"}} alt="Altars" src={ZoneManager.getIcon().url}></img>
+                    <div style={{fontWeight:"bolder",position: "absolute",right:"36%",top:"12%"}}>
+                        Resurgence zone 
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"1%",top:"20%"}}>
+                        Description: 
+                    </span>
+                    <div style={{position: "absolute",left:"2%",top:"28%"}}>
+                        Some old strange energy is merging in this part of our reality plan.<br/>
+                        The old ones claims this area in their realm.
+                    </div>
+                    <span style={{fontWeight:"bolder",position: "absolute",left:"1%",top:"60%"}}>
+                        Effects: 
+                    </span>
+                    <div style={{position: "absolute",left:"2%",top:"68%"}}>
+                        The resurgence area is the playing zone.<br/>
+                        Outside it, all the player powers are inefficient.
+                    </div>
+                </div>;
     }
 
 }

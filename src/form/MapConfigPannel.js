@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button} from 'reactstrap';
+import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button,Label} from 'reactstrap';
 
 import Time from '../helper/Time';
 
@@ -9,7 +9,10 @@ import SocketController from '../model/SocketController';
 import Game from '../model/Game';
 
 import TextDisplay from '../components/TextDisplay';
+import DateTimeDisplay from '../components/DateTimeDisplay';
 import CreateTeam from './CreateTeam';
+
+import 'react-widgets/dist/css/react-widgets.css';
 
 function MapConfigPannel({Config,setConfig}) {
 
@@ -21,9 +24,7 @@ function MapConfigPannel({Config,setConfig}) {
           typeGameChang : {value:'', errorMessage: '',message:'',isValid: true},
           numberChang : {value:'', errorMessage: '',message:'',isValid: true},
           beginDate : {value:'', errorMessage: '',message:'',isValid: false},
-          beginTime : {value:'', errorMessage: '',message:'',isValid: false},
           endDate : {value:'', errorMessage: '',message:'',isValid: true},
-          endTime : {value:'', errorMessage: '',message:'',isValid: true},
           isPublic: {value:false, isValid:true}
       }
   );
@@ -32,7 +33,6 @@ function MapConfigPannel({Config,setConfig}) {
 
   useEffect(()=>{
     changeCurrTeams(Config?Config.Teams:null);
-    formular.endTime.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
     formular.endDate.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
     changeFormular(formular);
   },[Config]);
@@ -43,12 +43,10 @@ function MapConfigPannel({Config,setConfig}) {
         if((event.target.value === Game.GameType.TIME) || (event.target.value === Game.GameType.FLAG))
         {
             formular.endDate.isValid = false;
-            formular.endTime.isValid = false;
         }
         else
         {
             formular.endDate.isValid = true;
-            formular.endTime.isValid = true;
         }
         formular.typeGameChang.value= val;
         formular.typeGameChang.isValid= true;
@@ -141,24 +139,23 @@ function MapConfigPannel({Config,setConfig}) {
         if(content.nameChang){Config.Name =content.nameChang;}
         if(content.numberChang){Config.MinPlayer = content.numberChang;}
         if(Teams.length>0){Config.Teams = Teams;}
-    
-        Config.BeginDate = Time.addTime(content.beginDate,content.beginTime).toUTCString();
+        
+        Config.BeginDate = new Date(content.beginDate).toUTCString();
         if(Config.Type === Game.GameType.TIME || Config.Type === Game.GameType.FLAG)
         {
-            Config.EndDate = (Time.addTime(content.endDate,content.endTime)).toUTCString();
+            Config.EndDate = new Date(content.endDate).toUTCString();
         }
         else
         {
             Config.EndDate = (new Date("01/17/2038")).toUTCString();
         }
-        
+
         Config.IsFinal = true;
         Config.IsPublic = content.isPublic;
 
         let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
         var conn = SocketController.getSocket();
         setConfig(null);
-        console.log("update",jsonMessage.toJson())
         conn.send(jsonMessage.toJson());
     }
   }
@@ -197,19 +194,13 @@ function MapConfigPannel({Config,setConfig}) {
                     </Row>
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
-                                <TextDisplay className="mb-1" type="date" typeInput="date" name="beginDate" label="Begin Date" formular={formular} changeFormular={changeFormular}/>
-                            </Col>
-                            <Col md={6}>
-                                <TextDisplay type="time" typeInput="time" name="beginTime" label="Begin Time" formular={formular} changeFormular={changeFormular}/>                                
+                                <DateTimeDisplay name="beginDate" twinsName="endDate" typeInput="dateBegin" label="Begin Date" placeHolder={new Date()} formular={formular} changeFormular={changeFormular}/>
                             </Col>
                     </Row>
                     {((Config && formular.typeGameChang.value === "" && (parseInt(Config.Type) === Game.GameType.TIME || parseInt(Config.Type) === Game.GameType.FLAG )) || (formular.typeGameChang.value !== "" && (parseInt(formular.typeGameChang.value) === Game.GameType.TIME || parseInt(formular.typeGameChang.value) === Game.GameType.FLAG)))?
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
-                                <TextDisplay className="mb-1" type="date" typeInput="date" name="endDate" label="End Date" formular={formular} changeFormular={changeFormular}/>
-                            </Col>
-                            <Col md={6}>
-                                <TextDisplay type="time" typeInput="time" name="endTime" label="End Time" formular={formular} changeFormular={changeFormular}/>
+                                <DateTimeDisplay name="endDate" twinsName="beginDate" typeInput="dateEnd" label="End Date" placeHolder={ Time.addDays(new Date() , 1)} formular={formular} changeFormular={changeFormular}/>
                             </Col>
                     </Row>:null}
                     <Row form className="ml-1 pb-2">

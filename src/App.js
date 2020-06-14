@@ -1,5 +1,9 @@
 import React,{useState,useEffect} from "react";
 import GoogleMap from "./GoogleMap.js";
+
+import moment from 'moment';
+import momentLocalizer from 'react-widgets-moment';
+
 import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
 import MapImportConfigPannel from "./MapImportConfigPannel";
@@ -118,6 +122,7 @@ function App() {
   },[configOpen]);
   
   useEffect(() => { // On Open Admin
+    momentLocalizer(moment);
     initWebsocket();
   }, []);
   

@@ -534,7 +534,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         </Nav>
       </DrawManager>
 
-      {(canDraw() &&  !canDrawMapZone) ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
+      {canDraw() ? <ElementInfo position={google.maps.ControlPosition.TOP_RIGHT}>
           <Card style={{marginTop:"10.7%",height:"100%"}}>
               {canDrawItem && 
                   <div>
@@ -544,6 +544,11 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
               {canDrawAltar &&
                   <div>
                     {AltarManager.description()}
+                  </div>
+              }
+              {canDrawMapZone &&
+                  <div>
+                    {ZoneManager.description()}
                   </div>
               }
           </Card>
@@ -588,8 +593,10 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
                 </div>:null}
               {(selectedDrawed.type && selectedDrawed.type !== "Player" && selectedDrawed.type !== "Zone")?<div className="group-btn">
                 <button className="btn-delete" onClick={()=>{suppressComponent(selectedDrawed); setSelectedDrawed(null);}}>Delete</button>{/* add an button to remove the drawed component */}
+                {Game.getInstance() && ((selectedDrawed.type === "CultMag" && Game.getInstance().getItemById(selectedDrawed.id) && Game.getInstance().getItemById(selectedDrawed.id).IsActive!=null && !(Game.getInstance().getItemById(selectedDrawed.id).IsActive)) || selectedDrawed.type !== "CultMag")?<>
                 <button className="btn-move" onClick={()=>{beginMove(selectedDrawed); setSelectedDrawed(null);}}>Move</button>{/* add an button to move the drawed component */}
                 {(selectedDrawed.type && (selectedDrawed.type === "Altar" || Object.keys(ItemManager.TypesItem).indexOf(selectedDrawed.type) !== -1)) ? <button className="btn-edit"onClick={()=>{beginEditing(selectedDrawed); setSelectedDrawed(null);}}>Edit</button>:null /* add an button to edit the drawed component */}
+                </>:null}
               </div>:null}
             </div>
         </InfoWindow>
