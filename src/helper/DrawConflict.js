@@ -35,7 +35,7 @@ export default class DrawConflict {
             var j = Coordinates.length - 1;
             for (var i = 0; i < Coordinates.length; i++)
             {
-                if ((new Point(Coordinates[i])).y < point.y && ((new Point(Coordinates[j])).y >= point.y || (new Point(Coordinates[j])).y < point.y )&& (new Point(Coordinates[i])).y >= point.y)
+                if (((new Point(Coordinates[i])).y < point.y && (new Point(Coordinates[j])).y >= point.y) || ((new Point(Coordinates[j])).y < point.y && (new Point(Coordinates[i])).y >= point.y))
                 {
                     if ((new Point(Coordinates[i])).x+ (point.y - (new Point(Coordinates[i])).y) / ((new Point(Coordinates[j])).y - (new Point(Coordinates[i])).y) * ((new Point(Coordinates[j])).x - (new Point(Coordinates[i])).x) < point.x)
                     {
