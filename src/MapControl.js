@@ -131,21 +131,20 @@ export default class MapControl extends Component {
       });
     }
 
-
     /**
      * Zones
      */
-    if((mapUpdate.Zones === null && _mapUpdate.Zones !== null) || (_mapUpdate.Zones === null && mapUpdate.Zones !== null))
+    if((mapUpdate.Regions === null && _mapUpdate.Regions !== null) || (_mapUpdate.Regions === null && mapUpdate.Regions !== null))
     {
       if(log)
-        console.log((_mapUpdate.Zones !== null)?"There is no more flags":"Now We had Flags");
+        console.log((_mapUpdate.Regions !== null)?"There is no more flags":"Now We had Flags");
       return true
     }
-    if(mapUpdate.Zones !== null && typeof mapUpdate.Zones != "undefined" && _mapUpdate.Zones !== null && typeof _mapUpdate.Zones != "undefined")
+    if(mapUpdate.Regions !== null && typeof mapUpdate.Regions != "undefined" && _mapUpdate.Regions !== null && typeof _mapUpdate.Regions != "undefined")
     {
-      Object.keys(mapUpdate.Zones).map(x=>{
-        let newZone = mapUpdate.Flags[x];
-        let _currentZone = this.findById(_mapUpdate.Zones,mapUpdate.Zones[x].Id);
+      Object.keys(mapUpdate.Regions).map(x=>{
+        let newZone = mapUpdate.Regions[x];
+        let _currentZone = this.findById(_mapUpdate.Regions,mapUpdate.Regions[x].Id);
         if(JSON.stringify(newZone) !== JSON.stringify(_currentZone) )
         {
           if(log)
@@ -156,9 +155,9 @@ export default class MapControl extends Component {
         return true;
       });
 
-      Object.keys(_mapUpdate.Zones).map(x=>{
-        let _newZone = _mapUpdate.Flags[x];
-        let currentZone = this.findById(mapUpdate.Zones,_mapUpdate.Zones[x].Id);
+      Object.keys(_mapUpdate.Regions).map(x=>{
+        let _newZone = _mapUpdate.Regions[x];
+        let currentZone = this.findById(mapUpdate.Regions,_mapUpdate.Regions[x].Id);
         if(JSON.stringify(_newZone) !== JSON.stringify(currentZone) )
         {
           if(log)
@@ -227,7 +226,7 @@ export default class MapControl extends Component {
             if(indexA !== -1)
             {
               exist = true;
-              if(Entity.IncrId<altar.Id)
+              if(Entity.IncrId<=altar.Id)
                 Entity.IncrId = altar.Id+1;
             }
             else
@@ -306,7 +305,7 @@ export default class MapControl extends Component {
             //console.log("Index",indexI)
             if(indexI !== -1)
             {
-              if(Entity.IncrId<item.Id)
+              if(Entity.IncrId<=item.Id)
                 Entity.IncrId = item.Id+1;
               exist = true;
             }
@@ -387,7 +386,7 @@ export default class MapControl extends Component {
             var indexZ = Game.getInstance().findZoneById(zone.Id);
             if(indexZ !== -1)
             {
-              if(ManagerZones.IncrId<zone.Id)
+              if(ManagerZones.IncrId<=zone.Id)
                 ManagerZones.IncrId = zone.Id+1;
               exist=true;
             }
@@ -395,7 +394,6 @@ export default class MapControl extends Component {
             {
               ManagerZones.IncrId++;
             }
-
             let newZone = ManagerZones.createZone(zone.Coordinates,zone.Id);
             let poly;
             let coordinates=[];
@@ -404,7 +402,7 @@ export default class MapControl extends Component {
               poly = Game.getInstance().Regions[indexZ].toMapElement();
               newZone.Coordinates.forEach(coordinate => {
                 coordinates.push({lat:coordinate[0],lng:coordinate[1]});
-                });
+              });
               poly.id = newZone.Id;
               poly.setPath(coordinates);
               newZone.MapEntity=poly;

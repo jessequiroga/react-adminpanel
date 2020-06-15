@@ -49,7 +49,7 @@ class ZoneManager
         else
         {
             zone = new Zone(coordinates,this.IncrId);
-            this.IncrId++;
+            ZoneManager.IncrId++;
         }
         return zone;
     }
