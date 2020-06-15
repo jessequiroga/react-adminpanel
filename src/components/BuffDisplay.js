@@ -3,6 +3,7 @@ import Game from "../model/Game";
 import { Col, Container, Row } from "reactstrap";
 
 import IconBuff from "../model/elements/IconBuff";
+
 import Time from "../helper/Time";
 
 function BuffDisplay({items}) {
@@ -19,7 +20,7 @@ function BuffDisplay({items}) {
                 let icon = IconBuff[item.Type].url;
                 return <Col key={keyI}>
                             <img style={{width: "60px"}} alt={item.Type} src={icon}></img>
-                            {item.EndEffectTime?<div>{Time.diffTime((new Date(item.EndEffectTime)),(new Date()))}</div>:null}
+                            {item.EndEffectTime && item.Type !== "PocheInterdimensionnelle"?<div>{Time.diffTime((new Date(item.EndEffectTime)),(new Date()))}</div>:null}
                         </Col>
 
             });

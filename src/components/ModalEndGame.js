@@ -3,7 +3,7 @@ import {Modal,ModalHeader,ModalBody,ModalFooter,Button,Container,Row,Col} from '
 
 function ModalEndGame({gameEnded,openConfig,winners}) {
 
-  const listWinners = null;
+  let listWinners = null;
   console.log("winners",winners);
   useEffect(() => { 
     if(winners != null)

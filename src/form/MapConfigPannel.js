@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button,Label} from 'reactstrap';
+import {Card,CardBody,CardHeader,Col,Alert,Form,Row,Button} from 'reactstrap';
 
 import Time from '../helper/Time';
 
@@ -38,7 +38,7 @@ function MapConfigPannel({Config,setConfig}) {
     changeFormular(formular);
   },[Config]);
 
-  const onChangeTypeGame = (event) =>
+    const onChangeTypeGame = (event) =>
     {
         let val = event.target.value;
         if((event.target.value === Game.GameType.TIME) || (event.target.value === Game.GameType.FLAG))
@@ -70,18 +70,28 @@ function MapConfigPannel({Config,setConfig}) {
         {
             team = currTeams[indexT];
         }
-
+        changeCurrTeams(currTeams);
         return team;
     }
 
     const replaceTeam = (id,team) =>
     {
+        console.log(currTeams)
         var indexT = currTeams.findIndex( ({ Id }) => Id === id);
         if(indexT!==-1)
         {
             currTeams[indexT] = team;
         }
+        changeCurrTeams(currTeams);
+        return currTeams;
+    }
 
+    const addTeam = (color,name) =>
+    {
+        console.log(currTeams);
+        currTeams.push(TeamManager.create(color,name))
+        changeCurrTeams(currTeams);
+        
         return currTeams;
     }
 
@@ -94,31 +104,27 @@ function MapConfigPannel({Config,setConfig}) {
     let Teams =[];
     let content = {};
     Object.keys(formular).map(x =>{
-        if(x.indexOf("teamname")!==-1 ){
-            if ((formular[x].color !== "" && formular[x].color !== null) || (formular[x].value !== null && formular[x].value !== "") )  {
+        if(x.indexOf("teamname")!==-1 && x.indexOf("Color") === -1 ){
+            if ((formular[x+"Color"].value !== "" && formular[x+"Color"].value !== null) || (formular[x].value !== null && formular[x].value !== "") )  {
                 if(formular[x].Id!==null && typeof formular[x].Id!=="undefined")
                 { 
                     let team  = findTeam(parseInt(formular[x].Id));
-                    console.log("team",team);
-                    if(formular[x].color!==null && typeof formular[x].color!=="undefined" && formular[x].color!=="")team.Color = formular[x].color;
+                    if(formular[x+"Color"].value!==null && typeof formular[x+"Color"].value!=="undefined" && formular[x+"Color"].value!=="")team.Color = formular[x+"Color"].value;
                     if(formular[x].value!==null && typeof formular[x].value!=="undefined" && formular[x].value!=="")team.Name = formular[x].value;                       
                     Teams = replaceTeam(parseInt(formular[x].Id),team);
                 }
                 else
                 {
-                    Teams.push(TeamManager.create(formular[x].color,formular[x].value));
+                    Teams = addTeam(formular[x+"Color"].value,formular[x].value);
                 }
             }
         }
-        else if(formular[x].value !== null && formular[x].value !== "")
+        if(formular[x].value !== null && formular[x].value !== "")
         {
-            content[x] = formular[x].value;
-            if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
-                formulaireValide = false; // Le formulaire n'est pas valide
-        }
-        else if(x.indexOf("Chang")===-1)
-        {
-            content[x] = formular[x].value;
+            if(x.indexOf("teamname")===-1)
+            {
+                content[x] = formular[x].value;
+            }
             if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
                 formulaireValide = false; // Le formulaire n'est pas valide
         }
@@ -133,18 +139,18 @@ function MapConfigPannel({Config,setConfig}) {
     else
     {
 
-        if(content.typeGameChang){Config.Type = content.typeGameChang;}
+        if(content.typeGameChang!=null){Config.Type = content.typeGameChang;}
         if(content.nameChang){Config.Name =content.nameChang;}
         if(Teams.length>0){Config.Teams = Teams;}
         
-        Config.BeginDate = new Date(content.beginDate).toUTCString();
+        Config.BeginDate = new Date(content.beginDate)
         if(Config.Type === Game.GameType.TIME || Config.Type === Game.GameType.FLAG)
         {
-            Config.EndDate = new Date(content.endDate).toUTCString();
+            Config.EndDate = new Date(content.endDate)
         }
         else
         {
-            Config.EndDate = (new Date("01/17/2038")).toUTCString();
+            Config.EndDate = (new Date("01/17/2028"))
         }
 
         Config.IsFinal = true;
@@ -196,7 +202,7 @@ function MapConfigPannel({Config,setConfig}) {
                     {((Config && formular.typeGameChang.value === "" && (parseInt(Config.Type) === Game.GameType.TIME || parseInt(Config.Type) === Game.GameType.FLAG )) || (formular.typeGameChang.value !== "" && (parseInt(formular.typeGameChang.value) === Game.GameType.TIME || parseInt(formular.typeGameChang.value) === Game.GameType.FLAG)))?
                     <Row form className="ml-1 pb-2">
                             <Col md={6}>
-                                <DateTimeDisplay name="endDate" twinsName="beginDate" typeInput="dateEnd" label="End Date" placeHolder={ Time.addDays(new Date() , 1)} formular={formular} changeFormular={changeFormular}/>
+                                <DateTimeDisplay name="endDate" twinsName="beginDate" typeInput="dateEnd" label="End Date" placeHolder={ Time.addDays(new Date() , 1)} formular={formular} changeFormular={changeFormular} min={new Date()}/>
                             </Col>
                     </Row>:null}
                     <Row form className="ml-1 pb-2">

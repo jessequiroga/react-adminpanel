@@ -20,7 +20,6 @@ import ItemManager from "./model/elements/ItemManager";
 import AltarManager from "./model/elements/Altar";
 
 import TextDisplay from "./components/TextDisplay";
-import SelectDisplay from "./components/SelectDisplay";
 import ItemsDisplay from "./components/ItemsDisplay";
 import BuffDisplay from "./components/BuffDisplay";
 

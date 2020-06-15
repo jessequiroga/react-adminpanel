@@ -188,9 +188,6 @@ export default class SocketMessage {
                 jsonObject.Game = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
-            case "GAMEUPDATE":
-                result = JSON.stringify(jsonObject);
-                break;
             default:
                 break;
         }

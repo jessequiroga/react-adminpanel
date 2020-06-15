@@ -27,7 +27,6 @@ function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
           jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
           var conn = SocketController.getSocket();
           conn.send(jsonMessage.toJson());
-          console.log(jsonMessage.toJson());
         };
         
         
@@ -51,7 +50,6 @@ function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
             jsonMessage = new SocketMessage(this.result,SocketMessage.TypeMessage.GAMESETUP);
             var conn = SocketController.getSocket();
             conn.send(jsonMessage.toJson());
-            console.log(jsonMessage.toJson());
           };
           
           fr.readAsText(configFile); //Run fr.onload

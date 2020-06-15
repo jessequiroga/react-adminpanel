@@ -1,5 +1,5 @@
 import React from 'react';
-import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback, Input} from 'reactstrap';
+import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback} from 'reactstrap';
 
 const SelectDisplay = (props) => {
     const inputName = props.name;
@@ -34,12 +34,14 @@ const SelectDisplay = (props) => {
     };
 
     const onChange = (input, event) => {
+        console.log(event.target.value);
+        console.log(input);
+        formular[input].value = event.target.value;
+        changeFormular(formular);
         if(props.onChange)
         {
             props.onChange(event);
         }
-        formular[input].value = event.target.value;
-        changeFormular(formular);
     };
 
 

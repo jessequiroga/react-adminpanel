@@ -2,8 +2,9 @@ import React,{useState, useEffect} from 'react';
 import {Button,Table} from 'reactstrap';
 
 import TextDisplay from '../components/TextDisplay';
+import SelectDisplay from '../components/SelectDisplay';
 import $ from 'jquery';
-
+import '../css/App.css';
 const CreateTeam = ({currTeams,formular,changeFormular}) =>
 {
     const [incrTeam,changeIncrTeam] = useState([]);
@@ -14,7 +15,6 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
         let sel = $(event.target);
         let color = $("option:selected", sel).val();
         sel.css("background-color", color);
-        formular[sel[0].name].color= color;
     }
 
     const refreshTeam = () =>
@@ -23,24 +23,25 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
         {
             let name = "Name";
             let color = null;
+            let chang =false;
             if(typeof incrTeam[index]  == 'object')
             {
                 name = incrTeam[index].Name;
                 color = incrTeam[index].Color;
+                chang =true;
             }
             index = index+1;
             return  <tr key={index}>
                         <td>
-                            <TextDisplay name={"teamname"+index} typeInput="tag" placeHolder={name} label={"Team " + index } formular={formular} changeFormular={changeFormular}/>
+                            <TextDisplay name={"teamname"+index+(chang?"Chang":"")} typeInput="tag" placeHolder={name} label={"Team " + index } formular={formular} changeFormular={changeFormular}/>
                         </td>
                         <td>
-                            <select style={{height:"38px",width:"80px",backgroundColor:color}} name={"teamname"+index} onChange={onChange} className={"teamColor "+index}>
-                                <option></option>
+                            <SelectDisplay style={{height:"38px",width:"80px",backgroundColor:color}} name={"teamname"+index+(chang?"Chang":"")+"Color"} typeInput="" label={"Team " + index } formular={formular} changeFormular={changeFormular} onChange={onChange} className={"teamColor "+index}>
                                 <option style={{backgroundColor:"green"}} defaultValue={color==="green"} className="green" value="green"></option>
                                 <option style={{backgroundColor:"purple"}} defaultValue={color==="purple"} className="purple" value="purple"></option>
                                 <option style={{backgroundColor:"red"}}  defaultValue={color==="red"}className="red" value="red"></option>
                                 <option style={{backgroundColor:"yellow"}} defaultValue={color==="yellow"} className="yellow" value="yellow"></option>
-                            </select>
+                            </SelectDisplay>
                         </td>
                     </tr>
         }));    
@@ -50,14 +51,16 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
     {
         incrTeam.push(currTeam?currTeam:1);
         changeIncrTeam(incrTeam);
-        formular["teamname"+incrTeam.length] = {value: '',errorMessage :'',message:'',isValid : currTeam?true:false,color:'',Id:currTeam?currTeam.Id:null}
+        formular["teamname"+incrTeam.length+(currTeam?"Chang":"")] = {value: '',errorMessage :'',message:'',isValid : currTeam?true:false,Id:currTeam?currTeam.Id:null}
+        formular["teamname"+incrTeam.length+(currTeam?"Chang":"")+"Color"] = {value: '',errorMessage :'',message:'',isValid : currTeam?true:false}
         changeFormular(formular);
         refreshTeam();
     }
 
     const RemoveTeam=() =>
     {
-        delete formular["teamname"+(incrTeam.length)]
+        delete formular["teamname"+(incrTeam.length)+(currTeams?"Chang":"")]
+        delete formular["teamname"+(incrTeam.length)+(currTeams?"Chang":"")+"Color"]
         incrTeam.pop();
         changeIncrTeam(incrTeam);
         refreshTeam();
