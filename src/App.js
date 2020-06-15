@@ -30,11 +30,12 @@ function App() {
   const [gameBegin,setGameBegin]  = useState(true);
   const [beginDate,setBeginDate] = useState(new Date());
   const [config,setConfig]= useState(false);
-  const [configOpen,changeConfigOpen] = useState(false);
   const [winners,setWinners] = useState(null);
 
-  const openConfig = () =>{
-    changeConfigOpen(true);
+  const openUpload = () =>{
+    setGameEnded(false);
+    setGameInstance(false);
+    setConfigJsonNeeded(true);
   }
 
   const initWebsocket= () => {
@@ -71,7 +72,6 @@ function App() {
           }
           break;
         case SocketMessage.TypeMessage.GAMEENDED:
-          console.log("oui");
           if(!config)
           {
             console.log(message.ContainedEntity);
@@ -107,19 +107,6 @@ function App() {
       }
     }
   }
-
-  useEffect(() => {
-    let game = Game.getInstance();
-    if(game){
-      initWebsocket();
-      game.IsFinal = false;
-      let jsonMessage = new SocketMessage(game,SocketMessage.TypeMessage.GAMESETUP);
-      var conn = SocketController.getSocket();
-      conn.send(jsonMessage.toJson());
-      setGameEnded(false);
-      setGameInstance(false);
-    }
-  },[configOpen]);
   
   useEffect(() => { // On Open Admin
     momentLocalizer(moment);
@@ -132,7 +119,7 @@ function App() {
         {config&&<MapConfigPannel Config={config} setConfig={setConfig}/>}
         {gameInstance&&<GoogleMap gameEnded={gameEnded} setWiner={setWinners} setGameEnded={setGameEnded}/>}
         {gameInstance&&<ModalBeginGame gameBegin={gameBegin} beginDate={beginDate}/>}
-        {gameInstance&&<ModalEndGame gameEnded={gameEnded} winer={winners} openConfig={openConfig}/>}
+        {gameInstance&&<ModalEndGame gameEnded={gameEnded} winners={winners} openUpload={openUpload}/>}
         <div style={{textAlign: "center",paddingTop: "20%"}}>
           {!gameInstance&& !configJsonNeeded && !config &&<span style={{ color:"grey", fontSize:"22px", fontWeight:"bold" }}>Game Server Is Down</span>}
         </div>
