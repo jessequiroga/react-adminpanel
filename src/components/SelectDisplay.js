@@ -34,8 +34,6 @@ const SelectDisplay = (props) => {
     };
 
     const onChange = (input, event) => {
-        console.log(event.target.value);
-        console.log(input);
         formular[input].value = event.target.value;
         changeFormular(formular);
         if(props.onChange)
