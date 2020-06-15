@@ -1,5 +1,5 @@
 import React from 'react';
-import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback} from 'reactstrap';
+import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback, Input} from 'reactstrap';
 
 const SelectDisplay = (props) => {
     const inputName = props.name;
@@ -9,9 +9,18 @@ const SelectDisplay = (props) => {
 
 
     const checkValue = (event, input) => {
+        if(event.target.value !== "")
+        {
             formular[input].isValid = true;
             formular[input].errorMessage = "";
             formular[input].message ="";
+        }
+        else
+        {
+            formular[input].isValid = false;
+            formular[input].errorMessage = "This is a needed field";
+            formular[input].message ="";
+        }
 
         if (formular[input].isValid) {
             event.target.className = "form-control is-valid"
@@ -25,13 +34,15 @@ const SelectDisplay = (props) => {
     };
 
     const onChange = (input, event) => {
+        if(props.onChange)
+        {
+            props.onChange(event);
+        }
         formular[input].value = event.target.value;
         changeFormular(formular);
     };
 
-    const options = Object.keys(props.options).map(function(option,index){
-        return <option key={index} value={props.options[option].value} defaultValue={props.options[option].selected}>{props.options[option].label}</option>
-    })
+
     return (
         <>
             <InputGroup>
@@ -42,10 +53,12 @@ const SelectDisplay = (props) => {
                     style={props.style}
                     id="input-form"
                     value={props.value}
+                    className={!formular[inputName].isValid?"form-control is-invalid":""}
                     onBlur={(e) => checkValue(e, inputName, type)}
                     onChange={onChange.bind(this, inputName)}
                 >
-                    {options}
+                    <option key="null" value=""></option>
+                    {props.children}
                 </select>
                 <FormFeedback>{formular[inputName].errorMessage}</FormFeedback>
             </InputGroup>

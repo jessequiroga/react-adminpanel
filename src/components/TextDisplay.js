@@ -14,13 +14,13 @@ const TextDisplay = (props) => {
             case "email":
                 if (formular[input].value !== "") {
                     if (validEmail(formular[input].value)) {
-                        if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                         {
                             formular[input].value ="";
                             event.target.value="";
                             formular[input].isValid = true;
                             formular[input].errorMessage = "";
-                            formular[input].message ="";
+                            formular[input].message ="This field will not be change";
                         }
                         else
                         {
@@ -34,7 +34,7 @@ const TextDisplay = (props) => {
                         formular[input].message ="";
                     }
                 } else {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -53,13 +53,13 @@ const TextDisplay = (props) => {
             case "password":
                 if (formular[input].value !== "") {
                     if (formular[input].value.length >= 8 && /\d/.test(formular[input].value)) {
-                        if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                        if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                         {
                             formular[input].value ="";
                             event.target.value="";
                             formular[input].isValid = true;
                             formular[input].errorMessage = "";
-                            formular[input].message ="";
+                            formular[input].message ="This field will not be change";
                         }
                         else
                         {
@@ -73,7 +73,7 @@ const TextDisplay = (props) => {
                         formular[input].message ="";
                     }
                 } else {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -90,7 +90,7 @@ const TextDisplay = (props) => {
 
             case "tag":
                 if (formular[input].value === '') {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -111,12 +111,12 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
                         formular[input].isValid = true;
-                        formular[input].errorMessage = "";
+                        formular[input].errorMessage = "This field will not be change";
                         formular[input].message ="";
                     }
                     else
@@ -129,7 +129,7 @@ const TextDisplay = (props) => {
                 break;
             case "name":
                 if (formular[input].value === '') {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -150,12 +150,12 @@ const TextDisplay = (props) => {
                     formular[input].errorMessage = "Please this field can contain only letter";
                     formular[input].message ="";
                 } else {
-                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
                         formular[input].isValid = true;
-                        formular[input].errorMessage = "";
+                        formular[input].errorMessage = "This field will not be change";
                         formular[input].message ="";
                     }
                     else
@@ -176,7 +176,7 @@ const TextDisplay = (props) => {
             case "ip":
                 if(formular[input].value === '')
                 {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -197,12 +197,12 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
                         formular[input].isValid = true;
-                        formular[input].errorMessage = "";
+                        formular[input].errorMessage = "This field will not be change";
                         formular[input].message ="";
                     }
                     else
@@ -217,7 +217,7 @@ const TextDisplay = (props) => {
             case "number":
                 if(formular[input].value === '')
                 {
-                    if (input.indexOf("Chang")!==-1)
+                    if (input.indexOf("Chang")!=-1)
                     {
                         formular[input].message = "This field will not be change";
                         formular[input].errorMessage ="";
@@ -238,12 +238,12 @@ const TextDisplay = (props) => {
                 }
                 else
                 {
-                    if (input.indexOf("Chang")!==-1 && formular[input].value === event.target.placeholder)
+                    if (input.indexOf("Chang")!=-1 && formular[input].value == event.target.placeholder)
                     {
                         formular[input].value ="";
                         event.target.value="";
                         formular[input].isValid = true;
-                        formular[input].errorMessage = "";
+                        formular[input].errorMessage = "This field will not be change";
                         formular[input].message ="";
                     }
                     else
@@ -280,12 +280,17 @@ const TextDisplay = (props) => {
 
 
     const validEmail = (email) => {
+        console.log(email);
         const re = /\S+@\S+\.\S+/;
         return re.test(email);
     };
 
     const onChange = (input, disable,event) => {
-        if(!disable)
+        if(disable)
+        {
+            event.preventDefault()
+        }
+        else
         {
             formular[input].value = event.target.value;
             changeFormular(formular);
@@ -316,7 +321,7 @@ const TextDisplay = (props) => {
                 input.message ="";
             }
         } else {
-            if(key.indexOf("Chang")!==-1 && (!formular[key] || (formular[key] && formular[key].value === "")))
+            if(key.indexOf("Chang")!=-1 && (!formular[key] || (formular[key] && formular[key].value == "")))
             {
                 input.message = "This field will not be change";
                 input.errorMessage = "";
@@ -330,22 +335,40 @@ const TextDisplay = (props) => {
             } 
         }
     };
+
+    const onFocus = (event, input, disable, type) => {
+        if (disable)
+        {
+            event.preventDefault()
+        }
+        else if(input.indexOf("Chang") !== -1 && inputName.indexOf("Rep") === -1 && type !== "password" && (event.target.value === "" || typeof event.target.value === "undefiend" || event.target.value === null))
+        {
+            formular[input].value = event.target.placeholder;
+            event.target.value = event.target.placeholder;
+            changeFormular(formular);
+        }
+    }
+
     return (
-        <InputGroup>
-            <InputGroupAddon addonType="prepend">
-                <InputGroupText>{props.label}</InputGroupText>
-            </InputGroupAddon>
-            <Input
-                style={props.style}
-                id="input-form"
-                value={props.value}
-                invalid={!formular[inputName].isValid}
-                type={props.type} name={inputName} placeholder={props.placeHolder}
-                onBlur={(e) => checkValue(e, inputName, type)}
-                onChange={onChange.bind(this, inputName,(typeof x !== "undefined" && props.value !==null))}
-            />
-            <FormFeedback>{formular[inputName].errorMessage}</FormFeedback>
-        </InputGroup>
+        <>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>{props.label}</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                    style={props.style}
+                    id="input-form"
+                    autoComplete={(inputName.indexOf("Chang") !== -1)?"new":"on"}
+                    value={props.value}
+                    invalid={!formular[inputName].isValid}
+                    type={props.type} name={inputName} placeholder={props.placeHolder}
+                    onBlur={(e) => checkValue(e, inputName, type)}
+                    onChange={onChange.bind(this, inputName,(typeof x !== "undefined" && props.value !==null))}
+                    onFocus ={(e) => onFocus(e,inputName, (typeof x !== "undefined" && props.value !==null), type)}
+                />
+                <FormFeedback>{formular[inputName].errorMessage}</FormFeedback>
+            </InputGroup>
+        </>
     );
 };
 

@@ -9,6 +9,8 @@ import SocketController from '../model/SocketController';
 import Game from '../model/Game';
 
 import TextDisplay from '../components/TextDisplay';
+import SelectDisplay from '../components/SelectDisplay';
+
 import DateTimeDisplay from '../components/DateTimeDisplay';
 import CreateTeam from './CreateTeam';
 
@@ -47,9 +49,6 @@ function MapConfigPannel({Config,setConfig}) {
         {
             formular.endDate.isValid = true;
         }
-        formular.typeGameChang.value= val;
-        formular.typeGameChang.isValid= true;
-        changeFormular(formular); //Isn't enought to refresh the display
         changeRefresh[1](val); // Refresh the display
     }
 
@@ -178,8 +177,7 @@ function MapConfigPannel({Config,setConfig}) {
                             <TextDisplay name="nameChang" typeInput="tag" placeHolder={Config?Config.Name:""} label="Game Name" formular={formular} changeFormular={changeFormular}/>
                         </Col>
                         <Col md={6}>
-                            <select style={{height:"38px", minWidth:"20px"}} onChange={(e)=>{onChangeTypeGame(e);}}>
-                                <option></option>
+                            <SelectDisplay style={{height:"38px", minWidth:"20px"}} name="typeGameChang" typeInput="Type" label="Type Game" formular={formular} changeFormular={changeFormular}  onChange={(e)=>{onChangeTypeGame(e);}}>
                                 {
                                     Object.keys(Game.GameType).map(type=>{
                                         let nameType = type.toString();
@@ -187,7 +185,7 @@ function MapConfigPannel({Config,setConfig}) {
                                         return  <option key={type} selected={(Config)?Game.GameType[type]===parseInt(Config.Type):false} value={Game.GameType[type]}>{Camel}</option>
                                     })
                                 }
-                            </select>
+                            </SelectDisplay>
                         </Col>
                     </Row>
                     <Row form className="ml-1 pb-2">
