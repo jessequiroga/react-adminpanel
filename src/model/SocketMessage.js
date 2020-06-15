@@ -174,7 +174,7 @@ export default class SocketMessage {
                 jsonObject.Item = JSON.parse(this.ContainedEntity);
                 result = JSON.stringify(jsonObject);
                 break;
-            case "REGIONYADD":
+            case "REGIONADD":
             case "REGIONUPDATE":
             case "REGIONDELETE":
                 jsonObject.Region = JSON.parse(this.ContainedEntity);

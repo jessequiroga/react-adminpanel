@@ -348,7 +348,9 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
       polyObject.MapEntity = poly;
       Game.getInstance().addZone(polyObject);
       let socket = SocketController.getSocket();
-      socket.send((new SocketMessage(polyObject, SocketMessage.TypeMessage.REGIONADD)).toJson());
+      let message = (new SocketMessage(polyObject, SocketMessage.TypeMessage.REGIONADD)).toJson();
+      console.log(message);
+      socket.send(message);
     }
     else // If the polygone have less of 3 coordinates it's not a polygone
     {
