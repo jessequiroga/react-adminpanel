@@ -119,8 +119,8 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         case SocketMessage.TypeMessage.OK:
           break;
         case SocketMessage.TypeMessage.GAMEENDED:
-            props.setGameEnded(true);
             props.setWiner(message.ContainedEntity.Team);
+            props.setGameEnded(true);
           break;
         default:
           /*if (message.MessageType != null)
@@ -497,7 +497,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         />
       )}
 
-      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} endGame={props.gameEnded} setEndGame={props.setGameEnded} setSelectedDrawed={setSelectedDrawed} position={google.maps.ControlPosition.TOP_CENTER}/>
+      <MapControl gameUpdate={gameUpdate} listVisionMarker={listVisionMarker} canDraw={canDraw} endGame={props.gameEnded} setSelectedDrawed={setSelectedDrawed} position={google.maps.ControlPosition.TOP_CENTER}/>
 
       <PlayersControl setInstanceListPlayer={setInstanceListPlayer} canDraw={canDraw} listMarkerPlayer={listMarkerPlayer} listPlayerPos={listPlayerPos} listPlayer={listPlayer} setSelectedDrawed={setSelectedDrawed} />
 
