@@ -22,7 +22,6 @@ function MapConfigPannel({Config,setConfig}) {
       {
           nameChang : {value: '',errorMessage:'',message:'',isValid: true}, // champ nom de la colocation
           typeGameChang : {value:'', errorMessage: '',message:'',isValid: true},
-          numberChang : {value:'', errorMessage: '',message:'',isValid: true},
           beginDate : {value:'', errorMessage: '',message:'',isValid: false},
           endDate : {value:'', errorMessage: '',message:'',isValid: true},
           isPublic: {value:false, isValid:true}
@@ -137,7 +136,6 @@ function MapConfigPannel({Config,setConfig}) {
 
         if(content.typeGameChang){Config.Type = content.typeGameChang;}
         if(content.nameChang){Config.Name =content.nameChang;}
-        if(content.numberChang){Config.MinPlayer = content.numberChang;}
         if(Teams.length>0){Config.Teams = Teams;}
         
         Config.BeginDate = new Date(content.beginDate).toUTCString();
@@ -211,11 +209,6 @@ function MapConfigPannel({Config,setConfig}) {
                 <div style={{backgroundColor:"rgba(217, 218, 221, 0.48)",borderRadius: "0.25rem"}}>
                     <Row className="ml-2">
                         <h2>Teams</h2>
-                    </Row>
-                    <Row form className="ml-1 pb-2">
-                        <Col md={6}>
-                            <TextDisplay name="numberChang" typeInput="number" label="Min Player" placeHolder={Config?Config.MinPlayer:""} formular={formular} changeFormular={changeFormular}/>
-                        </Col>
                     </Row>
                     <Row form className="ml-1 pb-2">
                             <CreateTeam currTeams={currTeams} formular={formular} changeFormular={changeFormular}/>

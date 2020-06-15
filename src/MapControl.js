@@ -253,6 +253,7 @@ export default class MapControl extends Component {
             }
             else{
               newAltar.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+              Game.getInstance().addAltar(newAltar);
             }
             if(exist)
             {
@@ -337,6 +338,7 @@ export default class MapControl extends Component {
             }
             else{
               newItem.toMapElement(this.map,this.props.setSelectedDrawed,withVisionCircle);
+              Game.getInstance().addItem(newItem);
             }
             if(exist)
               Game.getInstance().replaceItem(indexI,newItem);
@@ -384,6 +386,7 @@ export default class MapControl extends Component {
           if(zone.Id != null)
           {
             var indexZ = Game.getInstance().findZoneById(zone.Id);
+            var currZone = Game.getInstance().Regions[indexZ];
             if(indexZ !== -1)
             {
               if(ManagerZones.IncrId<=zone.Id)
@@ -397,9 +400,9 @@ export default class MapControl extends Component {
             let newZone = ManagerZones.createZone(zone.Coordinates,zone.Id);
             let poly;
             let coordinates=[];
-            if(exist && Game.getInstance().Regions[indexZ].toMapElement)
+            if(exist && currZone.toMapElement)
             {
-              poly = Game.getInstance().Regions[indexZ].toMapElement();
+              poly = currZone.toMapElement();
               newZone.Coordinates.forEach(coordinate => {
                 coordinates.push({lat:coordinate[0],lng:coordinate[1]});
               });
@@ -410,6 +413,7 @@ export default class MapControl extends Component {
             else{
               poly = newZone.toMapElement(this.map);
               window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
+              Game.getInstance().addZone(newZone);
             }
             if(exist)
               Game.getInstance().replaceRegion(indexZ,newZone);
