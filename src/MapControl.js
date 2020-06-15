@@ -440,7 +440,6 @@ export default class MapControl extends Component {
         this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
         if(parseInt(this.time.split(":")[2])<0)
         {
-           this.props.setEndGame(true);
            this.time = "The game is finish";
            clearInterval(this.tick);
         }
@@ -460,7 +459,6 @@ export default class MapControl extends Component {
         this.time = Time.diffTime((new Date(Game.getInstance().EndDate)),(new Date()));
         if(parseInt(this.time.split(":")[2])<0)
         {
-           this.props.setEndGame(true);
            this.time = "The game is finish";
            clearInterval(this.tick);
         }
