@@ -119,7 +119,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
         case SocketMessage.TypeMessage.OK:
           break;
         case SocketMessage.TypeMessage.GAMEENDED:
-            props.setWiner(message.ContainedEntity.Team);
+            props.setWiner(message.ContainedEntity.Teams);
             props.setGameEnded(true);
           break;
         default:
