@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {Modal,ModalHeader,ModalBody,ModalFooter,Button,Table,Row,Col} from 'reactstrap';
+import {Modal,ModalHeader,ModalBody,Button,Table} from 'reactstrap';
 
 function ModalEndGame({gameEnded,openUpload,winners}) {
 
