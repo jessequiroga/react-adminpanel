@@ -123,7 +123,7 @@ const DateTimeDisplay = (props) => {
             <InputGroupAddon addonType="prepend">
                 <InputGroupText>{props.label}</InputGroupText>
             </InputGroupAddon>
-            {(error || (!formular[inputName].isValid) && error ===null) ?<div style={{width: "100%",marginTop: "0.25rem",fontSize: "80%",color: "#dc3545"}}>{formular[inputName].errorMessage}</div>:null}
+            {(error || ((!formular[inputName].isValid) && error ===null)) ?<div style={{width: "100%",marginTop: "0.25rem",fontSize: "80%",color: "#dc3545"}}>{formular[inputName].errorMessage}</div>:null}
         </InputGroup>
     );
 };
