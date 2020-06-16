@@ -24,62 +24,65 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 
 ### Arboressance des different éléments du projet
 
-```
+```php
 .
-├── App.js                          : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
-├── components                      - *Composent utiles pour une creation rapide de la map*
-│   ├── BuffDisplay.js                  : `Liste des bonus ou malus actifs, d'un joueur, sous la forme d'une liste html`
-│   ├── DateTimeDisplay.js              : `Elément de choix de date et d'heure pour un formulaire html`
-│   ├── Header.js                       : `En-tête en haut de la carte, contient des boutons`
-│   ├── ItemsDisplay.js                 : `Liste des objets, que possède un joueur, sous la forme d'une liste html`
-│   ├── ModalBeginGame.js               : `Pop-up affichant une partie qui n'as pas encore commencée,elle contient la liste des joueur qui attende le début de la partie`  
-│   ├── ModalEndGame.js                 : `Pop-up affichant la fin d'une partie, elle contient le classement des équipes`
-│   ├── ModalListPlayer.js              : `Pop-up affichant la liste des joueurs connectés`
-│   ├── PlayersListDisplay.js           : `Liste des joueur contenue dans la partie courante, sous la forme d'une liste html`
-│   ├── SelectDisplay.js                : ``
-│   └── TextDisplay.js                  : ``
-├── css                             - *Fichiers de style*
-│   ├── App.css                         : ``
-│   └── Map.css                         : ``
-├── form                            - *Les formulaires*
-│   ├── CreateTeam.js                   : ``
-│   └── MapConfigPannel.js              : ``
-├── helper                          - *Les différents outils*
-│   ├── DrawConflict.js                 : ``
-│   ├── Point.js                        : ``
-│   └── Time.js                         : ``
-├── index.css                           : ``
-├── index.js                            : ``
-├── mapControllers                  - *Les différents composant utils a la gestion de la carte **Google-Maps** *
-│   ├── DrawManager.js                  : ``
-│   ├── ElementInfo.js                  : ``
-│   ├── GoogleMap.js                    : ``
-│   ├── MapControl.js                   : ``
-│   ├── MapImportConfigPannel.js        : ``
-│   ├── Map.js                          : ``
-│   ├── PlayersControl.js               : ``
-│   └── style.js                        : ``
-├── model                           - *L'ensemble des classe constituant une partie*
-│   ├── elements                        - *L'ensemble des classe des element disposable sur la carte*
-│   │   ├── Altar.js                        : ``
-│   │   ├── Entity.js                       : ``
-│   │   ├── IconBuff.js                     : ``
-│   │   ├── IconItem.js                     : ``
-│   │   ├── ItemManager.js                  : ``
-│   │   ├── Items                           - *L'ensemble des classes des objets*
-│   │   │   ├── CultMag.js                      : ``
-│   │   │   ├── DunwichAnnals.js                : ``
-│   │   │   ├── Item.js                         : ``
-│   │   │   ├── PocheInterdimensionnelle.js     : ``
-│   │   │   └── VisionOrb.js                    : ``
-│   │   ├── Marker.js                       : ``
-│   │   └── Player.js                       : ``
-│   ├── Game.js                         : ``
-│   ├── SocketController.js             : ``
-│   ├── SocketMessage.js                : ``
-│   ├── Team.js                         : ``
-│   └── Zone.js                         : ``
-└── serviceWorker.js                : ``
+├── App.js                      : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
+|
+├── components                  - *Composent utiles pour une creation rapide de la map*
+│   ├── BuffDisplay.js              : `Liste des bonus ou malus actifs, d'un joueur, sous la forme d'une liste html`
+│   ├── DateTimeDisplay.js          : `Elément de choix de date et d'heure pour un formulaire html`
+│   ├── Header.js                   : `En-tête en haut de la carte, contient des boutons`
+│   ├── ItemsDisplay.js             : `Liste des objets, que possède un joueur, sous la forme d'une liste html`
+│   ├── ModalBeginGame.js           : `Pop-up affichant une partie qui n'as pas encore commencée,elle contient la liste des joueurs qui attendent le début de la partie`  
+│   ├── ModalEndGame.js             : `Pop-up affichant la fin d'une partie, elle contient le classement des équipes`
+│   ├── ModalListPlayer.js          : `Pop-up affichant la liste des joueurs connectés`
+│   ├── PlayersListDisplay.js       : `Liste des joueur contenue dans la partie courante, sous la forme d'une liste html`
+│   ├── SelectDisplay.js            : `Elément de selection parmis une liste d'élements pour un formulaire html`
+│   └── TextDisplay.js              : `Elément d'entré text pour un formulaire html`
+|
+├── css                         - *Fichiers de style*
+│   ├── App.css                     : `Fichier de style pour les élements de formulaire`
+│   └── Map.css                     : `Fichier de style pour les élements contenue par la carte`
+|
+├── form                        - *Les formulaires*
+│   ├── CreateTeam.js               : `Formulaire de creation d'équipe`
+│   └── MapConfigPannel.js          : `Formulaire pour edité la configuration de la partie aprés injéction de la configuration JSON`
+|
+├── helper                      - *Les différents outils*
+│   ├── DrawConflict.js             : `Ensemble des calcules pour les intéractions entre les éléments sur la carte`
+│   ├── Point.js                    : `Classe d'un point d'un espace`
+│   └── Time.js                     : `Ensemble des calcules pour les dates`
+|
+├── mapControllers              - *Les différents composant utils a la gestion de la carte **Google-Maps** *
+│   ├── DrawManager.js              : `Controller chargé de l'ajout d'un éléments sur la carte`
+│   ├── ElementInfo.js              : `Controller chargé de l'ajout d'une bulle d'info`
+│   ├── GoogleMap.js                : `Controller chargé de l'appel avec l'api **Google-Maps**`
+│   ├── MapControl.js               : `Controller chargé du placement et de la mise à jour des éléments sur la carte`
+│   ├── MapImportConfigPannel.js    : `Controller chargé de la mise en ligne d'une nouvelle configuration JSON`
+│   ├── Map.js                      : `Controller principale chargé de la création de la carte et de l'interaction entre les informations du serveur de jeux et des éléments de la carte. `
+│   ├── PlayersControl.js           : `Controller chargé de l'affichage des joeurs`
+│   └── style.js                    : `Fichier de controlle du style de la carte **Google-Maps**`
+|
+├── model                       - *L'ensemble des classe constituant une partie*
+│   ├── elements                    - *L'ensemble des classe des éléments disposables sur la carte*
+│   │   ├── Altar.js                    : `Classe des drapeaux`
+│   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
+│   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
+│   │   ├── IconItem.js                 : `Classe de match entre les objets et leur images`
+│   │   ├── ItemManager.js              : `Classe abstraite c'est le Constructeur des objets`
+│   │   ├── Items                       - *L'ensemble des classes des objets*
+│   │   │   ├── CultMag.js                  : `Classe du magazine de culte`
+│   │   │   ├── DunwichAnnals.js            : `Classe des annales de dunwichs`
+│   │   │   ├── Item.js                     : `Classe abstraite des Objects`
+│   │   │   ├── PocheInterdimensionnelle.js : `Classe de la poche Interdimenssionnelle`
+│   │   │   └── VisionOrb.js                : `Classe de l'orbe de vision`
+│   │   ├── Marker.js                   : `Classe de création de l'élément visuèlement parlant sur la carte`
+│   │   └── Player.js                   : `Classe des joueurs`
+│   ├── Game.js                     : `Classe de la partie`
+│   ├── SocketController.js         : `Classe qui s'occupe de la connection avec le serveur de jeu `
+│   ├── SocketMessage.js            : `Classe de traitement des differents types messages reçus et envoyés au serveur de jeu `
+│   ├── Team.js                     : `Classe des équipes`
+│   └── Zone.js                     : `Classe des régions de jeu`
 ```
 
 ### Le serveur de jeu
