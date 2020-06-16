@@ -72,13 +72,13 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   └── style.js                    : `Fichier de controlle du style de la carte Google-Maps`
 |
 ├── model                       - Les classes qui constiuent une partie
-│   ├── elements                    - L'ensemble des classe des éléments disposables sur la carte
+│   ├── elements                    - Les classe des éléments disposables sur la carte
 │   │   ├── Altar.js                    : `Classe des drapeaux`
 │   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
 │   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
 │   │   ├── IconItem.js                 : `Classe de match entre les objets et leur images`
 │   │   ├── ItemManager.js              : `Classe abstraite qui joue le rôle de constructeur des objets`
-│   │   ├── Items                       - L'ensemble des classes des objets
+│   │   ├── Items                       - Les classes des objets
 │   │   │   ├── CultMag.js                  : `Classe du magazine de culte`
 │   │   │   ├── DunwichAnnals.js            : `Classe des annales de dunwichs`
 │   │   │   ├── Item.js                     : `Classe abstraite des Objects`
