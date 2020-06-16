@@ -2,13 +2,13 @@ import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
-import AltarManager from './model/elements/Altar.js';
-import ItemManager from './model/elements/ItemManager';
-import Game from './model/Game.js';
+import AltarManager from '../model/elements/Altar.js';
+import ItemManager from '../model/elements/ItemManager';
+import Game from '../model/Game.js';
 import $ from 'jquery';
-import SocketController from './model/SocketController.js';
-import SocketMessage from './model/SocketMessage.js';
-import Entity from './model/elements/Entity.js';
+import SocketController from '../model/SocketController.js';
+import SocketMessage from '../model/SocketMessage.js';
+import Entity from '../model/elements/Entity.js';
 
 export default class DrawManager extends Component {
 

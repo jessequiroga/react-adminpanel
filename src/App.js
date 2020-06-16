@@ -1,15 +1,18 @@
 import React,{useState,useEffect} from "react";
-import GoogleMap from "./GoogleMap.js";
-
-import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
+import styled from "styled-components";
+import moment from 'moment';
+
+
+import GoogleMap from "./mapControllers/GoogleMap.js";
+import MapImportConfigPannel from "./mapControllers/MapImportConfigPannel";
 
 import SocketMessage from "./model/SocketMessage";
 import SocketController from "./model/SocketController";
-import MapImportConfigPannel from "./MapImportConfigPannel";
-import styled from "styled-components";
-import MapConfigPannel from "./form/MapConfigPannel";
 import Game from "./model/Game";
+
+import MapConfigPannel from "./form/MapConfigPannel";
+
 import ModalEndGame from "./components/ModalEndGame";
 import ModalBeginGame from "./components/ModalBeginGame";
 

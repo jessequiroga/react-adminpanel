@@ -1,8 +1,8 @@
 import React from "react";
 
-import SocketController from './model/SocketController';
-import SocketMessage from './model/SocketMessage';
-import Game from './model/Game';
+import SocketController from '../model/SocketController';
+import SocketMessage from '../model/SocketMessage';
+import Game from '../model/Game';
 
 function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
   

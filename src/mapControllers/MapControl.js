@@ -2,13 +2,16 @@ import React,{ Component } from 'react';
 import { createPortal } from 'react-dom';
 import { Card, Nav, NavItem } from 'reactstrap';
 import { MAP } from 'react-google-maps/lib/constants';
+
 import PropTypes from 'prop-types';
-import ManagerItems from './model/elements/ItemManager';
-import ManagerAltars from './model/elements/Altar';
-import ManagerZones from './model/Zone';
-import Game from './model/Game.js';
-import Entity from './model/elements/Entity';
-import Time from './helper/Time';
+
+import ManagerItems from '../model/elements/ItemManager';
+import ManagerAltars from '../model/elements/Altar';
+import ManagerZones from '../model/Zone';
+import Game from '../model/Game';
+import Entity from '../model/elements/Entity';
+
+import Time from '../helper/Time';
 
 
 

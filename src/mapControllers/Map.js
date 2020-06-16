@@ -8,28 +8,30 @@ import {
   DrawingManager
 } from "react-google-maps/lib/components/drawing/DrawingManager";
 import myStyle from "./style";
-import Game from "./model/Game.js";
-import ZoneManager from "./model/Zone.js";
+
 
 import DrawManager from "./DrawManager.js";
 import MapControl from "./MapControl.js"
 import PlayersControl from "./PlayersControl";
-import SocketMessage from "./model/SocketMessage";
-import SocketController from "./model/SocketController";
-import ItemManager from "./model/elements/ItemManager";
-import AltarManager from "./model/elements/Altar";
 
-import TextDisplay from "./components/TextDisplay";
-import ItemsDisplay from "./components/ItemsDisplay";
-import BuffDisplay from "./components/BuffDisplay";
+import SocketMessage from "../model/SocketMessage";
+import SocketController from "../model/SocketController";
+import ItemManager from "../model/elements/ItemManager";
+import AltarManager from "../model/elements/Altar";
+import Game from "../model/Game.js";
+import ZoneManager from "../model/Zone.js";
 
-import Time from "./helper/Time";
+import TextDisplay from "../components/TextDisplay";
+import ItemsDisplay from "../components/ItemsDisplay";
+import BuffDisplay from "../components/BuffDisplay";
 
-import ModalListPlayer from "./components/ModalListPlayer";
+import Time from "../helper/Time";
+
+import ModalListPlayer from "../components/ModalListPlayer";
 
 import $ from "jquery";
 
-import './Map.css';
+import '../css/Map.css';
 import ElementInfo from "./ElementInfo";
 
 function Map(props) {

@@ -1,9 +1,10 @@
 import React,{ Component } from 'react';
 import { MAP } from 'react-google-maps/lib/constants';
 import PropTypes from 'prop-types';
-import ManagerPlayers from './model/elements/Player';
-import Game from './model/Game';
-import Entity from './model/elements/Entity';
+
+import ManagerPlayers from '../model/elements/Player';
+import Game from '../model/Game';
+import Entity from '../model/elements/Entity';
 
 export default class PlayerControl extends Component {
 
