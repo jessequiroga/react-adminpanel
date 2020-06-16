@@ -34,7 +34,7 @@ Voici la liste des dépendances présentes dans le projet sous la forme de libra
 
 ```php
 .
-├── App.js                      : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
+├── App.js                      : `Coeur du projet controle, la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
 |
 ├── components                  - Composents utiles pour une creation rapide de la map
 │   ├── BuffDisplay.js              : `Liste des bonus ou malus actifs, appartenant un joueur, sous la forme d'une liste html`
