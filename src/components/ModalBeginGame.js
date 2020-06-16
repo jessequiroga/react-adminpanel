@@ -32,7 +32,7 @@ function ModalBeginGame({gameBegin,beginDate}) {
             setTickRate(id);
             return () => clearInterval(id); // this "clean" function is executed here on component unmount
         }
-    },[]);
+    },[modalOpen]);
 
     let closeModal = () => {
         clearInterval(tickRate);
