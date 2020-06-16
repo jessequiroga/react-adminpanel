@@ -24,61 +24,63 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 
 ### Arboressance des different éléments du projet
 
+```
 .
-├── App.js                        : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
-├── components                    : `Liste des composent utiles pour une creation rapide de la map`
-│   ├── BuffDisplay.js            : `Liste des bonus ou malus actifs, d'un joueur, sous la forme d'une liste html`
-│   ├── DateTimeDisplay.js        : `Elément de choix de date et d'heure pour un formulaire html`
-│   ├── Header.js                 : `En-tête en haut de la carte, contient des boutons`
-│   ├── ItemsDisplay.js           : `Liste des objets, que possède un joueur, sous la forme d'une liste html`
-│   ├── ModalBeginGame.js         : `Pop-up affichant une partie qui n'as pas encore commencée,elle contient la liste des joueur qui attende le début de la partie`  
-│   ├── ModalEndGame.js           : `Pop-up affichant la fin d'une partie, elle contient le classement des équipes`
-│   ├── ModalListPlayer.js        : `Pop-up affichant la liste des joueurs connectés`
-│   ├── PlayersListDisplay.js     : `Liste des joueur contenue dans la partie courante, sous la forme d'une liste html`
-│   ├── SelectDisplay.js          : ``
-│   └── TextDisplay.js            : ``
-├── css
-│   ├── App.css                   : ``
-│   └── Map.css                   : ``
-├── form
-│   ├── CreateTeam.js             : ``
-│   └── MapConfigPannel.js        : ``
-├── helper 
-│   ├── DrawConflict.js           : ``
-│   ├── Point.js                  : ``
-│   └── Time.js                   : ``
-├── index.css                     : ``
-├── index.js                      : ``
-├── mapControllers                : ``
-│   ├── DrawManager.js            : ``
-│   ├── ElementInfo.js            : ``
-│   ├── GoogleMap.js              : ``
-│   ├── MapControl.js             : ``
-│   ├── MapImportConfigPannel.js  : ``
-│   ├── Map.js                    : ``
-│   ├── PlayersControl.js         : ``
-│   └── style.js                  : ``
-├── model
-│   ├── elements
-│   │   ├── Altar.js
-│   │   ├── Entity.js
-│   │   ├── IconBuff.js
-│   │   ├── IconItem.js
-│   │   ├── ItemManager.js
-│   │   ├── Items
-│   │   │   ├── CultMag.js
-│   │   │   ├── DunwichAnnals.js
-│   │   │   ├── Item.js
-│   │   │   ├── PocheInterdimensionnelle.js
-│   │   │   └── VisionOrb.js
-│   │   ├── Marker.js
-│   │   └── Player.js
-│   ├── Game.js
-│   ├── SocketController.js
-│   ├── SocketMessage.js
-│   ├── Team.js
-│   └── Zone.js
-└── serviceWorker.js
+├── App.js                                  : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
+├── components                                  - *Composent utiles pour une creation rapide de la map*
+│   ├── BuffDisplay.js                              : `Liste des bonus ou malus actifs, d'un joueur, sous la forme d'une liste html`
+│   ├── DateTimeDisplay.js                          : `Elément de choix de date et d'heure pour un formulaire html`
+│   ├── Header.js                                   : `En-tête en haut de la carte, contient des boutons`
+│   ├── ItemsDisplay.js                             : `Liste des objets, que possède un joueur, sous la forme d'une liste html`
+│   ├── ModalBeginGame.js                           : `Pop-up affichant une partie qui n'as pas encore commencée,elle contient la liste des joueur qui attende le début de la partie`  
+│   ├── ModalEndGame.js                             : `Pop-up affichant la fin d'une partie, elle contient le classement des équipes`
+│   ├── ModalListPlayer.js                          : `Pop-up affichant la liste des joueurs connectés`
+│   ├── PlayersListDisplay.js                       : `Liste des joueur contenue dans la partie courante, sous la forme d'une liste html`
+│   ├── SelectDisplay.js                            : ``
+│   └── TextDisplay.js                              : ``
+├── css                                         - *Fichiers de style*
+│   ├── App.css                                     : ``
+│   └── Map.css                                     : ``
+├── form                                        - *Les formulaires*
+│   ├── CreateTeam.js                               : ``
+│   └── MapConfigPannel.js                          : ``
+├── helper                                      - *Les different outils*
+│   ├── DrawConflict.js                             : ``
+│   ├── Point.js                                    : ``
+│   └── Time.js                                     : ``
+├── index.css                                       : ``
+├── index.js                                        : ``
+├── mapControllers                              - *Les *
+│   ├── DrawManager.js                              : ``
+│   ├── ElementInfo.js                              : ``
+│   ├── GoogleMap.js                                : ``
+│   ├── MapControl.js                               : ``
+│   ├── MapImportConfigPannel.js                    : ``
+│   ├── Map.js                                      : ``
+│   ├── PlayersControl.js                           : ``
+│   └── style.js                                    : ``
+├── model                                       - **
+│   ├── elements                                    - **
+│   │   ├── Altar.js                                    : ``
+│   │   ├── Entity.js                                   : ``
+│   │   ├── IconBuff.js                                 : ``
+│   │   ├── IconItem.js                                 : ``
+│   │   ├── ItemManager.js                              : ``
+│   │   ├── Items                                       - **
+│   │   │   ├── CultMag.js                                  : ``
+│   │   │   ├── DunwichAnnals.js                            : ``
+│   │   │   ├── Item.js                                     : ``
+│   │   │   ├── PocheInterdimensionnelle.js                 : ``
+│   │   │   └── VisionOrb.js                                : ``
+│   │   ├── Marker.js                                   : ``
+│   │   └── Player.js                                   : ``
+│   ├── Game.js                                         : ``
+│   ├── SocketController.js                         : ``
+│   ├── SocketMessage.js                            : ``
+│   ├── Team.js                                     : ``
+│   └── Zone.js                                     : ``
+└── serviceWorker.js                            : ``
+```
 
 ### Le serveur de jeu
 
