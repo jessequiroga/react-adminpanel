@@ -4,6 +4,14 @@ Acrobatt 2020, Les Cultistes
 
 Serveur client dévéloppé en React. [React](https://reactjs.org/)
 
+## Lancement du projet
+
+### Développement
+``` npm start ```
+
+### Production
+``` npm build ```
+
 
 ## Dépendances
 
@@ -28,7 +36,7 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 .
 ├── App.js                      : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
 |
-├── components                  - *Composent utiles pour une creation rapide de la map*
+├── components                  - Composent utiles pour une creation rapide de la map
 │   ├── BuffDisplay.js              : `Liste des bonus ou malus actifs, d'un joueur, sous la forme d'une liste html`
 │   ├── DateTimeDisplay.js          : `Elément de choix de date et d'heure pour un formulaire html`
 │   ├── Header.js                   : `En-tête en haut de la carte, contient des boutons`
@@ -40,20 +48,20 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   ├── SelectDisplay.js            : `Elément de selection parmis une liste d'élements pour un formulaire html`
 │   └── TextDisplay.js              : `Elément d'entré text pour un formulaire html`
 |
-├── css                         - *Fichiers de style*
+├── css                         - Fichiers de style
 │   ├── App.css                     : `Fichier de style pour les élements de formulaire`
 │   └── Map.css                     : `Fichier de style pour les élements contenue par la carte`
 |
-├── form                        - *Les formulaires*
+├── form                        - Les formulaires
 │   ├── CreateTeam.js               : `Formulaire de creation d'équipe`
 │   └── MapConfigPannel.js          : `Formulaire pour edité la configuration de la partie aprés injéction de la configuration JSON`
 |
-├── helper                      - *Les différents outils*
+├── helper                      - Les différents outils
 │   ├── DrawConflict.js             : `Ensemble des calcules pour les intéractions entre les éléments sur la carte`
 │   ├── Point.js                    : `Classe d'un point d'un espace`
 │   └── Time.js                     : `Ensemble des calcules pour les dates`
 |
-├── mapControllers              - *Les différents composant utils a la gestion de la carte **Google-Maps** *
+├── mapControllers              - Les différents composant utils a la gestion de la carte **Google-Maps** 
 │   ├── DrawManager.js              : `Controller chargé de l'ajout d'un éléments sur la carte`
 │   ├── ElementInfo.js              : `Controller chargé de l'ajout d'une bulle d'info`
 │   ├── GoogleMap.js                : `Controller chargé de l'appel avec l'api **Google-Maps**`
@@ -63,14 +71,14 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   ├── PlayersControl.js           : `Controller chargé de l'affichage des joeurs`
 │   └── style.js                    : `Fichier de controlle du style de la carte **Google-Maps**`
 |
-├── model                       - *L'ensemble des classe constituant une partie*
-│   ├── elements                    - *L'ensemble des classe des éléments disposables sur la carte*
+├── model                       - L'ensemble des classe constituant une partie
+│   ├── elements                    - L'ensemble des classe des éléments disposables sur la carte
 │   │   ├── Altar.js                    : `Classe des drapeaux`
 │   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
 │   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
 │   │   ├── IconItem.js                 : `Classe de match entre les objets et leur images`
 │   │   ├── ItemManager.js              : `Classe abstraite c'est le Constructeur des objets`
-│   │   ├── Items                       - *L'ensemble des classes des objets*
+│   │   ├── Items                       - L'ensemble des classes des objets
 │   │   │   ├── CultMag.js                  : `Classe du magazine de culte`
 │   │   │   ├── DunwichAnnals.js            : `Classe des annales de dunwichs`
 │   │   │   ├── Item.js                     : `Classe abstraite des Objects`
@@ -93,13 +101,3 @@ Le client reçois de cette façons:
 - L'update de position des joueur uttiliser dans **Map.js** et transmise à **PlayersControl.js**.
 - La configuration de la map.
 - Si la partie se fini.
-
-### Lancement du projet
-
-## Développement
-``` npm start ```
-
-## Production
-``` npm build ```
-
-
