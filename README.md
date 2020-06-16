@@ -28,7 +28,7 @@ Voici la liste des dépendances présentes dans le projet sous la forme de libra
 - **react-widgets**             - Librairie d'ajout d'élement widget(comme les dateTimePickers).
 - **react-widgets-moment**      - Librairie de depandance pour **react-widgets**, permet de configurer la time-zone des widgets.
 - **reactstrap**                - Librairie de style css, permet l'uttilisation de boostrap avec les élements react.
-- **tyled-components**          - Librairie de style css.
+- **styled-components**          - Librairie de style css.
 
 ### Arboressance des different éléments du projet
 
