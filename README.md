@@ -61,7 +61,7 @@ Voici la liste des dépendances présentes dans le projet sous la forme de libra
 │   ├── Point.js                    : `Classe d'un point d'un espace`
 │   └── Time.js                     : `Ensemble des calcules pour les dates`
 |
-├── mapControllers              - Les différents composant utils a la gestion de la carte Google-Maps
+├── mapControllers              - Les différents composants utils à la gestion de la carte Google-Maps
 │   ├── DrawManager.js              : `Controller chargé de placer un éléments sur la carte`
 │   ├── ElementInfo.js              : `Controller chargé de montrer les bulle d'infos`
 │   ├── GoogleMap.js                : `Controller chargé de la liason avec Google-Maps`
