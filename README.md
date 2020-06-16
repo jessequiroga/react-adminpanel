@@ -1,4 +1,4 @@
-#Cultwars - Client Amin
+#Cultwars - Client Admin
 
 Acrobatt 2020, Les Cultistes
 
