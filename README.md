@@ -61,14 +61,14 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   ├── Point.js                    : `Classe d'un point d'un espace`
 │   └── Time.js                     : `Ensemble des calcules pour les dates`
 |
-├── mapControllers              - "Les différents composant utils a la gestion de la carte **Google-Maps**" 
-│   ├── DrawManager.js              : `Controller chargé de l'ajout d'un éléments sur la carte`
-│   ├── ElementInfo.js              : `Controller chargé de l'ajout d'une bulle d'info`
-│   ├── GoogleMap.js                : `Controller chargé de l'appel avec l'api **Google-Maps**`
+├── mapControllers              - "Les différents composant utils a la gestion de la carte Google-Maps"
+│   ├── DrawManager.js              : `Controller chargé de l\'ajout d'un éléments sur la carte`
+│   ├── ElementInfo.js              : `Controller chargé de l\'ajout d'une bulle d'info`
+│   ├── GoogleMap.js                : `Controller chargé de l\'appel avec l'api Google-Maps`
 │   ├── MapControl.js               : `Controller chargé du placement et de la mise à jour des éléments sur la carte`
 │   ├── MapImportConfigPannel.js    : `Controller chargé de la mise en ligne d'une nouvelle configuration JSON`
 │   ├── Map.js                      : `Controller principale chargé de la création de la carte et de l'interaction entre les informations du serveur de jeux et des éléments de la carte. `
-│   ├── PlayersControl.js           : `Controller chargé de l'affichage des joeurs`
+│   ├── PlayersControl.js           : `Controller chargé de l\'affichage des joeurs`
 │   └── style.js                    : `Fichier de controlle du style de la carte **Google-Maps**`
 |
 ├── model                       - "L'ensemble des classe constituant une partie"
@@ -77,17 +77,17 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
 │   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
 │   │   ├── IconItem.js                 : `Classe de match entre les objets et leur images`
-│   │   ├── ItemManager.js              : `Classe abstraite c'est le Constructeur des objets`
+│   │   ├── ItemManager.js              : `Classe abstraite c\'est le Constructeur des objets`
 │   │   ├── Items                       - L'ensemble des classes des objets
 │   │   │   ├── CultMag.js                  : `Classe du magazine de culte`
 │   │   │   ├── DunwichAnnals.js            : `Classe des annales de dunwichs`
 │   │   │   ├── Item.js                     : `Classe abstraite des Objects`
 │   │   │   ├── PocheInterdimensionnelle.js : `Classe de la poche Interdimenssionnelle`
 │   │   │   └── VisionOrb.js                : `Classe de l'orbe de vision`
-│   │   ├── Marker.js                   : `Classe de création de l'élément visuèlement parlant sur la carte`
+│   │   ├── Marker.js                   : `Classe de création de l\'élément visuèlement parlant sur la carte`
 │   │   └── Player.js                   : `Classe des joueurs`
 │   ├── Game.js                     : `Classe de la partie`
-│   ├── SocketController.js         : `Classe qui s'occupe de la connection avec le serveur de jeu `
+│   ├── SocketController.js         : `Classe qui s\'occupe de la connection avec le serveur de jeu `
 │   ├── SocketMessage.js            : `Classe de traitement des differents types messages reçus et envoyés au serveur de jeu `
 │   ├── Team.js                     : `Classe des équipes`
 │   └── Zone.js                     : `Classe des régions de jeu`
