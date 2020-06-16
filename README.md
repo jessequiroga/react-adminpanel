@@ -36,7 +36,7 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 .
 ├── App.js                      : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
 |
-├── components                  - "Composent utiles pour une creation rapide de la map"
+├── components                  - Composent utiles pour une creation rapide de la map
 │   ├── BuffDisplay.js              : `Liste des bonus ou malus actifs, appartenant un joueur, sous la forme d'une liste html`
 │   ├── DateTimeDisplay.js          : `Elément de choix de date et heure pour un formulaire html`
 │   ├── Header.js                   : `En-tête en haut de la carte, contient des boutons`
@@ -48,20 +48,20 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   ├── SelectDisplay.js            : `Elément de selection parmis une liste d'élements pour un formulaire html`
 │   └── TextDisplay.js              : `Elément d'entré text pour un formulaire html`
 |
-├── css                         - "Fichiers de style"
+├── css                         - Fichiers de style
 │   ├── App.css                     : `Fichier de style pour les élements de formulaire`
 │   └── Map.css                     : `Fichier de style pour les élements contenue par la carte`
 |
-├── form                        - "Les formulaires"
+├── form                        - Les formulaires
 │   ├── CreateTeam.js               : `Formulaire de creation d'équipe`
 │   └── MapConfigPannel.js          : `Formulaire pour edité la configuration de la partie aprés injéction de la configuration JSON`
 |
-├── helper                      - "Les différents outils"
+├── helper                      - Les différents outils
 │   ├── DrawConflict.js             : `Ensemble des calcules pour les intéractions entre les éléments sur la carte`
 │   ├── Point.js                    : `Classe d'un point d'un espace`
 │   └── Time.js                     : `Ensemble des calcules pour les dates`
 |
-├── mapControllers              - "Les différents composant utils a la gestion de la carte Google-Maps"
+├── mapControllers              - Les différents composant utils a la gestion de la carte Google-Maps
 │   ├── DrawManager.js              : `Controller chargé de placer un éléments sur la carte`
 │   ├── ElementInfo.js              : `Controller chargé de montrer les bulle d'infos`
 │   ├── GoogleMap.js                : `Controller chargé de la liason avec Google-Maps`
@@ -69,10 +69,10 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   ├── MapImportConfigPannel.js    : `Controller chargé de la mise en ligne d'une nouvelle configuration JSON`
 │   ├── Map.js                      : `Controller principale chargé de la création de la carte et de l'interaction entre les informations du serveur de jeux et des éléments de la carte. `
 │   ├── PlayersControl.js           : `Controller chargé du placement des joeurs sur la carte`
-│   └── style.js                    : `Fichier de controlle du style de la carte **Google-Maps**`
+│   └── style.js                    : `Fichier de controlle du style de la carte Google-Maps`
 |
-├── model                       - "Les classes qui constiuent une partie"
-│   ├── elements                    - "L'ensemble des classe des éléments disposables sur la carte"
+├── model                       - Les classes qui constiuent une partie
+│   ├── elements                    - L'ensemble des classe des éléments disposables sur la carte
 │   │   ├── Altar.js                    : `Classe des drapeaux`
 │   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
 │   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
