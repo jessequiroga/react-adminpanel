@@ -24,8 +24,8 @@ function MapConfigPannel({Config,setConfig}) {
       {
           nameChang : {value: '',errorMessage:'',message:'',isValid: true}, // champ nom de la colocation
           typeGameChang : {value:'', errorMessage: '',message:'',isValid: true},
-          beginDate : {value:'', errorMessage: '',message:'',isValid: false},
-          endDate : {value:'', errorMessage: '',message:'',isValid: true},
+          beginDate : {value:'', errorMessage: 'This is a needed filed',message:'',isValid: false},
+          endDate : {value:'', errorMessage: 'This is a needed filed',message:'',isValid: true},
           isPublic: {value:false, isValid:true}
       }
   );
@@ -35,7 +35,14 @@ function MapConfigPannel({Config,setConfig}) {
   Config.Type =parseInt(Config.Type);
   useEffect(()=>{
     changeCurrTeams(Config?Config.Teams:null);
-    formular.endDate.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
+    if(Config && parseInt(Config.Type) === Game.GameType.SUPREMACY)
+    {
+        formular.endDate.isValid = true;
+    }
+    else
+    {
+        formular.endDate.isValid = false;
+    }
     changeFormular(formular);
   },[Config]);
 

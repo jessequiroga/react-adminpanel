@@ -13,8 +13,7 @@ const DateTimeDisplay = (props) => {
     const min = props.min;
     const max = props.max;
 
-    const [error,setError] = useState(false);
-
+    const [error,setError] = useState(null);
 
     const checkValue = (event, input,type,twinsName) => {
         let elem = $(event.target);
@@ -82,9 +81,8 @@ const DateTimeDisplay = (props) => {
                 elem.addClass("is-invalid");
                 elem.parents(".invalid-feedback").text(formular[input].errorMessage);
             }
-
-            changeFormular(formular);
         }
+        changeFormular(formular);
     };
 
     const onChange = (value,input) => {
@@ -114,6 +112,7 @@ const DateTimeDisplay = (props) => {
         }
         return res;
     };
+    
     return (
         <InputGroup>
             <DateTimePicker onChange={(val)=>onChange(val,inputName)} 
@@ -124,7 +123,7 @@ const DateTimeDisplay = (props) => {
             <InputGroupAddon addonType="prepend">
                 <InputGroupText>{props.label}</InputGroupText>
             </InputGroupAddon>
-            {error?<div style={{width: "100%",marginTop: "0.25rem",fontSize: "80%",color: "#dc3545"}}>{formular[inputName].errorMessage}</div>:null}
+            {(error || (!formular[inputName].isValid) && error ===null) ?<div style={{width: "100%",marginTop: "0.25rem",fontSize: "80%",color: "#dc3545"}}>{formular[inputName].errorMessage}</div>:null}
         </InputGroup>
     );
 };
