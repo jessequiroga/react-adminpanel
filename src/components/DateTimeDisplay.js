@@ -21,6 +21,13 @@ const DateTimeDisplay = (props) => {
         let err = false;
         let brother= twinsName;
         let way = ">";
+        if(formular[input].value === "" || typeof formular[input].value === "undefined" || formular[input].value === null)
+        {
+            formular[input].isValid = false;
+            formular[input].errorMessage = "This is a needed filed";
+            setError(true); 
+        }
+        else
         switch(type)
         {
             case "dateTime":

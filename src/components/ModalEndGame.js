@@ -5,13 +5,11 @@ function ModalEndGame({gameEnded,openUpload,winners}) {
 
   const [listWinners,setListWinners] = useState(null);
 
-  console.log("winners",winners);
   useEffect(() => { 
     if(winners != null)
     {
-      console.log("winners",Object.keys(winners));
       let ranking = Object.keys(winners).map(index => {
-        return  <tr>
+        return  <tr key={index}>
                   <td>
                     {parseInt(index)+1}
                   </td>
@@ -28,7 +26,7 @@ function ModalEndGame({gameEnded,openUpload,winners}) {
     
 return (
     <Modal isOpen={gameEnded}>
-        <ModalHeader className="text-center text-light bg-dark">The Game is closed</ModalHeader>
+        <ModalHeader className="text-center text-light bg-dark">The Game has ended</ModalHeader>
         <ModalBody className="text-center font-weight-bold">
         {listWinners?
                 <Table>

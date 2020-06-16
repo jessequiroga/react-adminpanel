@@ -24,6 +24,7 @@ function ModalBeginGame({gameBegin,beginDate}) {
                 Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);
                 let timediff = Time.diffTime(new Date (beginDate),new Date())
                 setUntilBegin(timediff);
+                console.log("timediff",timediff)
                 if(parseInt(timediff.split(":")[2])<0)
                 {
                     closeModal();

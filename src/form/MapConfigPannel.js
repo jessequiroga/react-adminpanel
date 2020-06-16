@@ -32,6 +32,7 @@ function MapConfigPannel({Config,setConfig}) {
 
   const changeRefresh = useState(null);
 
+  Config.Type =parseInt(Config.Type);
   useEffect(()=>{
     changeCurrTeams(Config?Config.Teams:null);
     formular.endDate.isValid = Config?!(Config.Type === Game.GameType.TIME):true;
@@ -119,12 +120,19 @@ function MapConfigPannel({Config,setConfig}) {
                 }
             }
         }
-        if(formular[x].value !== null && formular[x].value !== "")
+        if(x.indexOf("Chang")!==-1)
         {
-            if(x.indexOf("teamname")===-1)
+            if(formular[x].value !== null && formular[x].value !== "")
             {
-                content[x] = formular[x].value;
+                if(x.indexOf("teamname")===-1)
+                {
+                    content[x] = formular[x].value;
+                }
             }
+        }
+        else if( x.indexOf("teamname")===-1)
+        {
+            content[x] = formular[x].value;
             if(!formular[x].isValid) // Si un champs n'est pas valide alors tout le formulaire ne l'est pas
                 formulaireValide = false; // Le formulaire n'est pas valide
         }
@@ -156,10 +164,19 @@ function MapConfigPannel({Config,setConfig}) {
         Config.IsFinal = true;
         Config.IsPublic = content.isPublic;
 
-        let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
-        var conn = SocketController.getSocket();
-        setConfig(null);
-        conn.send(jsonMessage.toJson());
+        if((Config.EndDate) < new Date())
+        {
+            formular.endDate.isValid = false;
+            formular.endDate.errorMessage = "You can't end a game befor now";
+            changeFormular(formular);
+        }   
+        else
+        {       
+            let jsonMessage = new SocketMessage(Config,SocketMessage.TypeMessage.GAMESETUP);
+            var conn = SocketController.getSocket();
+            setConfig(null);
+            conn.send(jsonMessage.toJson());
+        }
     }
   }
 

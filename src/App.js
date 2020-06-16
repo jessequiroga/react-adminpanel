@@ -74,8 +74,6 @@ function App() {
         case SocketMessage.TypeMessage.GAMEENDED:
           if(!config)
           {
-            console.log(message.ContainedEntity);
-            console.log(message.ContainedEntity.Teams);
             setWinners(message.ContainedEntity.Teams);
             let game = message.ContainedEntity.Game;
             Game.getInstance(game);
