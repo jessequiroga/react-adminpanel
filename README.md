@@ -15,7 +15,7 @@ Serveur client dévéloppé en React. [React](https://reactjs.org/)
 
 ## Dépendances
 
-Voici la liste des dépendances présente dans le projet sous la forme de libraries react. disponible [ici](https://www.npmjs.com/)
+Voici la liste des dépendances présente dans le projet sous la forme de libraries react. Disponible [ici](https://www.npmjs.com/).
 
 - **bootstrap**                 - Librairie de style css.
 - **jquery**                    - Librairie de recherche des elemnt html d'une page web.
@@ -82,7 +82,7 @@ Voici la liste des dépendances présente dans le projet sous la forme de librar
 │   │   │   ├── CultMag.js                  : `Classe du magazine de culte`
 │   │   │   ├── DunwichAnnals.js            : `Classe des annales de dunwichs`
 │   │   │   ├── Item.js                     : `Classe abstraite des Objects`
-│   │   │   ├── PocheInterdimensionnelle.js : `Classe de la poche Interdimenssionnelle`
+│   │   │   ├── PocheInterdimensionnelle.js : `Classe de la poche interdimenssionnelle`
 │   │   │   └── VisionOrb.js                : `Classe orbe de vision`
 │   │   ├── Marker.js                   : `Classe de création des éléments visuèlement parlant sur la carte`
 │   │   └── Player.js                   : `Classe des joueurs`
