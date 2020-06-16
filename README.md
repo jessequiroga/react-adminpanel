@@ -2,7 +2,7 @@
 
 Acrobatt 2020, Les Cultistes
 
-Serveur client dévéloppé en **React**. [React](https://reactjs.org/)
+Serveur client dévéloppé en [**React**](https://reactjs.org/). 
 
 ## Lancement du projet
 
@@ -36,7 +36,7 @@ Voici la liste des dépendances présentes dans le projet sous la forme de libra
 .
 ├── App.js                      : `Coeur du projet controle la mise en place d'une partie, et son lancement si le serveur de jeu en contient deja une`
 |
-├── components                  - Composent utiles pour une creation rapide de la map
+├── components                  - Composents utiles pour une creation rapide de la map
 │   ├── BuffDisplay.js              : `Liste des bonus ou malus actifs, appartenant un joueur, sous la forme d'une liste html`
 │   ├── DateTimeDisplay.js          : `Elément de choix de date et heure pour un formulaire html`
 │   ├── Header.js                   : `En-tête en haut de la carte, contient des boutons`
