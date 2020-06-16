@@ -72,7 +72,7 @@ Voici la liste des dépendances présentes dans le projet sous la forme de libra
 │   └── style.js                    : `Fichier de controlle du style de la carte Google-Maps`
 |
 ├── model                       - Les classes qui constiuent une partie
-│   ├── elements                    - Les classe des éléments disposables sur la carte
+│   ├── elements                    - Les classes des éléments disposables sur la carte
 │   │   ├── Altar.js                    : `Classe des drapeaux`
 │   │   ├── Entity.js                   : `Classe abstraite de tout les élements disposables sur la carte`
 │   │   ├── IconBuff.js                 : `Classe de match entre les bonus et les malus d'un joueur et leur images`
