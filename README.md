@@ -2,7 +2,7 @@
 
 Acrobatt 2020, Les Cultistes
 
-Serveur client dévéloppé en React. [React](https://reactjs.org/)
+Serveur client dévéloppé en **React**. [React](https://reactjs.org/)
 
 ## Lancement du projet
 
@@ -15,7 +15,7 @@ Serveur client dévéloppé en React. [React](https://reactjs.org/)
 
 ## Dépendances
 
-Voici la liste des dépendances présente dans le projet sous la forme de libraries react. Disponible [ici](https://www.npmjs.com/).
+Voici la liste des dépendances présentes dans le projet sous la forme de libraries **React**. Disponible [ici](https://www.npmjs.com/).
 
 - **bootstrap**                 - Librairie de style css.
 - **jquery**                    - Librairie de recherche des elemnt html d'une page web.
