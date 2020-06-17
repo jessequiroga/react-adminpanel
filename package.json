@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^1.9.7",
     "bootstrap": "^4.5.0",
     "eslint-config-react-app": "^5.2.1",
     "jquery": "^3.5.1",
@@ -15,6 +16,7 @@
     "react-widgets": "^4.5.0",
     "react-widgets-moment": "^4.0.28",
     "reactstrap": "^8.4.1",
+    "save": "^2.4.0",
     "styled-components": "^5.1.1"
   },
   "scripts": {
