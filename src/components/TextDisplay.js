@@ -233,7 +233,7 @@ const TextDisplay = (props) => {
                 else if(!formular[input].value.match(/^[0-9]+$/))
                 {
                     formular[input].isValid = false;
-                    formular[input].errorMessage = "This ip isn't valid";
+                    formular[input].errorMessage = "This number isn't valid";
                     formular[input].message ="";
                 }
                 else

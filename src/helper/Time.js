@@ -18,7 +18,8 @@ export default class Time {
         return parseInt(hour)*60*60 + (min)*60;
     }
 
-    static diffTime(date1, date2){
+    static showTime(time)
+    {
         let years = 0;
         let month = 0;
         let day = 0;
@@ -26,7 +27,6 @@ export default class Time {
         let min = 0;
         let sec = 0;
         let res = "";
-        let time = (date1.getTime()- date2.getTime())/1000;
         if(time>86400)
         {
           if(time>31556925.216)
@@ -52,8 +52,14 @@ export default class Time {
             sec =  Math.floor((time%3600)%60);
             res = ((hour<9)?"0":"")+ hour+":"+ ((min<9)?"0":"")+ min +":"+ ((sec<9)?"0":"")+ sec;
         }
-        
+
         return res;
+
     }
+
+    static diffTime(date1, date2){
+        let time = (date1.getTime()- date2.getTime())/1000;
+        return Time.showTime(time);
+    } 
 
 }
