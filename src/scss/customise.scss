@@ -1,0 +1,12 @@
+// Override default variables before the import
+$theme-colors: (
+  "myblue": #44FFC4,
+  "mypurple": #C832FF,
+  "mydarkpurple": #480F5C,
+  "mydarkblue": #19143D,
+  "mywhite": #FEFEFF,
+);
+
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';

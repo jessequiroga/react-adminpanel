@@ -415,7 +415,6 @@ export default class MapControl extends Component {
             }
             else{
               poly = newZone.toMapElement(this.map);
-              window.google.maps.event.addListener(poly, 'click',()=>{!this.props.canDraw() && this.props.setSelectedDrawed(poly)});
               Game.getInstance().addZone(newZone);
             }
             if(exist)

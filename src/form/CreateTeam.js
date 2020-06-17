@@ -36,11 +36,11 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
                             <TextDisplay name={"teamname"+index+(chang?"Chang":"")} typeInput="tag" placeHolder={name} label={"Team " + index } formular={formular} changeFormular={changeFormular}/>
                         </td>
                         <td>
-                            <SelectDisplay style={{height:"38px",width:"80px",backgroundColor:color}} name={"teamname"+index+(chang?"Chang":"")+"Color"} typeInput="" label={"Team " + index } formular={formular} changeFormular={changeFormular} onChange={onChange} className={"teamColor "+index}>
-                                <option style={{backgroundColor:"green"}} defaultValue={color==="green"} className="green" value="green"></option>
-                                <option style={{backgroundColor:"purple"}} defaultValue={color==="purple"} className="purple" value="purple"></option>
-                                <option style={{backgroundColor:"red"}}  defaultValue={color==="red"}className="red" value="red"></option>
-                                <option style={{backgroundColor:"yellow"}} defaultValue={color==="yellow"} className="yellow" value="yellow"></option>
+                            <SelectDisplay style={{height:"38px",width:"80px",backgroundColor:color}} defaultValue={color} name={"teamname"+index+(chang?"Chang":"")+"Color"} typeInput="color" label={"Team " + index } formular={formular} changeFormular={changeFormular} onChange={onChange} className={"teamColor "+index}>
+                                <option style={{backgroundColor:"green"}}  className="green" value="green"></option>
+                                <option style={{backgroundColor:"purple"}} className="purple" value="purple"></option>
+                                <option style={{backgroundColor:"red"}}  className="red" value="red"></option>
+                                <option style={{backgroundColor:"yellow"}}  className="yellow" value="yellow"></option>
                             </SelectDisplay>
                         </td>
                     </tr>
@@ -96,8 +96,8 @@ const CreateTeam = ({currTeams,formular,changeFormular}) =>
 
     return (
         <>
-        <Button className="ml-1 mb-2 fixed-right" color="myblue" onClick={Addteam}>Add Team</Button>
-        <Button className="ml-1 mb-2 fixed-right" color="myblue" onClick={RemoveTeam}>Remove A Team</Button>
+        {incrTeam.length<4 && <Button className="ml-1 mb-2 fixed-right" color="myblue" onClick={Addteam}>Add Team</Button>}
+        {incrTeam.length>2 && <Button className="ml-1 mb-2 fixed-right" color="myblue" onClick={RemoveTeam}>Remove A Team</Button>}
         <Table>
             <thead>
                 <tr>

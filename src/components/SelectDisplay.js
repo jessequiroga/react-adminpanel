@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import {InputGroup, InputGroupAddon, InputGroupText, FormFeedback} from 'reactstrap';
 
 const SelectDisplay = (props) => {
@@ -6,9 +7,11 @@ const SelectDisplay = (props) => {
     const formular = props.formular;
     const changeFormular = props.changeFormular;
     const type = props.typeInput;
+    const defaultValue = props.defaultValue
 
 
     const checkValue = (event, input) => {
+        let elem = $(event.target);
         if(event.target.value !== "")
         {
             formular[input].isValid = true;
@@ -22,12 +25,15 @@ const SelectDisplay = (props) => {
             formular[input].message ="";
         }
 
+        elem.addClass("form-control")
+
         if (formular[input].isValid) {
-            event.target.className = "form-control is-valid"
+            elem.removeClass("is-invalid")
+            elem.addClass("is-valid");
         } else {
-            event.target.className = "form-control is-invalid";
-            (event.target.parentNode.children[2].className === "invalid-feedback") ?
-                event.target.parentNode.children[2].textContent = formular[input].errorMessage : console.log("errorMessage");
+            elem.removeClass("is-valid");
+            elem.addClass("is-invalid");
+            elem.parents(".invalid-feedback").text(formular[input].errorMessage);
         }
 
         changeFormular(formular);
@@ -35,12 +41,52 @@ const SelectDisplay = (props) => {
 
     const onChange = (input, event) => {
         formular[input].value = event.target.value;
+        $(event.target).addClass("init");
         changeFormular(formular);
         if(props.onChange)
         {
             props.onChange(event);
         }
     };
+
+    const changeOption = (event,type) => {
+        if(type === "color")
+        {
+            let colorTake = [];
+            let options = [];
+            let allSelectColor = $("select."+type);
+            allSelectColor.map(index=>{
+                let select = allSelectColor[index];
+                let value ="";
+                if($(select).hasClass("init"))
+                {
+                    value = select.value;
+                }
+                else
+                {
+                    value = $(select).attr("beginvalue");
+                }
+                colorTake.push(value);
+                return true;
+            })
+
+            Object.keys(props.children).map(index=>{
+                let option = props.children[index].props
+                if(!colorTake.includes(option.value))
+                {
+                    let color = props.children[index].props.value;
+                    options.push( '<option style="background-color:'+color+';" class="'+color+'" value="'+color+'"></option>');
+                }
+                return true;
+            })
+            let elem = $(event.target);
+            elem.children().remove();
+            options.map(op=>{
+                elem.append(op);
+                return true;
+            });
+        }
+    }
 
 
     return (
@@ -53,9 +99,12 @@ const SelectDisplay = (props) => {
                     style={props.style}
                     id="input-form"
                     value={props.value}
-                    className={!formular[inputName].isValid?"form-control is-invalid":""}
+                    className={!formular[inputName].isValid?"form-control is-invalid "+type:" "+type}
                     onBlur={(e) => checkValue(e, inputName, type)}
                     onChange={onChange.bind(this, inputName)}
+                    onFocus={(e) => changeOption(e,type)}
+                    defaultValue={defaultValue}
+                    beginvalue={defaultValue}
                 >
                     <option key="null" value=""></option>
                     {props.children}

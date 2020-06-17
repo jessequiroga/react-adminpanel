@@ -207,12 +207,12 @@ function MapConfigPannel({Config,setConfig}) {
                             <TextDisplay name="nameChang" typeInput="tag" placeHolder={Config?Config.Name:""} label="Game Name" formular={formular} changeFormular={changeFormular}/>
                         </Col>
                         <Col md={6}>
-                            <SelectDisplay style={{height:"38px", minWidth:"20px"}} name="typeGameChang" typeInput="Type" label="Type Game" formular={formular} changeFormular={changeFormular}  onChange={(e)=>{onChangeTypeGame(e);}}>
+                            <SelectDisplay style={{height:"38px", minWidth:"20px"}} defaultValue={Config?Config.Type:""} name="typeGameChang" typeInput="Type" label="Type Game" formular={formular} changeFormular={changeFormular}  onChange={(e)=>{onChangeTypeGame(e);}}>
                                 {
                                     Object.keys(Game.GameType).map(type=>{
                                         let nameType = type.toString();
                                         let Camel = nameType[0].toUpperCase() + nameType.slice(1,50).toLowerCase();
-                                        return  <option key={type} selected={(Config)?Game.GameType[type]===parseInt(Config.Type):false} value={Game.GameType[type]}>{Camel}</option>
+                                        return  <option key={type} value={Game.GameType[type]}>{Camel}</option>
                                     })
                                 }
                             </SelectDisplay>

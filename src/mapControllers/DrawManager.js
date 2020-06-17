@@ -63,24 +63,30 @@ export default class DrawManager extends Component {
       //window.google.maps.event.clearListeners(this.map, 'click'); // clear all action add Element on the map
       Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
         window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
-        if (zone.toMapElement().editable)
-          window.google.maps.event.addListener(zone.toMapElement(), 'click', () => !this.props.canDraw() && this.props.setSelectedMoved(zone.toMapElement()));
-        else
-          window.google.maps.event.addListener(zone.toMapElement(), 'click', () => !this.props.canDraw() && this.props.setSelectedDrawed(zone.toMapElement())); // clear all action add Element on zone
       });
+
+      Game.getInstance().Items.forEach(item =>{
+        if(item.toMapElement && item.toMapElement().visionCircle)
+          window.google.maps.event.clearListeners(item.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
+      })
+
+      Game.getInstance().Flags.forEach(altar =>{
+        if(altar.toMapElement && altar.toMapElement().visionCircle)
+          window.google.maps.event.clearListeners(altar.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
+      })
     }
     else {
       Game.getInstance().Regions.forEach(zone => { // foreach polygon zone
         window.google.maps.event.clearListeners(zone.toMapElement(), 'click'); // clear all action add Element on zone
       });
 
-      Game.getInstance().Flags.forEach(altar =>{
-        if(altar.totoMapElement && altar.toMapElement().visionCircle)
-          window.google.maps.event.clearListeners(altar.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
+      Game.getInstance().Items.forEach(item =>{
+        if(item.toMapElement && item.toMapElement().visionCircle)
+          window.google.maps.event.clearListeners(item.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
       })
 
       Game.getInstance().Flags.forEach(altar =>{
-        if(altar.totoMapElement && altar.toMapElement().visionCircle)
+        if(altar.toMapElement && altar.toMapElement().visionCircle)
           window.google.maps.event.clearListeners(altar.toMapElement().visionCircle, 'click'); // add the action listener click add Altar on zone
       })
     }
@@ -96,12 +102,12 @@ export default class DrawManager extends Component {
         });
 
         Game.getInstance().Flags.forEach(altar =>{
-          if(altar.totoMapElement && altar.toMapElement().visionCircle)
-            window.google.maps.event.addListener(altar.toMapElement().visionCircle, 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
+          if(altar.toMapElement && altar.toMapElement().visionCircle)
+            window.google.maps.event.addListener(altar.toMapElement().visionCircle, 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
         })
   
         Game.getInstance().Items.forEach(item =>{
-          if(item.totoMapElement && item.toMapElement().visionCircle)
+          if(item.toMapElement && item.toMapElement().visionCircle)
             window.google.maps.event.addListener(item.toMapElement().visionCircle, 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()],this.props.typeItemDraw)); // add the action listener click add Altar on zone
         })
       }
@@ -115,13 +121,13 @@ export default class DrawManager extends Component {
       });
 
       Game.getInstance().Flags.forEach(altar =>{
-        if(altar.totoMapElement && altar.toMapElement().visionCircle)
+        if(altar.toMapElement && altar.toMapElement().visionCircle)
           window.google.maps.event.addListener(altar.toMapElement().visionCircle, 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
       })
 
       Game.getInstance().Items.forEach(item =>{
-        if(item.totoMapElement && item.toMapElement().visionCircle)
-          window.google.maps.event.addListener(item.toMapElement().visionCircle, 'click', (event) => this.addAltar([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
+        if(item.toMapElement && item.toMapElement().visionCircle)
+          window.google.maps.event.addListener(item.toMapElement().visionCircle, 'click', (event) => this.addItem([event.latLng.lat(), event.latLng.lng()])); // add the action listener click add Altar on zone
       })
 
     }
