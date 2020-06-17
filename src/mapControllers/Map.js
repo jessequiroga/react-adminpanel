@@ -567,9 +567,7 @@ const [formularAttributeAltar, setFormularAttributeAltar] = useState({
             lng: selectedDrawed.getPath ? selectedDrawed.getPath().getArray()[0].lng() : selectedDrawed.position.lng() // lng: Marker and polygon don't have the same coordinates: array for polygon
           }}
         >
-
               <div className="grp-info"> {/* Info Window body */}
-                <div className="lib-res"><span className="lib">Id: </span><span>{selectedDrawed.id}</span></div>
                 <div className="lib-res"><span className="lib">{selectedDrawed.title}</span></div>
                 {(selectedDrawed.type && selectedDrawed.type === "Altar")?
                   <div>
