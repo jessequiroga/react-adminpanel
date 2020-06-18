@@ -58,24 +58,30 @@ export default class Marker extends Entity
             
           var conflict = false;
 
-          let visionCircle = new window.google.maps.Circle({
-              strokeColor: '#ccf3ff',
-              strokeOpacity: 0.5,
-              strokeWeight: 2,
-              fillColor: '#01A9DB',
-              fillOpacity: 0.35,
-              center: {lat:this.Position[0],lng:this.Position[1]},
-              radius: this.VisionDistance
-            });
-          let actionCircle = new window.google.maps.Circle({
-              strokeColor: '#3A01DF',
-              strokeOpacity: 0.7,
-              strokeWeight: 2,
-              fillColor: '#3A01DF',
-              fillOpacity: 0.25,
-              center: {lat:this.Position[0],lng:this.Position[1]},
-              radius: this.ActionDistance
-            });
+          let visionCircle = null;
+          let actionCircle = null;
+          if(withColision || withVisionCircle)
+          {
+            visionCircle = new window.google.maps.Circle({
+                strokeColor: '#ccf3ff',
+                strokeOpacity: 0.5,
+                strokeWeight: 2,
+                fillColor: '#01A9DB',
+                fillOpacity: 0.35,
+                center: {lat:this.Position[0],lng:this.Position[1]},
+                radius: this.VisionDistance
+              });
+              
+            actionCircle = new window.google.maps.Circle({
+                strokeColor: '#3A01DF',
+                strokeOpacity: 0.7,
+                strokeWeight: 2,
+                fillColor: '#3A01DF',
+                fillOpacity: 0.25,
+                center: {lat:this.Position[0],lng:this.Position[1]},
+                radius: this.ActionDistance
+              });
+          }
 
           marker = new window.google.maps.Marker({
               position: {lat:this.Position[0],lng:this.Position[1]},
@@ -87,7 +93,7 @@ export default class Marker extends Entity
               id : this.Id
           });
           
-          if(withColision){
+          if(withColision && visionCircle !== null && actionCircle !== null ){
               conflict = DrawConflict.isConflict(actionCircle.center,this.ActionDistance);    
               if(!conflict)
               {
@@ -112,7 +118,7 @@ export default class Marker extends Entity
               window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
               if(this.constructor.name !== "Player")
               {
-                if (withVisionCircle)
+                if (withVisionCircle && visionCircle !== null && actionCircle !== null)
                 {
                     visionCircle.setMap(map);
                     actionCircle.setMap(map);
