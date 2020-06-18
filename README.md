@@ -101,3 +101,14 @@ Le client reçois de cette façons:
 - L'update de position des joueur uttiliser dans **Map.js** et transmise à **PlayersControl.js**.
 - La configuration de la map.
 - Si la partie se fini.
+
+
+## Collaborateurs
+
+- FORNAZARIC Florian
+- BRUA Hugo
+- GUERRE Michaël
+- RITZENTHALER Thibaud
+- DAGON Anthony
+- UNGERER Marc
+
