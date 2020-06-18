@@ -2,7 +2,7 @@ import React from "react";
 import Game from "../model/Game";
 import { Col, Container, Row } from "reactstrap";
 
-function PlayersListDisplay({instanceListPlayer}) {
+function PlayersListDisplay({instanceListPlayer}) { //affiche une liste de joueur classé par équipe
 
     let listTeamswithPlayer = null;
     if (Game.getInstance() && Game.getInstance().Teams && instanceListPlayer && Object.keys(instanceListPlayer).length > 0 && Object.keys(Game.getInstance().Teams).length > 0) {

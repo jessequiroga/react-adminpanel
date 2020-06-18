@@ -6,7 +6,7 @@ import IconBuff from "../model/elements/IconBuff";
 
 import Time from "../helper/Time";
 
-function BuffDisplay({items}) {
+function BuffDisplay({items}) { //affiche la liste des bonus et malus d'un joueur
 
     let listItems = null;
     if (typeof items === "object")
@@ -14,10 +14,10 @@ function BuffDisplay({items}) {
         if (Game.getInstance() && items &&  Object.keys(items).length > 0 ) {
             let _listItems = items;
         
-            listItems = Object.keys(_listItems).map(function (keyI, index) // List Teams
+            listItems = Object.keys(_listItems).map(function (keyI, index) // Pour chaque item representant un malus/bonus dans les effet du joueur
             {
                 let item = _listItems[keyI];
-                let icon = IconBuff[item.Type].url;
+                let icon = IconBuff[item.Type].url; // on cherche l'image du bonus/malus pour cette item
                 return <Col key={keyI}>
                             <img style={{width: "60px"}} alt={item.Type} src={icon}></img>
                             {item.EndEffectTime && item.Type !== "PocheInterdimensionnelle"?<div>{Time.diffTime((new Date(item.EndEffectTime)),(new Date()))}</div>:null}

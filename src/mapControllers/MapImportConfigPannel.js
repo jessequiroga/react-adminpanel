@@ -4,7 +4,7 @@ import SocketController from '../model/SocketController';
 import SocketMessage from '../model/SocketMessage';
 import Game from '../model/Game';
 
-function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) {
+function MapImportConfigPannel({setConfigJsonNeeded,setConfig}) { //Interface d'importation de configuration de carte
   
   let dragOverHandler = (event) => {  
     // Prevent default behavior (Prevent file from being opened)

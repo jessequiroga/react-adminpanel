@@ -1,11 +1,11 @@
 import React,{useEffect, useState} from "react";
 import {Modal,ModalHeader,ModalBody,Button,Table} from 'reactstrap';
 
-function ModalEndGame({gameEnded,openUpload,winners}) {
+function ModalEndGame({gameEnded,openUpload,winners}) { // Modale déstiné à l'affichage de la fin de partie: peux afficher un classement
 
   const [listWinners,setListWinners] = useState(null);
 
-  useEffect(() => { 
+  useEffect(() => { //cree la liste de classe si on lui en donne une en paramètre
     if(winners != null)
     {
       let ranking = Object.keys(winners).map(index => {

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PlayersListDisplay from "./PlayersListDisplay";
 
-function ModalListPlayer( {listPlayerOpen, setListPlayerOpen, instanceListPlayer} ) {
+function ModalListPlayer( {listPlayerOpen, setListPlayerOpen, instanceListPlayer} ) { //Modale d'affichage d'une lise de joueur
 
     let closeModal = () => {
         setListPlayerOpen(false);

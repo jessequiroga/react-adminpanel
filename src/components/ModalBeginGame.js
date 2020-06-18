@@ -6,7 +6,7 @@ import Game from "../model/Game";
 import PlayersListDisplay from "./PlayersListDisplay";
 import Time from "../helper/Time";
 
-function ModalBeginGame({gameBegin,beginDate}) {
+function ModalBeginGame({gameBegin,beginDate}) { //Modale destinée à l'affichage d'une ecrant d'attente de debut de partie
 
     const [modalOpen, setModalOpen] = useState(!gameBegin);
     const [untilBegin,setUntilBegin] = useState(null);
@@ -17,8 +17,8 @@ function ModalBeginGame({gameBegin,beginDate}) {
         setModalOpen(!gameBegin);
     }, [gameBegin]);
 
-    useEffect(()=>{
-        if(modalOpen)
+    useEffect(()=>{ //lance le timer d'attente à chaque ouverture de la modale 
+        if(modalOpen) //lance le timer que si la modale est fermée
         {
             const id = setInterval(() => {
                 Game.getInstance()&&setInstanceListPlayer(Game.getInstance().Players);

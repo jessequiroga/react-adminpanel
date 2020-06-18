@@ -2,7 +2,7 @@ import Point from './Point.js';
 import Game from '../model/Game';
 
 export default class DrawConflict {
-    static isConflict(actionCircleCenter,actionCircleRadius,listVisionMarker=null) {
+    static isConflict(actionCircleCenter,actionCircleRadius,listVisionMarker=null) { // on verifie que le marker ne se trouve pas dans une zone de vison d'un autre marker
         if(listVisionMarker == null)
         {
             listVisionMarker = [];
@@ -26,7 +26,7 @@ export default class DrawConflict {
         return result;
     }
 
-    static isInRegion(regions, marker) {
+    static isInRegion(regions, marker) { // on verifie que le marker se trouve bien dans une region
         var point = new Point(marker.position);
         var result =false;
         for (const regionCoordinates of regions.entries()) {

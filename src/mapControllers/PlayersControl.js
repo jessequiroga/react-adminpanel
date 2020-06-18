@@ -6,11 +6,11 @@ import ManagerPlayers from '../model/elements/Player';
 import Game from '../model/Game';
 import Entity from '../model/elements/Entity';
 
-export default class PlayerControl extends Component {
+export default class PlayerControl extends Component { //Controller des joueur, place les joueur sur la carte et les met à jour
 
   static contextTypes = { [MAP]: PropTypes.object }
 
-  newMarkerPlayers = (players) =>
+  newMarkerPlayers = (players) => //affichage des joueur: reception de la liste des joueuer envoyer par le server et regarde si les joueur doivent etre rajouter ou mis à jour
   {
     players.forEach((player)=>{
       if(player != null &&  player.Id != null && (player.Team != null && typeof player.Team != "undefined"))
@@ -18,7 +18,7 @@ export default class PlayerControl extends Component {
         if(player.Position != null)
         {
           let indexP = Game.getInstance().findPlayerById(player.Id);
-          if( indexP !== -1)
+          if( indexP !== -1) // le joueur existe => on ne recrée pas un nouveau marker sur la carte
           {
             let _currentPlayer = Game.getInstance().Players[indexP];
             if( _currentPlayer.toMapElement &&  _currentPlayer.toMapElement() !== null)
@@ -44,7 +44,7 @@ export default class PlayerControl extends Component {
               Game.getInstance().replacePlayer(indexP,newPlayer);
               this.props.setInstanceListPlayer(Game.getInstance().Players);
             }
-            else
+            else // le joueur n'existe pas encore => on crée le marker et on le dispose sur la carte
             {
               let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
               newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
@@ -58,7 +58,7 @@ export default class PlayerControl extends Component {
               this.props.setInstanceListPlayer(Game.getInstance().Players);
             }
           }
-          else
+          else //si l'element n'a pas d'id on le recrée forcement un nouveau
           {
             let newPlayer = ManagerPlayers.createPlayer(player.Position,player.ActionDistance,player.IsInActionRange,player.Name,player.VisionDistance,player.Team,player.VisibleEntities,player.InventorySize,player.IsAFK,player.Items,player.AffectedByItems,player.Id);
             newPlayer.toMapElement(this.map,this.props.setSelectedDrawed);
@@ -81,7 +81,7 @@ export default class PlayerControl extends Component {
   }
 
 
-  newPlayerInLobby = (players) =>
+  newPlayerInLobby = (players) => //affichage des joueur traitement pour un affichage juste dans le lobby (la partie n'a pas encore commencée)
   {
     players.forEach((player)=>{
       if(player !=null && player.Id != null && (player.Team != null && typeof player.Team != "undefined") )

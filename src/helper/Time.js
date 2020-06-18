@@ -1,3 +1,5 @@
+import {Translate} from '../../utils/Translator';
+
 export default class Time {
     static addDays(date, days) {
         var result = new Date(date);
@@ -18,7 +20,7 @@ export default class Time {
         return parseInt(hour)*60*60 + (min)*60;
     }
 
-    static showTime(time)
+    static showTime(time) //convertie un temps en milisecond en string
     {
         let years = 0;
         let month = 0;
@@ -32,17 +34,17 @@ export default class Time {
           if(time>31556925.216)
           {
             years = Math.floor(time/31556925.216);
-            res = ((years<9)?"0":"")+ years +" years left";
+            res = ((years<9)?"0":"")+ years +" "+Translate("years left");
           }
           else
           {
             month = Math.floor(time/2630016);
             if(month>0)
             {
-                res = ((month<9)?"0":"")+ month + " month and ";
+                res = ((month<9)?"0":"")+ month + " "+Translate("month and")+" ";
             }
             day = Math.floor((time%2630016)/86400);
-            res += ((day<9)?"0":"")+ day + " days left";
+            res += ((day<9)?"0":"")+ day + " "+Translate("days left");
           }
         }
         else
@@ -57,9 +59,8 @@ export default class Time {
 
     }
 
-    static diffTime(date1, date2){
+    static diffTime(date1, date2){ //calcule la difference de temps entre deux date et l'affiche en string
         let time = (date1.getTime()- date2.getTime())/1000;
         return Time.showTime(time);
     } 
-
 }
