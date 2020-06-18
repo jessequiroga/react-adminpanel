@@ -1,6 +1,6 @@
 import SocketMessage from "./SocketMessage";
 const createWebsocket = () => {
-    var socket = new WebSocket("ws://localhost:80/ws");//localhost:5000
+    var socket = new WebSocket("ws://"+window.location.hostname+":80/ws");//localhost:5000
 
     socket.onopen = function () {
        console.log("Connected.");
@@ -14,7 +14,7 @@ const createWebsocket = () => {
             console.log('Connection lost.'); // for example if server processes is killed
         }
         console.log('Code: ' + event.code + '. Reason: ' + event.reason);
-        socket = new WebSocket("ws://localhost:80/ws");
+        socket = new WebSocket("ws://"+window.location.hostname+":80/ws");
     };
 
     socket.onerror = function (error) {
