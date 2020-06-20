@@ -1,5 +1,3 @@
-import {Translate} from '../../utils/Translator';
-
 export default class Time {
     static addDays(date, days) {
         var result = new Date(date);
@@ -34,17 +32,17 @@ export default class Time {
           if(time>31556925.216)
           {
             years = Math.floor(time/31556925.216);
-            res = ((years<9)?"0":"")+ years +" "+Translate("years left");
+            res = ((years<9)?"0":"")+ years +" "+"years left";
           }
           else
           {
             month = Math.floor(time/2630016);
             if(month>0)
             {
-                res = ((month<9)?"0":"")+ month + " "+Translate("month and")+" ";
+                res = ((month<9)?"0":"")+ month + " "+"month and"+" ";
             }
             day = Math.floor((time%2630016)/86400);
-            res += ((day<9)?"0":"")+ day + " "+Translate("days left");
+            res += ((day<9)?"0":"")+ day + " "+"days left";
           }
         }
         else
