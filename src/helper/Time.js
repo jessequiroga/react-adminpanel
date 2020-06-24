@@ -1,6 +1,6 @@
 export default class Time {
     static addDays(date, days) {
-        var result = new Date(date);
+        var result = date;
         result.setDate(result.getDate() + days);
         return result;
     }
@@ -15,10 +15,10 @@ export default class Time {
     static getTime(strTime){
         let[hour,min] = strTime.split(':');
 
-        return parseInt(hour)*60*60 + (min)*60;
+        return parseInt(hour)*60*60 + parseInt(min)*60;
     }
 
-    static showTime(time) //convertie un temps en milisecond en string
+    static showTime(time) //convertie un temps en sec en string
     {
         let years = 0;
         let month = 0;
@@ -48,7 +48,7 @@ export default class Time {
         else
         {
             hour = Math.floor(time/3600);
-            min = Math.floor((time%3600)/60);
+            min =  Math.floor((time%3600)/60);
             sec =  Math.floor((time%3600)%60);
             res = ((hour<9)?"0":"")+ hour+":"+ ((min<9)?"0":"")+ min +":"+ ((sec<9)?"0":"")+ sec;
         }
