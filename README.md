@@ -18,7 +18,10 @@ Serveur client dévéloppé en [**React**](https://reactjs.org/).
 Voici la liste des dépendances présentes dans le projet sous la forme de libraries **React**. Disponible [ici](https://www.npmjs.com/).
 
 - **bootstrap**                 - Librairie de style css.
+- **chai**                      - Librairie de test unitaire sur des object de classe distincte.
 - **jquery**                    - Librairie de recherche des elemnt html d'une page web.
+- **jsdom**                     - librairie permetant la creation d'un environnement de teste.
+- **mocha**                     - Libraire  de tests unitaire.
 - **moment**                    - Librairie de chargement du time-zone de l'utilisateur.
 - **react**                     - Librairie principal de react.
 - **react-bootstrap-typeahead** - Librairie de style css pour les en-tête de tableau.
