@@ -93,7 +93,7 @@ export default class Marker extends Entity
               id : this.Id
           });
           
-          if(withColision && visionCircle !== null && actionCircle !== null ){
+          if(withColision){
               conflict = DrawConflict.isConflict(actionCircle.center,this.ActionDistance);    
               if(!conflict)
               {
@@ -118,7 +118,7 @@ export default class Marker extends Entity
               window.google.maps.event.addListener(marker, 'click',()=>setSelectedDrawed(marker));
               if(this.constructor.name !== "Player")
               {
-                if (withVisionCircle && visionCircle !== null && actionCircle !== null)
+                if (withVisionCircle)
                 {
                     visionCircle.setMap(map);
                     actionCircle.setMap(map);

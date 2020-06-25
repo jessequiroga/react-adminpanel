@@ -8,7 +8,7 @@ const TextDisplay = (props) => {
     const type = props.typeInput;
 
 
-    const checkValue = (event, input) => {
+    const checkValue = (event, input,val) => {
         switch (type) {
 
             case "email":

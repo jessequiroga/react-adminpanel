@@ -10,7 +10,7 @@ const SelectDisplay = (props) => {
     const defaultValue = props.defaultValue
 
 
-    const checkValue = (event, input) => {
+    const checkValue = (event, input,val) => {
         let elem = $(event.target);
         if(event.target.value !== "")
         {

@@ -174,11 +174,6 @@ export default class MapControl extends Component {
     return result;
   }
 
-  findById(array, id){
-    var index = array.findIndex( ({ Id }) => Id === id);
-    return index;
-}
-
   configMap = (mapUpdate =null) => {
     if(Object.keys(Game.getInstance()).length >0)
     {
