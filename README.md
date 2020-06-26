@@ -12,6 +12,12 @@ Serveur client dévéloppé en [**React**](https://reactjs.org/).
 ### Production
 ``` npm build ```
 
+### Tests unitaires
+``` npm run test:unit ```
+
+#### Tests unitaires verbeux
+``` npm run test:unit:watch ```
+
 
 ## Dépendances
 
